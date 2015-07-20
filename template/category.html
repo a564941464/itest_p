@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>category</title>
+
+</head>
+<body>
+{% include "nav.html" %}
+
+<div id="content">
+<h3><span>{{category}}</span>
+	<a class="btn" style="line-height:100%; margin-left:10px;display:inline-block;" href="/{{category}}/add_product.html">添加产品</a>
+</h3>
+<hr/>
+
+<table class="category" border="1px" bordercolor="#ccc" cellspacing="0px" style="width:100%; border-collapse:collapse">
+	<tr>
+		<th style="width:60px;"><input type="checkbox" class="checkall"/></th>
+		<th style="width:80px;">操作</th>
+		<th>SKU</th>
+		<th>Product ID</th>
+		<th>Product ID Type</th>
+		<th>价格</th>
+		<th>数量</th>
+		<th>产品链接</th>
+	</tr>
+{% for coll in collections %}
+	<tr id="tr_{{coll.id}}">
+		<td><input name="product_ids" type="checkbox" class="checkone" value="{{coll.id}}" /></td>
+		<td>{{coll.item_sku}}</td>
+		<td>{{coll.external_product_id}}</td>
+		<td>{{coll.external_product_id_type}}</td>
+		<td>{{coll.quantity}}</td>
+		<td>{{coll.product_link}}</td>
+	</tr>
+{%endfor%}
+	<tr>
+		<td style="text-align:center;"><input type="checkbox" class="checkall"/></td><td colspan="20"><input type="submit" class="btn category_download_button" value="下载" /></td>
+	</tr>
+</table>
+</div>
+</body>
+</html>

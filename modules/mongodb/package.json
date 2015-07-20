@@ -25,5 +25,5 @@
     "engines": {
         "ringojs": ">= 0.9"
     },
-    "main": "mongodb.js"
+    "main": "./mongodb.js"
 }
