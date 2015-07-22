@@ -1,0 +1,434 @@
+<html>
+    <head>
+        <title>用户角色 - iListing</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="icon" type="image/vnd.microsoft.icon" href="/icon/favicon.png" />
+        <link rel="shortcut icon" type="image/x-icon" href="/icon/favicon.png" />
+        <link rel="stylesheet" href="/css/nav.css">
+        
+		<script src="/js/jquery-1.10.2.min.js"></script>
+        <link type="text/css" rel="stylesheet" href="/js/weebox/weebox.css" />
+        <script type="text/javascript" src="/js/weebox/bgiframe.js"></script>
+        <script type="text/javascript" src="/js/weebox/weebox.js"></script>
+
+        <style type="text/css">
+        <!--
+
+        *{
+            font-size: 12px;
+            padding: 2px 4px 2px 6px;
+        }
+        .nav_user_role a{
+            color: #FFFFFF;
+            text-shadow: -1px -1px 0 #3293D6;
+            background-color: #49B2FF;
+        }
+        .active{
+            background-color: #0088CC;
+            color: #ffffff;
+        }
+        .left ul {
+            font-szie: 16px;
+            line-height:30px;
+            list-style: none outside none;
+            color: #0088CC;
+        }        
+		.main .left{
+            float:left;
+            height:800px;
+            border-right: dotted 1px #333;
+            border-left: dotted 1px #333;
+        }
+        .main .right{
+            float:left;
+            height:800px;
+            border-right: dotted 1px #333;
+        }
+        .main .left{
+            width:10%;
+        }
+        .main .right{
+            width:88%;
+        }
+
+        .btn {
+            background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3) repeat scroll 0 0 rgba(0, 0, 0, 0);
+            border-color: #CCCCCC #BBBBBB #A0A0A0;
+            border-radius: 3px;
+            border-style: solid;
+            border-width: 1px;
+            color: #000000;
+            
+            outline: medium none;
+            padding: 3px 8px;
+            text-align: center;
+            text-shadow: 0 1px 0 #FFFFFF;
+            vertical-align: middle;
+            white-space: nowrap;
+            border-radius:12px 12px 12px 12px;
+        }
+		.tr_line_r_td input[type='text']{
+			width:80%;
+			height:80%;
+			font-size:100%;
+		}
+		.tr_line_r_td select{
+			width:80%;
+		}
+		
+		.tr_line td{
+			text-align:center;
+		}
+        .action_menu{
+            color: #0066CC;
+            text-decoration:none;
+        }            
+        .action_menu_active{
+            color: #0066CC; position:relative;
+            z-index: 50; border-style: solid solid none;
+            border-width: 1px 1px 1px;border-color:#000;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .action_menu_div{
+            padding:5px;
+            z-index:49; color: #0066CC; border-color:#000;
+            display:none; border-style: solid solid solid;border-width: 1px 1px 1px 1px;position:absolute;text-align:left; 
+            width:80px; margin-left: 12px;border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;background-color:#fff; border-shadow:3px 3px 3px #AAAAAA;
+        }
+        .action_menu_li:hover{
+            background-color:#00ff00;
+        }
+        -->
+        </style>
+        <script type="text/javascript">
+        <!--
+        $(document).ready(function(){
+			$(document).click(function(e){                
+                var drag = $(".action_menu_div");
+                var target = e.target;
+                drag.each(function(i){;
+                    if($.contains(drag[i], target) || (target.getAttribute("class")!=null && target.getAttribute("class").indexOf("action_menu")!=-1)){
+
+                    }else{
+                        $(drag[i]).hide();
+                        $(drag[i]).prev().removeClass("action_menu_active");
+                    }                    
+                });               
+            });
+			
+            $(".action_menu").on("click", function(){
+                $.each($(".action_menu"), function(i, item){
+                    $(item).removeClass("action_menu_active");
+                });
+                $.each($(".action_menu_div"), function(i, item){
+                    $(item).hide();
+                });
+                var menu_div = $("#menu_" + $(this).attr("id-ref")); 
+                menu_div.toggle();
+                if(menu_div.is(":visible")){
+                    $(this).addClass("action_menu_active");
+                }else{
+                    $(this).removeClass("action_menu_active");
+                }
+            });
+            $(".left_menu").click(function(){
+                $(".left_menu").each(function(){
+                    $(this).removeClass("active");
+                });
+                $(this).addClass("active");
+
+                $("#container").load($(this).attr("data-ref"));
+            });
+            $(".left_menu[data-ref='{{action}}']").click();
+            
+            $(".checkall").on("click", function(){
+                //alert($(this).attr("checked"));
+                var ischecked = $(this).attr("checked");
+                $(".checkone").each(function(){
+                    $(this).attr("checked", ischecked);
+                });
+                $(".checkall").attr("checked", ischecked);
+            });
+			$("#user_add_button").on("click", function(){
+				$.weeboxs.open("/user_role_to_add_user.md", {
+                    title:'添加用户',  
+                    contentType:'ajax',
+                    width:400 , height:360,
+                    onok:function(box){
+                        var data = $("#user_role_add_user_form").serialize();
+                        $.ajax({
+                            type: "POST",
+                            url: "/user_role_add_user.md",
+                            data: data,
+                            dataType: "json",
+                            success: function(json){
+                                if(json.status==200){
+									box.close();//增加事件方法后需手动关闭弹窗
+                                    alert("ok 添加成功!");
+                                    $(".left_menu.userlist").click();
+                                }else{
+                                    alert(json.msg);
+                                }
+                            }
+                        }); 
+                       
+                    },
+                });
+			});
+			$("#role_add_button").on("click", function(){
+				$.weeboxs.open("/user_role_to_add_role.md", {
+                    title:'添加角色',  
+                    contentType:'ajax',
+                    width:800 , height:510,
+                    onok:function(box){
+                        var data = $("#user_role_add_role_form").serialize();
+                        $.ajax({
+                            type: "POST",
+                            url: "/user_role_add_role.md",
+                            data: data,
+                            dataType: "json",
+                            success: function(json){
+                                if(json.status==200){
+									box.close();//增加事件方法后需手动关闭弹窗
+                                    alert("ok 添加成功!");
+                                    $(".left_menu.rolelist").click();
+                                }else{
+                                    alert(json.msg);
+                                }
+                            }
+                        }); 
+                       
+                    },
+                });
+			});
+			
+			$(".action_edit").on("click", function(){
+				var user_id = $(this).attr("id-ref");
+				$.weeboxs.open("/" + user_id + "/user_role_to_edit_user.md", {
+                    title:'修改用户信息',  
+                    contentType:'ajax',
+                    width:400 , height:280,
+                    onok:function(box){
+                        var data = $("#user_role_edit_user_form").serialize();
+                        $.ajax({
+                            type: "POST",
+                            url: "/user_role_edit_user.md",
+                            data: data,
+                            dataType: "json",
+                            success: function(json){
+                                if(json.status==200){
+									box.close();//增加事件方法后需手动关闭弹窗
+                                    alert("ok 修改成功!");
+                                    $(".left_menu.userlist").click();
+                                }else{
+                                    alert(json.msg);
+                                }
+                            }
+                        }); 
+                       
+                    },
+                });
+			});
+			
+			$(".action_passwd").on("click", function(){
+				var user_id = $(this).attr("id-ref");
+				
+				$.weeboxs.open("/" + user_id + "/user_role_to_passwd.md", {
+                    title: '修改用户信息',  
+                    contentType:'ajax',
+                    width:400 , height:280,
+                    onok:function(box){
+                        var data = $("#user_role_passwd_form").serialize();
+                        $.ajax({
+                            type: "POST",
+                            url: "/user_role_passwd.md",
+                            data: data,
+                            dataType: "json",
+                            success: function(json){
+                                if(json.status==200){
+									box.close();//增加事件方法后需手动关闭弹窗
+                                    alert("ok 修改成功!");
+                                }else{
+                                    alert(json.msg);
+                                }
+                            }
+                        }); 
+                       
+                    },
+                });
+			});
+			$(".action_set_role").on("click", function(){
+				var user_id = $(this).attr("id-ref");
+				$.weeboxs.open("/" + user_id + "/user_role_to_set_role.md", {
+                    title:'设定角色',  
+                    contentType:'ajax',
+                    width:400 , height:280,
+                    onok:function(box){
+                        var data = $("#user_role_set_role_form").serialize();
+                        $.ajax({
+                            type: "POST",
+                            url: "/user_role_set_role.md",
+                            data: data,
+                            dataType: "json",
+                            success: function(json){
+                                if(json.status==200){
+									box.close();//增加事件方法后需手动关闭弹窗
+                                    alert("ok 修改成功!");
+                                    $(".left_menu.userlist").click();
+                                }else{
+                                    alert(json.msg);
+                                }
+                            }
+                        }); 
+                       
+                    },
+                });
+			});
+			$(".action_display").on("click", function(){
+				var user_id = $(this).attr("id-ref");
+				var display_name = $(this).attr("data-display-name");
+				$.weeboxs.open("/" + user_id + "/user_role_to_display.md", {
+                    title:display_name + ' 列表显示方式',  
+                    contentType:'ajax',
+                    width:400 , height:280,
+                    onok:function(box){
+                        var data = $("#user_role_display_form").serialize();
+                        $.ajax({
+                            type: "POST",
+                            url: "/" + user_id + "/user_role_display.md",
+                            data: data,
+                            dataType: "json",
+                            success: function(json){
+                                if(json.status==200){
+									box.close();//增加事件方法后需手动关闭弹窗
+                                    alert("ok 设置成功!");
+                                }else{
+                                    alert(json.msg);
+                                }
+                            }
+                        }); 
+                       
+                    },
+                });
+			});
+			$(".action_edit_r").on("click", function(){
+				var role_id = $(this).attr("id-ref");
+				$.weeboxs.open("/" + role_id + "/user_role_to_edit_role.md", {
+                    title:'修改角色',  
+                    contentType:'ajax',
+                    width:800 , height:510,
+                    onok:function(box){
+                        var data = $("#user_role_edit_role_form").serialize();
+                        $.ajax({
+                            type: "POST",
+                            url: "/user_role_edit_role.md",
+                            data: data,
+                            dataType: "json",
+                            success: function(json){
+                                if(json.status==200){
+									box.close();//增加事件方法后需手动关闭弹窗
+                                    alert("ok 修改成功!");
+                                    $(".left_menu.rolelist").click();
+                                }else{
+                                    alert(json.msg);
+                                }
+                            }
+                        }); 
+                       
+                    },
+                });
+			});
+			$(".action_delete").on("click",function(){
+				var sure = confirm("确定禁用此用户吗?");
+                var _this = $(this);
+				if(sure){
+					var user_id = $(this).attr("id-ref");
+					$.getJSON("/"+user_id+"/user_role_delete_user.md", function(json){
+						if(json.status == 200){
+							//$("#tr_" + user_id).fadeOut("slow");
+							$("#userstatus" + user_id).html("禁用");
+                            _this.addClass("action_active");
+                            _this.removeClass("action_delete");
+                            _this.html("激活");
+                            
+						}else{
+							alert(json.msg);
+						}
+					});
+				}
+			});
+			$(".action_active").on("click",function(){
+				var sure = confirm("确定激活此用户吗?");
+                var _this = $(this);
+				if(sure){
+					var user_id = $(this).attr("id-ref");
+					$.getJSON("/"+user_id+"/user_role_active_user.md", function(json){
+						if(json.status == 200){
+							//$("#tr_" + user_id).fadeOut("slow");
+							$("#userstatus" + user_id).html("正常");
+                            _this.addClass("action_delete");
+                            _this.removeClass("action_active");
+                            _this.html("禁用");
+						}else{
+							alert(json.msg);
+						}
+					});
+				}
+			});
+            $(".action_delete_r").on("click",function(){
+				var sure = confirm("确定删除此角色吗?");
+				if(sure){
+					var role_id = $(this).attr("id-ref");
+					$.getJSON("/"+role_id+"/user_role_delete_role.md", function(json){
+						if(json.status == 200){
+							$("#tr_" + role_id).fadeOut("slow");
+						}else{
+							alert(json.msg);
+						}
+					});
+				}
+			});            
+            $(".is_super").on("click",function(){
+                $("#select_role").fadeOut("slow");
+			});         
+            $(".not_super").on("click",function(){
+                $("#select_role").fadeIn("slow");
+			});
+            $(".update_owner").on("click", function(){
+                var action = $(this).attr("action");
+                $.getJSON("/"+ action + "/user_role_update_owner.md", function(json){
+                    
+                    if(json.status == 200){
+                        alert("更新成功!");
+                    }else{
+                        alert(json.msg);
+                    }
+                });            
+            });
+        });
+    
+        -->
+        </script>
+    </head>
+    <body>
+    {% include "nav.html" %}
+    <div class="main">
+        <div class="left">
+            <ul>
+                <li class="left_menu userlist" data-ref="/user_list.md">用户列表</li>
+                <li class="left_menu rolelist" data-ref="/role_list.md">角色列表</li>
+                
+            </ul>
+        </div>
+		
+        <div class="right" id="container">
+            用户用于管理人员
+			角色用于管理权限
+			功能完善中...
+			
+        </div>
+    </div>
+    </body>
+</html>

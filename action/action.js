@@ -5,7 +5,7 @@ var env = new Environment({
    loader: module.resolve("../template/")
 });
 
-var db = require('db').db;
+var db = require('db');
 var response = require('ringo/jsgi/response');
 //////////////////////////////////////////////////////////////////////
 
@@ -37,15 +37,10 @@ var to_login = exports.to_login = function(req, redirect_path) {
     });
 }
 
-exports.category = function(req, category) {
-	var col = db.getCollection(category);
-	var curi = col.find();
-	
-	var  arr = curi.toArray().map(function(item){
-		return JSON.parse(item.toJSON());
-	});
+exports.category = function(req, category) {	
+	var  products = db.all(category);
 	return env.renderResponse("category.html",{
-	   collections:arr,
+	   products:products,
 	   category:category,
 	   
 	});

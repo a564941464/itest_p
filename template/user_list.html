@@ -1,0 +1,46 @@
+<div style="float:left;"><input type="button" value="添加用户" class="btn" name="user_add_button" id="user_add_button"/></div>
+<div style="float:right;">
+<input type="button" action="update_product_owner" value="更新产品归属" class="btn update_owner" name="update_product_owner_button" id="update_product_owner_button"/>
+<input type="button" action="partial_update_product_owner" value="更新无主产品归属" class="btn update_owner" name="partial_update_product_owner_button" id="partial_update_product_owner_button"/>
+<input type="button" action="update_order_owner" value="更新订单归属" class="btn update_owner" name="update_order_owner_button" id="update_order_owner_button"/>
+</div>
+<table border="1px" bordercolor="#ccc" cellspacing="0px" style="width:100%; border-collapse:collapse">
+    <tr class="tr_line">
+        <th><input type="checkbox" class ="checkall" name="checkall" /></th>
+        <th style="width:70px;">操作</th>
+        <th>登陆名</th>
+		<th>显示名</th>
+        <th>角色</th>
+        <th>编码字符</th>
+        <th>最后一次登陆时间</th>
+        <th>创建时间</th>
+        <th>状态</th>
+    </tr>
+    {% for user in users %}
+    <tr class="tr_line" id="tr_{{user._id}}">
+        <td><input type="checkbox" class="checkone" name="checkone[]" title="{{user._id}}" value="{{user._id}}"</td>
+        <td><a href="javascript://;" class="action_menu" id = "a_{{user._id}}" id-ref="{{user._id}}">操作▼</a>
+            <div id="menu_{{user._id}}" class="action_menu_div">
+                <div id-ref="{{user._id}}" class="action_edit action_menu_li">编辑</div>
+                <div id-ref="{{user._id}}" class="action_display action_menu_li" data-display-name ="{{user.display_name}}">显示</div>
+                <div>--------</div>                
+                <div id-ref="{{user._id}}" class="action_passwd action_menu_li">修改密码</div>
+                <div id-ref="{{user._id}}" class="action_set_role action_menu_li">设定角色</div>
+                <div>--------</div>                
+                {% if user.is_del %}
+                <div id-ref="{{user._id}}" class="action_active action_menu_li">激活</div>
+                {%else%}
+                <div id-ref="{{user._id}}" class="action_delete action_menu_li">禁用</div>
+                {%endif%}
+            </div>
+		</td>
+        <td>{{user.login_name}}</td>
+        <td>{{user.display_name}}</td>
+        <td>{{user.role_name|default:""}}</td>
+        <td>{{user.codechar|default:""}}</td>
+        <td>{{user.last_login_time|default:""}}</td>
+        <td>{{user.crt_time}}</td>
+        <td id="userstatus{{user._id}}">{{user.is_del|yesno:"禁用,正常"}}</td>
+    </tr>
+    {% endfor %}
+</table>

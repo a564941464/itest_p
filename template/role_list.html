@@ -1,0 +1,24 @@
+<input type="button" value="添加角色" class="btn" name="role_add_button" id="role_add_button"/>
+<table border="1px" bordercolor="#ccc" cellspacing="0px" style="width:100%; border-collapse:collapse">
+    <tr class="tr_line">
+        <th><input type="checkbox" class ="checkall" name="checkall" /></th>
+        <th>ID</th>
+        <th style="width:70px;">操作</th>
+        <th>角色名</th>
+        <th>创建时间</th>
+    </tr>
+    {% for role in roles %}
+    <tr class="tr_line" id="tr_{{role._id}}">
+        <td align="center"><input type="checkbox" class="checkone" name="checkone[]" title="{{logisticsorder._id}}" value="{{role._id}}"</td>
+        <td>{{role._id}}</td>        
+        <td><a href="javascript://;" class="action_menu" id = "a_{{role._id}}" id-ref="{{role._id}}">操作▼</a>
+            <div id="menu_{{role._id}}" class="action_menu_div">
+                <div id-ref="{{role._id}}" class="action_edit_r action_menu_li">编辑</div>
+                <div id-ref="{{role._id}}" class="action_delete_r action_menu_li">删除</div>
+            </div>
+		</td>
+        <td>{{role.role_name}}</td>
+        <td>{{role.crt_time}}</td>
+    </tr>
+    {% endfor %}
+</table>

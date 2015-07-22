@@ -24,16 +24,16 @@
 		<th>数量</th>
 		<th>产品链接</th>
 	</tr>
-{% for coll in collections %}
-	<tr id="tr_{{coll.id}}">
-		<td><input name="product_ids" type="checkbox" class="checkone" value="{{coll.id}}" /></td>
+{% for p in products %}
+	<tr id="tr_{{p.id}}">
+		<td><input name="product_ids" type="checkbox" class="checkone" value="{{p.id}}" /></td>
 		<td>操作</td>
-		<td>{{coll.item_sku}}</td>
-		<td>{{coll.external_product_id}}</td>
-		<td>{{coll.external_product_id_type}}</td>
-		<td>{{coll.standard_price}}</td>
-		<td>{{coll.quantity}}</td>
-		<td>{{coll.product_link}}</td>
+		<td>{{p.item_sku}}</td>
+		<td>{{p.external_product_id}}</td>
+		<td>{{p.external_product_id_type}}</td>
+		<td>{{p.standard_price}}</td>
+		<td>{{p.quantity}}</td>
+		<td>{{p.product_link}}</td>
 	</tr>
 {%endfor%}
 	<tr>

@@ -5,6 +5,16 @@
 
 var db = exports.db = require('mongodb/mongodb').connect('mongodb://localhost/ListingBuilder');
 
+var all = exports.all = function(collection_name){
+	var col = db.getCollection(collection_name);
+	var curi = col.find();
+	
+	var  objects = curi.toArray().map(function(item){
+		return JSON.parse(item.toJSON());
+	});
+	return objects;
+}
+	
 
 var health = exports.health = db.getCollection('Health');
 var watches = exports.watches = db.getCollection('Watches');

@@ -29,6 +29,13 @@ var env = new Environment({
 });
 
 var action = require("action");
+var user_role = require("user_role");
+
+app.get("/user_list.md", user_role.user_list);
+app.get("/role_list.md", user_role.role_list);
+app.get("/user_role.md", user_role.user_role);
+
+app.post("/login.in", action.login);
 
 app.post("/login.in", action.login);
 app.get("/logout.out", action.logout);
