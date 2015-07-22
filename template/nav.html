@@ -1,17 +1,31 @@
-<div style="margin-left:2px;display:inline-block;">
-	<a href="/Clothing/category.md">Clothing</a>
+<ul class= "nav_bar">
+	<li><a href="/Clothing/category.md">Clothing</a></li>
 	<!--a href="/Computers/category.md">Computers</a-->
-	<a href="/Office/category.md">Office</a>
-	<a href="/FoodAndBeverages/category.md">FoodAndBeverages</a>
-	<a href="/Beauty/category.md">Beauty</a>
-	<a href="/Health/category.md">Health</a>
+	<li><a href="/Office/category.md">Office</a></li>
+	<li><a href="/FoodAndBeverages/category.md">FoodAndBeverages</a></li>
+	<li><a href="/Beauty/category.md">Beauty</a></li>
+	<li><a href="/Health/category.md">Health</a></li>
 	<!--a href="/HomeImproveme/category.md">HomeImproveme</a-->
-	<a href="/Outdoors/category.md">Outdoors</a>
-	<a href="/Watches/category.md">Watches</a>
-	<a href="/Toys/category.md">Toys</a>
-	<a href="/Baby/category.md">Baby</a>
-	<a href="/Home/category.md">Home & Garden </a>
-	<a href="/Follow_Ads/category.md">Follow Ads </a>
-	<a href="/ShippingFees/category.md">ShippingFees</a>
-	<a href="/user_manage.md">用户管理</a>
-</div>
+	<li><a href="/Outdoors/category.md">Outdoors</a></li>
+	<li><a href="/Watches/category.md">Watches</a></li>
+	<li><a href="/Toys/category.md">Toys</a></li>
+	<li><a href="/Baby/category.md">Baby</a></li>
+	<li><a href="/Home/category.md">Home & Garden </a></li>
+	<li><a href="/Follow_Ads/category.md">Follow Ads </a></li>
+	<li><a href="/ShippingFees/category.md">ShippingFees</a></li>
+	<li><a href="/user_manage.md">用户管理</a></li>
+	<li class="right"><a href="/logout.out">Logout</a></li>
+    <li class="right"><span id="nav_bar_user_display_name"></span></li>
+
+</ul>
+<div style="clear:both;"></div>
+<script type="text/javascript">
+	$("#nav_bar_user_display_name").load("/login_user_display_name.md");
+    var head = document.getElementsByTagName('head')[0];
+    var link = document.createElement('link');
+    link.href = "/user_role_auth.css";
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    head.appendChild(link);
+    
+</script>

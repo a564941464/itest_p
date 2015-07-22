@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>category</title>
-
+<title>iListing</title>
+<link rel="stylesheet" href="/css/nav.css">
 </head>
 <body>
 {% include "nav.html" %}
@@ -27,9 +27,11 @@
 {% for coll in collections %}
 	<tr id="tr_{{coll.id}}">
 		<td><input name="product_ids" type="checkbox" class="checkone" value="{{coll.id}}" /></td>
+		<td>操作</td>
 		<td>{{coll.item_sku}}</td>
 		<td>{{coll.external_product_id}}</td>
 		<td>{{coll.external_product_id_type}}</td>
+		<td>{{coll.standard_price}}</td>
 		<td>{{coll.quantity}}</td>
 		<td>{{coll.product_link}}</td>
 	</tr>

@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <title>iListing</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link href="/css/login.css" rel="stylesheet" type="text/css" media="all" />
+        <script src="/js/jquery-1.10.2.min.js"></script>
+        
+    </head>
+    <body>
+    <div id="main">
+        <div id="content">
+            <script type="text/javascript">
+                var there_are = 'There are';
+                var there_is = 'There is';
+                var label_errors = 'errors';
+                var label_error = 'error';
+            </script>
+            <div id="container">    
+                <div id="error" class="hide" style="display: none;">
+                <!--div id="error" class="hide" style="display: block;"-->
+                    <h3>There is 1 error</h3>
+                    <ol>
+                    <li>Invalid login name.</li>
+                    </ol>
+                </div>
+                <br />
+                <div id="login">
+                    <h1>iListing</h1>
+                        <form action="/login.in" id="login_form" method="post">
+                            <input type="hidden" value="{%if redirect_path %}{{redirect_path}}{%else%}{%endif%}" name="redirect_path" />
+                            <div class="field">
+                                <label for="login_name">用户名：</label>
+                                <input type="text" id="login_name" name="login_name" class="input email_field" value="" />
+                            </div>                  
+                            <div class="field">
+                                <label for="login_password">密码：</label>
+                                <input id="login_password" type="password" name="login_password" class="input password_field" value=""/>
+                            </div>                  
+                            <div class="field">
+                                <input type="submit" name="submitLogin" value="登 陆" class="button fl margin-right-5" />                 
+                                <p class="fl no-margin hide ajax-loader">
+                                    <img src="../img/loader.gif" alt="" />
+                                </p>    
+                                <div class="clear"></div>
+                            </div>
+                            <input type="hidden" name="redirect" id="redirect" value="index.php?controller=&token=8d6ab534aa6c4cbe00128d6c682fc8f2"/>
+                        </form>      
+                </div>
+                <h2><a href="#">&copy; 2011 - 2013 Copyright by iAmazon. all rights reserved.</a></h2>
+            </div>
+            <div style="clear:both;height:0;line-height:0">&nbsp;</div>
+        </div>
+        <div style="clear:both;height:0;line-height:0">&nbsp;</div>
+    </div>
+    <div id="scrollTop"><a href="#top"></a></div>
+    </body>
+</html>

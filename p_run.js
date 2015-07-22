@@ -28,8 +28,17 @@ var env = new Environment({
    loader: module.resolve("./template/")
 });
 
-app.get('/intro.md', require("action").intro);
-app.get('/:category/category.md', require("action").category);
+var action = require("action");
+
+app.post("/login.in", action.login);
+app.get("/logout.out", action.logout);
+
+
+app.get("/", action.to_login);
+app.get("/index.html", action.to_login);
+
+app.get('/intro.md', action.intro);
+app.get('/:category/category.md', action.category);
 
 if (require.main === module) {
     require("ringo/httpserver").main(module.id);

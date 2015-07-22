@@ -1,0 +1,110 @@
+*{
+	font-size: 12px;
+	padding: 2px 4px 2px 6px;
+}
+.nav_bar{
+    background-color:#F8F8F8;
+    line-height:120%;
+    font-family:Arial,Verdana,Helvetica,sans-serif;
+    border-bottom: 1px solid #eeeeee;
+    float:left;
+    width:100%;
+    
+}
+.nav_bar li{
+    display:inline-block;
+    border-right: 1px solid #CCCCCC;
+    white-space:nowrap;
+    float:left;
+    padding:5px 5px 5px 5px;
+    
+}
+.nav_bar li.right{
+    display:inline-block;
+    border-left: 1px solid #CCCCCC;
+    border-right: none;
+    white-space:nowrap;
+    float:right;
+    padding:5px 5px 5px 5px;
+    
+}
+.nav_bar a{
+    width:100%;
+    height:100%;
+    text-decoration:none;
+    color:#111;
+}
+.nav_bar a:hover{
+    color: #FFFFFF;
+    text-shadow: -1px -1px 0 #3293D6;
+    background-color: #49B2FF;
+}
+.nav_bar li:hover{
+    background-color: #49B2FF;
+    border-right: 1px solid #49B2FF;
+
+}
+.nav_bar li.right:hover{
+    background-color: #49B2FF;
+    border-left: 1px solid #49B2FF;
+}
+
+.tr_line th{
+    background: -moz-linear-gradient(center top , #F9F9F9, #ECECEC) repeat-x scroll left top #ECECEC;
+    color: #333333;
+    font-size: 13px;
+    padding: 4px 6px;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+.tr_line td{
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    color: #333333;
+    font-size: 12px;
+    padding: 4px 4px 4px 6px;
+}
+.tr_line:hover{
+    background-color: #fff1b5;
+}
+.tr_line input[type='text'], .tr_line select, .tr_line textarea{
+    background-color:transparent;    
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom:1px solid #888;
+    }
+.tr_line textarea{
+    background-color:transparent;    
+    border:1px solid #888;
+}
+.tr_line input[type='text']:hover, .tr_line select:hover{
+    background-color:transparent;
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom:1px solid #888;
+
+}
+}
+.tr_line textarea:hover{
+    background-color:transparent;    
+    border:1px solid #888;
+}
+.page_number_input{
+	width:30px;
+}
+.tr_line  .tr_line_l_td{
+    padding:0px;
+}
+.tr_line  .tr_line_r_td{
+    padding:0px;
+}
+
+.page_number{
+    cursor: pointer;
+}
+.nowrap{
+white-space:nowrap; 
+overflow-x:scroll; 
+overflow-y:hidden;
+ }
