@@ -1,13 +1,18 @@
+<!DOCTYPE html>
 <html>
     <head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
         <title>用户角色 - iListing</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
 		<link rel="icon" type="image/vnd.microsoft.icon" href="/icon/favicon.png" />
         <link rel="shortcut icon" type="image/x-icon" href="/icon/favicon.png" />
         <link rel="stylesheet" href="/css/nav.css">
-		<link rel="stylesheet" href="/js/themes/smoothness/jquery-ui.min.css">
+		
+		<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<script src="/js/jquery-1.10.2.min.js"></script>
-		<script src="/js/ui/jquery-ui.custom.min.js"></script>
+		<script src="/bootstrap/js/bootstrap.min.js"></script>
 
         <style type="text/css">
         <!--
@@ -49,31 +54,6 @@
             width:88%;
         }
 
-        .btn {
-            background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3) repeat scroll 0 0 rgba(0, 0, 0, 0);
-            border-color: #CCCCCC #BBBBBB #A0A0A0;
-            border-radius: 3px;
-            border-style: solid;
-            border-width: 1px;
-            color: #000000;
-            
-            outline: medium none;
-            padding: 3px 8px;
-            text-align: center;
-            text-shadow: 0 1px 0 #FFFFFF;
-            vertical-align: middle;
-            white-space: nowrap;
-            border-radius:12px 12px 12px 12px;
-        }
-		.tr_line_r_td input[type='text']{
-			width:80%;
-			height:80%;
-			font-size:100%;
-		}
-		.tr_line_r_td select{
-			width:80%;
-		}
-		
 		.tr_line td{
 			text-align:center;
 		}
@@ -150,22 +130,9 @@
                 $(".checkall").attr("checked", ischecked);
             });
 
-			$(document).on("click", "#user_add_button", function(){ 
-				$.getJSON("http://tandlol.com:8080/Clothing/category.md",  function(data){				
-					autoOpen: false,
-					height: 300,
-					width: 350,
-					modal: true,
-					buttons: {
-						"Create an account": addUser,
-						Cancel: function() { dialog.dialog( "close" ); }
-					},
-					close: function() {
-						form[ 0 ].reset();
-						allFields.removeClass( "ui-state-error" );
-					}
-				});
-				
+			$(document).on("click", "#add_user_save_btn", function(){ 
+				alert("中国, 你好");
+				$(add_user_modal).modal('hide');				
 			}); 
         });
     
@@ -190,8 +157,38 @@
 			
         </div>
     </div>
-	<div id="dialog" title="Basic dialog">
-		<p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="add_user_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel">用户添加</h4>
+		  </div>
+		  <div class="modal-body">
+			<form id="user_role_add_user_form">
+			<table border="1px" bordercolor="#ccc" class="table">
+				<tr class="tr_line">
+					<td style="width:20%;">登陆名</td><td><input type="text" class="form-control" value="" name="login_name" />&nbsp;</td>
+				</tr>
+				<tr class="tr_line">
+					<td>密码</td><td><input type="text" class="form-control" value="" name="login_password" />&nbsp;</td>
+				</tr>
+				<tr class="tr_line">
+					<td>重复密码</td><td><input type="text" class="form-control" value="" name="re_login_password" />&nbsp;</td>
+				</tr>
+			</table>
+			</form>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			<button type="button" id="add_user_save_btn" class="btn btn-primary">保存</button>
+		  </div>
+		</div>
+	  </div>
 	</div>
+
+	
     </body>
 </html>
