@@ -5,11 +5,9 @@
 		<link rel="icon" type="image/vnd.microsoft.icon" href="/icon/favicon.png" />
         <link rel="shortcut icon" type="image/x-icon" href="/icon/favicon.png" />
         <link rel="stylesheet" href="/css/nav.css">
-        
+		<link rel="stylesheet" href="/js/themes/smoothness/jquery-ui.min.css">
 		<script src="/js/jquery-1.10.2.min.js"></script>
-        <link type="text/css" rel="stylesheet" href="/js/weebox/weebox.css" />
-        <script type="text/javascript" src="/js/weebox/bgiframe.js"></script>
-        <script type="text/javascript" src="/js/weebox/weebox.js"></script>
+		<script src="/js/ui/jquery-ui.custom.min.js"></script>
 
         <style type="text/css">
         <!--
@@ -104,7 +102,7 @@
         </style>
         <script type="text/javascript">
         <!--
-        $(document).ready(function(){
+        $(function(){
 			$(document).click(function(e){                
                 var drag = $(".action_menu_div");
                 var target = e.target;
@@ -151,262 +149,24 @@
                 });
                 $(".checkall").attr("checked", ischecked);
             });
-			$("#user_add_button").on("click", function(){
-				$.weeboxs.open("/user_role_to_add_user.md", {
-                    title:'添加用户',  
-                    contentType:'ajax',
-                    width:400 , height:360,
-                    onok:function(box){
-                        var data = $("#user_role_add_user_form").serialize();
-                        $.ajax({
-                            type: "POST",
-                            url: "/user_role_add_user.md",
-                            data: data,
-                            dataType: "json",
-                            success: function(json){
-                                if(json.status==200){
-									box.close();//增加事件方法后需手动关闭弹窗
-                                    alert("ok 添加成功!");
-                                    $(".left_menu.userlist").click();
-                                }else{
-                                    alert(json.msg);
-                                }
-                            }
-                        }); 
-                       
-                    },
-                });
-			});
-			$("#role_add_button").on("click", function(){
-				$.weeboxs.open("/user_role_to_add_role.md", {
-                    title:'添加角色',  
-                    contentType:'ajax',
-                    width:800 , height:510,
-                    onok:function(box){
-                        var data = $("#user_role_add_role_form").serialize();
-                        $.ajax({
-                            type: "POST",
-                            url: "/user_role_add_role.md",
-                            data: data,
-                            dataType: "json",
-                            success: function(json){
-                                if(json.status==200){
-									box.close();//增加事件方法后需手动关闭弹窗
-                                    alert("ok 添加成功!");
-                                    $(".left_menu.rolelist").click();
-                                }else{
-                                    alert(json.msg);
-                                }
-                            }
-                        }); 
-                       
-                    },
-                });
-			});
-			
-			$(".action_edit").on("click", function(){
-				var user_id = $(this).attr("id-ref");
-				$.weeboxs.open("/" + user_id + "/user_role_to_edit_user.md", {
-                    title:'修改用户信息',  
-                    contentType:'ajax',
-                    width:400 , height:280,
-                    onok:function(box){
-                        var data = $("#user_role_edit_user_form").serialize();
-                        $.ajax({
-                            type: "POST",
-                            url: "/user_role_edit_user.md",
-                            data: data,
-                            dataType: "json",
-                            success: function(json){
-                                if(json.status==200){
-									box.close();//增加事件方法后需手动关闭弹窗
-                                    alert("ok 修改成功!");
-                                    $(".left_menu.userlist").click();
-                                }else{
-                                    alert(json.msg);
-                                }
-                            }
-                        }); 
-                       
-                    },
-                });
-			});
-			
-			$(".action_passwd").on("click", function(){
-				var user_id = $(this).attr("id-ref");
+
+			$(document).on("click", "#user_add_button", function(){ 
+				$.getJSON("http://tandlol.com:8080/Clothing/category.md",  function(data){				
+					autoOpen: false,
+					height: 300,
+					width: 350,
+					modal: true,
+					buttons: {
+						"Create an account": addUser,
+						Cancel: function() { dialog.dialog( "close" ); }
+					},
+					close: function() {
+						form[ 0 ].reset();
+						allFields.removeClass( "ui-state-error" );
+					}
+				});
 				
-				$.weeboxs.open("/" + user_id + "/user_role_to_passwd.md", {
-                    title: '修改用户信息',  
-                    contentType:'ajax',
-                    width:400 , height:280,
-                    onok:function(box){
-                        var data = $("#user_role_passwd_form").serialize();
-                        $.ajax({
-                            type: "POST",
-                            url: "/user_role_passwd.md",
-                            data: data,
-                            dataType: "json",
-                            success: function(json){
-                                if(json.status==200){
-									box.close();//增加事件方法后需手动关闭弹窗
-                                    alert("ok 修改成功!");
-                                }else{
-                                    alert(json.msg);
-                                }
-                            }
-                        }); 
-                       
-                    },
-                });
-			});
-			$(".action_set_role").on("click", function(){
-				var user_id = $(this).attr("id-ref");
-				$.weeboxs.open("/" + user_id + "/user_role_to_set_role.md", {
-                    title:'设定角色',  
-                    contentType:'ajax',
-                    width:400 , height:280,
-                    onok:function(box){
-                        var data = $("#user_role_set_role_form").serialize();
-                        $.ajax({
-                            type: "POST",
-                            url: "/user_role_set_role.md",
-                            data: data,
-                            dataType: "json",
-                            success: function(json){
-                                if(json.status==200){
-									box.close();//增加事件方法后需手动关闭弹窗
-                                    alert("ok 修改成功!");
-                                    $(".left_menu.userlist").click();
-                                }else{
-                                    alert(json.msg);
-                                }
-                            }
-                        }); 
-                       
-                    },
-                });
-			});
-			$(".action_display").on("click", function(){
-				var user_id = $(this).attr("id-ref");
-				var display_name = $(this).attr("data-display-name");
-				$.weeboxs.open("/" + user_id + "/user_role_to_display.md", {
-                    title:display_name + ' 列表显示方式',  
-                    contentType:'ajax',
-                    width:400 , height:280,
-                    onok:function(box){
-                        var data = $("#user_role_display_form").serialize();
-                        $.ajax({
-                            type: "POST",
-                            url: "/" + user_id + "/user_role_display.md",
-                            data: data,
-                            dataType: "json",
-                            success: function(json){
-                                if(json.status==200){
-									box.close();//增加事件方法后需手动关闭弹窗
-                                    alert("ok 设置成功!");
-                                }else{
-                                    alert(json.msg);
-                                }
-                            }
-                        }); 
-                       
-                    },
-                });
-			});
-			$(".action_edit_r").on("click", function(){
-				var role_id = $(this).attr("id-ref");
-				$.weeboxs.open("/" + role_id + "/user_role_to_edit_role.md", {
-                    title:'修改角色',  
-                    contentType:'ajax',
-                    width:800 , height:510,
-                    onok:function(box){
-                        var data = $("#user_role_edit_role_form").serialize();
-                        $.ajax({
-                            type: "POST",
-                            url: "/user_role_edit_role.md",
-                            data: data,
-                            dataType: "json",
-                            success: function(json){
-                                if(json.status==200){
-									box.close();//增加事件方法后需手动关闭弹窗
-                                    alert("ok 修改成功!");
-                                    $(".left_menu.rolelist").click();
-                                }else{
-                                    alert(json.msg);
-                                }
-                            }
-                        }); 
-                       
-                    },
-                });
-			});
-			$(".action_delete").on("click",function(){
-				var sure = confirm("确定禁用此用户吗?");
-                var _this = $(this);
-				if(sure){
-					var user_id = $(this).attr("id-ref");
-					$.getJSON("/"+user_id+"/user_role_delete_user.md", function(json){
-						if(json.status == 200){
-							//$("#tr_" + user_id).fadeOut("slow");
-							$("#userstatus" + user_id).html("禁用");
-                            _this.addClass("action_active");
-                            _this.removeClass("action_delete");
-                            _this.html("激活");
-                            
-						}else{
-							alert(json.msg);
-						}
-					});
-				}
-			});
-			$(".action_active").on("click",function(){
-				var sure = confirm("确定激活此用户吗?");
-                var _this = $(this);
-				if(sure){
-					var user_id = $(this).attr("id-ref");
-					$.getJSON("/"+user_id+"/user_role_active_user.md", function(json){
-						if(json.status == 200){
-							//$("#tr_" + user_id).fadeOut("slow");
-							$("#userstatus" + user_id).html("正常");
-                            _this.addClass("action_delete");
-                            _this.removeClass("action_active");
-                            _this.html("禁用");
-						}else{
-							alert(json.msg);
-						}
-					});
-				}
-			});
-            $(".action_delete_r").on("click",function(){
-				var sure = confirm("确定删除此角色吗?");
-				if(sure){
-					var role_id = $(this).attr("id-ref");
-					$.getJSON("/"+role_id+"/user_role_delete_role.md", function(json){
-						if(json.status == 200){
-							$("#tr_" + role_id).fadeOut("slow");
-						}else{
-							alert(json.msg);
-						}
-					});
-				}
-			});            
-            $(".is_super").on("click",function(){
-                $("#select_role").fadeOut("slow");
-			});         
-            $(".not_super").on("click",function(){
-                $("#select_role").fadeIn("slow");
-			});
-            $(".update_owner").on("click", function(){
-                var action = $(this).attr("action");
-                $.getJSON("/"+ action + "/user_role_update_owner.md", function(json){
-                    
-                    if(json.status == 200){
-                        alert("更新成功!");
-                    }else{
-                        alert(json.msg);
-                    }
-                });            
-            });
+			}); 
         });
     
         -->
@@ -430,5 +190,8 @@
 			
         </div>
     </div>
+	<div id="dialog" title="Basic dialog">
+		<p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+	</div>
     </body>
 </html>

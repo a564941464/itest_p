@@ -46,9 +46,7 @@ exports.category = function(req, category) {
 	});
 }
 exports.intro = function(req) {
-   var coll_names = db.getCollectionNames();
    return env.renderResponse("intro.html",{
-	   coll_names:coll_names,
 	   
    });
 }
