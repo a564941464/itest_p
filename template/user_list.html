@@ -1,6 +1,6 @@
 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#add_user_modal">添加用户</button>
-<table border="1px" bordercolor="#ccc" cellspacing="0px" style="width:100%; border-collapse:collapse">
-    <tr class="tr_line">
+<table border="1px" bordercolor="#ccc" class="table">
+    <tr>
         <th><input type="checkbox" class ="checkall" name="checkall" /></th>
         <th style="width:70px;">操作</th>
         <th>登陆名</th>
@@ -12,7 +12,7 @@
         <th>状态</th>
     </tr>
     {% for user in users %}
-    <tr class="tr_line" id="tr_{{user._id}}">
+    <tr id="tr_{{user._id}}">
         <td><input type="checkbox" class="checkone" name="checkone[]" title="{{user._id}}" value="{{user._id}}"</td>
         <td><a href="javascript://;" class="action_menu" id = "a_{{user._id}}" id-ref="{{user._id}}">操作▼</a>
             <div id="menu_{{user._id}}" class="action_menu_div">
