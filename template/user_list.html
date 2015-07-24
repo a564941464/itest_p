@@ -1,41 +1,39 @@
 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#add_user_modal">添加用户</button>
-<table border="1px" bordercolor="#ccc" class="table">
+<table class="table">
     <tr>
-        <th><input type="checkbox" class ="checkall" name="checkall" /></th>
-        <th style="width:70px;">操作</th>
-        <th>登陆名</th>
-		<th>显示名</th>
-        <th>角色</th>
-        <th>编码字符</th>
-        <th>最后一次登陆时间</th>
-        <th>创建时间</th>
-        <th>状态</th>
+        <td><input type="checkbox" class ="checkall" name="checkall" /></td>
+        <td style="widtd:100px;">操作</td>
+        <td>登陆名</td>
+		<td>显示名</td>
+        <td>最后一次登陆时间</td>
+        <td>创建时间</td>
+        <td>状态</td>
     </tr>
     {% for user in users %}
     <tr id="tr_{{user._id}}">
         <td><input type="checkbox" class="checkone" name="checkone[]" title="{{user._id}}" value="{{user._id}}"</td>
-        <td><a href="javascript://;" class="action_menu" id = "a_{{user._id}}" id-ref="{{user._id}}">操作▼</a>
-            <div id="menu_{{user._id}}" class="action_menu_div">
-                <div id-ref="{{user._id}}" class="action_edit action_menu_li">编辑</div>
-                <div id-ref="{{user._id}}" class="action_display action_menu_li" data-display-name ="{{user.display_name}}">显示</div>
-                <div>--------</div>                
-                <div id-ref="{{user._id}}" class="action_passwd action_menu_li">修改密码</div>
-                <div id-ref="{{user._id}}" class="action_set_role action_menu_li">设定角色</div>
-                <div>--------</div>                
-                {% if user.is_del %}
-                <div id-ref="{{user._id}}" class="action_active action_menu_li">激活</div>
-                {%else%}
-                <div id-ref="{{user._id}}" class="action_delete action_menu_li">禁用</div>
-                {%endif%}
-            </div>
+        <td>
+			<div class="dropdown">
+				<div class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+				操作▼
+				</div>
+				<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+					<li><a href="#">编辑</a></li>
+					<li><a href="#">修改密码</a></li>
+					<li role="separator" class="divider"></li>
+					{% if user.is_enabled %}
+					<li><a href="#">禁用</a></li>
+					{%else%}
+					<li><a href="#">激活</a></li>
+					{%endif%}
+				</ul>
+			</div>
 		</td>
         <td>{{user.login_name}}</td>
         <td>{{user.display_name}}</td>
-        <td>{{user.role_name|default:""}}</td>
-        <td>{{user.codechar|default:""}}</td>
         <td>{{user.last_login_time|default:""}}</td>
         <td>{{user.crt_time}}</td>
-        <td id="userstatus{{user._id}}">{{user.is_del|yesno:"禁用,正常"}}</td>
+        <td id="userstatus{{user._id}}">{{user.is_enabled|yesno:"禁用,正常"}}</td>
     </tr>
     {% endfor %}
 </table>

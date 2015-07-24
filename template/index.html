@@ -1,29 +1,34 @@
+<!DOCTYPE html>
 <html>
     <head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
         <title>iListing</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link href="/css/login.css" rel="stylesheet" type="text/css" media="all" />
-        <script src="/js/jquery-1.10.2.min.js"></script>
-        
-    </head>
+
+		<link rel="icon" type="image/vnd.microsoft.icon" href="/icon/favicon.png" />
+        <link rel="shortcut icon" type="image/x-icon" href="/icon/favicon.png" />
+		
+		<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<script src="/js/jquery-1.10.2.min.js"></script>
+		<script src="/bootstrap/js/bootstrap.min.js"></script>  
+		
+		<link href="/css/login.css" rel="stylesheet">
+		<style type="text/css">
+        <!--
+        *{
+            font-size: 12px;
+            padding: 2px 4px 2px 6px;
+        }       
+		-->
+        </style>
+	</head>
     <body>
     <div id="main">
         <div id="content">
-            <script type="text/javascript">
-                var there_are = 'There are';
-                var there_is = 'There is';
-                var label_errors = 'errors';
-                var label_error = 'error';
-            </script>
+
             <div id="container">    
-                <div id="error" class="hide" style="display: none;">
-                <!--div id="error" class="hide" style="display: block;"-->
-                    <h3>There is 1 error</h3>
-                    <ol>
-                    <li>Invalid login name.</li>
-                    </ol>
-                </div>
-                <br />
+   
                 <div id="login">
                     <h1>iListing</h1>
                         <form action="/login.in" id="login_form" method="post">

@@ -8,6 +8,7 @@ fs.changeWorkingDirectory(root_directory);
 require.paths[require.paths.length] = "./action";
 require.paths[require.paths.length] = "./modules";
 require.paths[require.paths.length] = "./db";
+require.paths[require.paths.length] = "./middleware";
 
 var {Application} = require("stick/stick");
 
@@ -17,7 +18,7 @@ app.configure('route');
 app.configure("notfound", "mount", "static");
 app.configure(require('stick/middleware/upload'));
 app.configure('params');
-//app.configure(require("./middleware/auth"));
+app.configure(require("auth"));
 app.configure('session');
 
 app.static(module.resolve("./static"), "index.html");
@@ -31,6 +32,7 @@ var env = new Environment({
 var action = require("action");
 var user_role = require("user_role");
 
+app.post("/add_user.md", user_role.add_user);
 app.get("/user_list.md", user_role.user_list);
 app.get("/role_list.md", user_role.role_list);
 app.get("/user_role.md", user_role.user_role);
