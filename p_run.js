@@ -29,25 +29,33 @@ var env = new Environment({
    loader: module.resolve("./template/")
 });
 
-var action = require("action");
+var login = require("login");
+var category = require("category");
 var user_role = require("user_role");
 
+//app.post("/:category/:parent_product_id/generate_child_product.md", category.generate_child_product);
+app.get("/:category/:parent_product_id/child_products.md", category.child_products);
+
+app.get("/:category/:product_id/delete_product.md", category.delete_product);
+app.post("/add_product.md", category.add_product);
+app.get("/:category/add_product_page.md", category.add_product_page);
+app.get('/:category/category.md', category.category);
+app.get('/intro.md', category.intro);
+
+
+app.post("/user_passwd.md", user_role.user_passwd);
+app.get("/:user_id/user_to_passwd.md", user_role.user_to_passwd);
+app.get("/:user_id/user_inactive.md", user_role.user_inactive);
+app.get("/:user_id/user_active.md", user_role.user_active);
 app.post("/add_user.md", user_role.add_user);
 app.get("/user_list.md", user_role.user_list);
 app.get("/role_list.md", user_role.role_list);
 app.get("/user_role.md", user_role.user_role);
 
-app.post("/login.in", action.login);
-
-app.post("/login.in", action.login);
-app.get("/logout.out", action.logout);
-
-
-app.get("/", action.to_login);
-app.get("/index.html", action.to_login);
-
-app.get('/intro.md', action.intro);
-app.get('/:category/category.md', action.category);
+app.post("/login.in", login.login);
+app.get("/logout.out", login.logout);
+app.get("/", login.to_login);
+app.get("/index.html", login.to_login);
 
 if (require.main === module) {
     require("ringo/httpserver").main(module.id);

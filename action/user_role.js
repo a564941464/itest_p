@@ -12,14 +12,39 @@ var utils = require('utils');
 
 ///////////////////////////////////////////////////////////////////
 
-var user_role_to_edit_user = exports.user_role_to_edit_user = function(req, user_id){
-	var rolelist = store.query("from Role order by Role.id");
-	var user = store.query("from User where User.id = :user_id", {"user_id": parseInt(user_id)})[0];
-	
-    return env.renderResponse('user_role_to_edit_user.html', {
-		"rolelist":rolelist,
-		"user":user,
-	});
+var user_passwd = exports.user_passwd = function(req){
+	var user_id = req.postParams.user_id.trim();
+	var user = db.one("User", {"_id":user_id});
+	var login_password = req.postParams.login_password.trim();
+	var re_login_password = req.postParams.re_login_password.trim();
+
+	if(login_password==""){
+		return response.json({"status":120, "msg":"password could not be empty"});
+	}
+	if(login_password!=re_login_password){
+		return response.json({"status":152, "msg":"password not same"});
+	}
+	var save_login_password = strings.digest(login_password + user.crt_time, "md5");
+
+	user.login_password = save_login_password;
+	db.save("User", user);
+	return response.json({"status":200, msg:""});
+}
+var user_to_passwd = exports.user_to_passwd = function(req, user_id){
+	var user = db.one("User", {"_id":user_id});
+    return env.renderResponse('user_passwd.html',{"user":user});
+}
+
+var user_inactive = exports.user_inactive = function(req, user_id){
+	var user = db.one("User", {"_id":user_id});
+	user.is_enabled = false;
+	db.save("User", user);
+    return response.json({"status":200, msg:""});
+}
+var user_active = exports.user_active = function(req, user_id){
+	var user = db.one("User", {"_id":user_id});
+	user.is_enabled = true;
+    return response.json({"status":200, msg:""});
 }
 
 var add_user = exports.add_user = function(req){
@@ -37,7 +62,7 @@ var add_user = exports.add_user = function(req){
 
    var login_name = req.postParams.login_name.trim();
    
-   var existed_user = db.find_one("User", {"login_name":login_name});
+   var existed_user = db.one("User", {"login_name":login_name});
    if(existed_user){
 		return response.json({"status":300, "msg": "existed user!"});
     }
@@ -74,5 +99,5 @@ var role_list = exports.role_list = function(req){
 }
 
 var user_role = exports.user_role = function(req){
-	return env.renderResponse('user_role.html');
+	return env.renderResponse('user_role.html', {"category": "user_role"});
 }

@@ -19,18 +19,23 @@ var login = exports.login = function(req) {
     var login_name = req.postParams.login_name.trim();
     var login_password = req.postParams.login_password.trim();
 	
-   var user = db.find_one("User", {"login_name":login_name});
-
+   var user = db.one("User", {"login_name":login_name});
+   // log.info("===========================================");
+   // log.info("login:"+JSON.stringify(user));
    if(!user || user.is_enabled == false){
         return response.html("user is not existed! <a href='javascript:history.back()'>back.</a>");
         //return response.html("<script>alert('"+ all_chinese[166] +"');history.back();</script>"); 
 	}
-	if(user.login_password == strings.digest(login_password + user.crt_time)){
+	var md5_login_password = strings.digest(login_password + user.crt_time, "md5")
+	
+	// log.info("md5_login_password:"+md5_login_password);
+	// log.info("user.password:"+user.password);
+	if(user.login_password == md5_login_password){
         req.session.data['islogon'] =true;
         req.session.data['user'] = user;
 		 var cur_time = utils.cur_time();
 		 user.last_login_time = cur_time;
-		 db.update("User", user);
+		 db.save("User", user);
         if(redirect_path){
             return response.redirect(base64.decode(redirect_path, "utf-8"));
         }else{
@@ -60,18 +65,4 @@ var to_login = exports.to_login = function(req, redirect_path) {
     return env.renderResponse('index.html', {
         "redirect_path":redirect_path,
     });
-}
-
-exports.category = function(req, category) {	
-	var  products = db.all(category);
-	return env.renderResponse("category.html",{
-	   products:products,
-	   category:category,
-	   
-	});
-}
-exports.intro = function(req) {
-   return env.renderResponse("intro.html",{
-	   
-   });
 }

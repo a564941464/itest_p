@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{category}} - iListing</title>
+
+		<link rel="icon" type="image/vnd.microsoft.icon" href="/icon/favicon.png" />
+        <link rel="shortcut icon" type="image/x-icon" href="/icon/favicon.png" />
+		
+		<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<script src="/js/jquery-1.10.2.min.js"></script>
+		<script src="/bootstrap/js/bootstrap.min.js"></script>
+		<script>
+			$(document).ready(function(){
+				$("#save_btn").click(function(){
+					var data = $(".tab-pane.active form").serialize();
+					
+					$.ajax({
+						type: "POST",
+						url: "/add_product.md",
+						data: data,
+						success: function(json){
+							if(json.status == 200 && json.spc == "010"){
+								$("#child_products_modal").modal('show');
+								$("#child_products_div").load("/{{category}}/"+json.product_id +"/child_products.md");
+							}else{
+								alert(json.msg);
+							}
+						},
+						error: function(){
+							alert("通讯异常, 联系开发人员!");
+						}
+						
+					});
+				});
+				$("#variation_theme").click(function(){
+					var _this = $(this);
+					$("#parent .variation_theme_content").remove();
+					_this.parent().parent().after($("#"+_this.val()).html());
+				});
+			});
+		</script>
+	</head>
+<body>
+<div class="panel panel-default">  
+	<!-- Default panel contents -->
+	<div class="panel-heading">
+		{% include "nav.html" %}
+	</div>
+	<div class="panel-body">
+		<ol class="breadcrumb">
+			<li><a href="/{{category}}/category.md">{{category}}</a></li>
+			<li class="active">Add a product</li>
+		</ol>
+		<div class="pull-right"><a class="btn btn-primary" id="save_btn" href="#" role="button">Save</a></div>
+		<div>
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs nav-pills" role="tablist">
+				<li role="presentation" class="active"><a href="#single" aria-controls="single" role="tab" data-toggle="tab">Single Product</a></li>
+			{% if variable %}
+				<li role="presentation"><a href="#parent" aria-controls="parent" role="tab" data-toggle="tab">Parent/Child Product</a></li>
+			{% endif %}
+			</ul>
+			
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="single">
+					<br/>
+					<form class="form-horizontal">
+					<input type="hidden" name="category" value="{{category}}" />
+					<input type="hidden" name="spc" value="100" />
+					{%for fi in single %}
+						{% ifequal fi.type "text"%}
+						<div class="form-group">
+							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
+							<div class="col-sm-10">
+							<input type="text" class="form-control" name="{{fi.key}}" id="{{fi.key}}" placeholder="{{fi.en}}">
+							</div>
+						</div>
+						{%else%}
+						{% ifequal fi.type "textarea"%}
+						<div class="form-group">
+							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
+							<div class="col-sm-10">
+							<textarea class="form-control" rows="3" name="{{fi.key}}" id="{{fi.key}}" placeholder="{{fi.en}}"></textarea>
+							</div>
+						</div>
+						{%else%}
+						{% ifequal fi.type "select"%}
+						<div class="form-group">
+							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
+							<div class="col-sm-10">
+							<select class="form-control" name="{{fi.key}}" id="{{fi.key}}">
+								{% for v in fi.values%}
+								<option value="{{v}}">{{v}}</option>
+								{% endfor %}
+							</select>
+							</div>
+						</div>
+						{%else%}
+						{% endifequal%}
+						{% endifequal%}
+						{% endifequal%}
+					{%endfor%}
+					</form>
+				</div>
+				{% if variable %}
+				<div role="tabpanel" class="tab-pane" id="parent">
+					<br/>
+					<form class="form-horizontal">
+					<input type="hidden" name="category" value="{{category}}" />
+					<input type="hidden" name="spc" value="010" />
+					<input type="hidden" name="parent_child" value="parent" />
+					<input type="hidden" name="relationship_type" value="Variation" />
+					{%for fi in parent %}
+						{% ifequal fi.type "text"%}
+						<div class="form-group">
+							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
+							<div class="col-sm-10">
+							<input type="text" class="form-control" name="{{fi.key}}" id="{{fi.key}}" placeholder="{{fi.en}}">
+							</div>
+						</div>
+						{%else%}
+						{% ifequal fi.type "textarea"%}
+						<div class="form-group">
+							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
+							<div class="col-sm-10">
+							<textarea class="form-control" name="{{fi.key}}" rows="3" id="{{fi.key}}" placeholder="{{fi.en}}"></textarea>
+							</div>
+						</div>
+						{%else%}
+						{% ifequal fi.type "select"%}
+						<div class="form-group">
+							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
+							<div class="col-sm-10">
+							<select class="form-control" name="{{fi.key}}" id="{{fi.key}}">
+								{% for v in fi.values%}
+								<option value="{{v}}">{{v}}</option>
+								{% endfor %}
+							</select>
+							</div>
+						</div>
+						{%else%}
+						{% endifequal%}
+						{% endifequal%}
+						{% endifequal%}
+					{%endfor%}
+					</form>
+					
+				</div>
+				{% endif %}
+			</div>
+		</div>		
+	</div>	
+</div>
+
+<div id="Color" style="display:none;">
+	<div class="form-group variation_theme_content">
+		<label for="variation_theme_color" class="col-sm-2 control-label">Variation Theme Color</label>
+		<div class="col-sm-10">
+		<input type="text" class="form-control" name="variation_theme_color" id="variation_theme_color" placeholder="Variation Theme Color">
+		</div>
+	</div>
+</div>
+<div id="Size" style="display:none;">
+	<div class="form-group variation_theme_content">
+		<label for="variation_theme_size" class="col-sm-2 control-label">Variation Theme Size</label>
+		<div class="col-sm-10">
+		<input type="text" class="form-control" name="variation_theme_size" id="variation_theme_size" placeholder="Variation Theme Size">
+		</div>
+	</div>
+</div>
+<div id="sizecolor" style="display:none;">
+	<div class="form-group variation_theme_content">
+		<label for="variation_theme_color" class="col-sm-2 control-label">Variation Theme Color</label>
+		<div class="col-sm-10">
+		<input type="text" class="form-control" name="variation_theme_color" id="variation_theme_color" placeholder="Variation Theme Color">
+		</div>
+	</div>
+	<div class="form-group variation_theme_content">
+		<label for="variation_theme_size" class="col-sm-2 control-label">Variation Theme Size</label>
+		<div class="col-sm-10">
+		<input type="text" class="form-control" name="variation_theme_size" id="variation_theme_size" placeholder="Variation Theme Size">
+		</div>
+	</div>
+</div>
+<!------------------------------------------------------->
+	<!-- Modal -->
+	<div class="modal " id="child_products_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel">生成子产品</h4>
+		  </div>
+		  <div class="modal-body" id="child_products_div">
+
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			<button type="button" id="passwd_user_btn" class="btn btn-primary">保存</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+</body>
+</html>

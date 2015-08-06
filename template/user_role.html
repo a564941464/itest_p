@@ -14,14 +14,6 @@
 		<script src="/bootstrap/js/bootstrap.min.js"></script>
         <style type="text/css">
         <!--
-        *{
-            font-size: 12px;
-            padding: 2px 4px 2px 6px;
-        }
-        .active{
-            background-color: #0088CC;
-            color: #ffffff;
-        }
         .left ul {
             font-szie: 16px;
             line-height:30px;
@@ -45,10 +37,6 @@
         .main .right{
             width:88%;
         }
-
-		.tr_line td{
-			text-align:center;
-		}
         -->
         </style>
         <script type="text/javascript">
@@ -83,7 +71,7 @@
 					success: function(json){
 						if(json.status==200){
 							alert("ok 添加成功!");
-							$(add_user_modal).modal('hide');
+							$("#add_user_modal").modal('hide');
 							$(".left_menu.user_list").click();
 						}else{
 							alert(json.msg);
@@ -91,14 +79,77 @@
 					}
 				}); 
 			}); 
+			$(document).on("click", ".user_inactive", function(){
+				var sure = confirm("确定禁用此用户吗?");
+                var _this = $(this);
+				if(sure){
+					var user_id = $(this).attr("id-ref");
+					$.getJSON("/"+user_id+"/user_inactive.md", function(json){
+						if(json.status == 200){
+							$("#userstatus" + user_id).html("禁用");
+                            _this.addClass("user_active");
+                            _this.removeClass("user_inactive");
+                            _this.html("激活");
+                            
+						}else{
+							alert(json.msg);
+						}
+					});
+				}
+			});
+			$(document).on("click", ".user_active", function(){
+				var sure = confirm("确定激活此用户吗?");
+                var _this = $(this);
+				if(sure){
+					var user_id = $(this).attr("id-ref");
+					$.getJSON("/"+user_id+"/user_active.md", function(json){
+						if(json.status == 200){
+							//$("#tr_" + user_id).fadeOut("slow");
+							$("#userstatus" + user_id).html("正常");
+                            _this.addClass("user_inactive");
+                            _this.removeClass("user_active");
+                            _this.html("禁用");
+						}else{
+							alert(json.msg);
+						}
+					});
+				}
+			});
+			$(document).on("click", ".user_passwd", function(){
+                var _this = $(this);
+				var user_id = _this.attr("id-ref");
+				$("#passwd_user_div").load("/"+ user_id +"/user_to_passwd.md");
+			});
+			$(document).on("click", "#passwd_user_btn", function(){
+                var data = $("#passwd_user_form").serialize();
+				$.ajax({
+					type: "POST",
+					url: "/user_passwd.md",
+					data: data,
+					dataType: "json",
+					success: function(json){
+						if(json.status==200){
+							alert("ok 修改成功!");
+							$("#passwd_user_modal").modal('hide');
+						}else{
+							alert(json.msg);
+						}
+					}
+				}); 
+			});
         });
     
         -->
         </script>
     </head>
     <body>
-    {% include "nav.html" %}
-    <div class="main">
+	<div class="panel panel-default">  
+		<!-- Default panel contents -->
+		<div class="panel-heading">
+			{% include "nav.html" %}
+		</div>
+
+    <div class="panel-body main">
         <div class="left">
             <ul>
                 <li class="left_menu user_list" data-ref="/user_list.md">用户列表</li>
@@ -114,9 +165,9 @@
 			
         </div>
     </div>
-	
+</div>	
 	<!-- Modal -->
-	<div class="modal fade" id="add_user_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal " id="add_user_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
@@ -164,7 +215,25 @@
 		</div>
 	  </div>
 	</div>
+	<!------------------------------------------------------->
+	<!-- Modal -->
+	<div class="modal " id="passwd_user_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel">密码修改</h4>
+		  </div>
+		  <div class="modal-body" id="passwd_user_div">
 
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			<button type="button" id="passwd_user_btn" class="btn btn-primary">保存</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
 	
     </body>
 </html>

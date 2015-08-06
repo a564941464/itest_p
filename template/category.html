@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>用户角色 - iListing</title>
+        <title>{{category}} - iListing</title>
 
 		<link rel="icon" type="image/vnd.microsoft.icon" href="/icon/favicon.png" />
         <link rel="shortcut icon" type="image/x-icon" href="/icon/favicon.png" />
@@ -12,51 +12,106 @@
 		<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<script src="/js/jquery-1.10.2.min.js"></script>
 		<script src="/bootstrap/js/bootstrap.min.js"></script>        
-		<style type="text/css">
-        <!--
-        *{
-            font-size: 12px;
-            padding: 2px 4px 2px 6px;
-        }       
-		-->
-        </style>
+		<script>
+			$(document).ready(function(){
+				$(".action_delete").click(function(){
+					var pid = $(this).attr("id-ref")
+					$.getJSON("/{{category}}/"+pid+"/delete_product.md", function(json){
+						if(json.status == 200){
+							//alert("删除成功!");
+							$("#tr_"+pid).hide("slow");
+						}else{
+							alert(json.msg);
+						}
+					});
+				});
+			});
+		</script>
 	</head>
 <body>
-{% include "nav.html" %}
+<div class="panel panel-default">  
+	<!-- Default panel contents -->
+	<div class="panel-heading">
+		{% include "nav.html" %}
+	</div>
+	<div class="panel-body">
+		<div class="pull-left">
+		<ol class="breadcrumb">
+			<li><a href="#">{{category}}</a></li>
+			<li class="active">Listings</li>
+		</ol>
+		</div>
+		<div class="pull-right"><a class="btn btn-primary" href="/{{category}}/add_product_page.md" role="button">Add a product</a></div>
+	</div>
 
-<div id="content">
-<h3><span>{{category}}</span>
-	<a class="btn" style="line-height:100%; margin-left:10px;display:inline-block;" href="/{{category}}/add_product.html">添加产品</a>
-</h3>
-<hr/>
-
-<table class="category" border="1px" bordercolor="#ccc" cellspacing="0px" style="width:100%; border-collapse:collapse">
+  <!-- Table -->
+  <table class="table">
 	<tr>
-		<th style="width:60px;"><input type="checkbox" class="checkall"/></th>
-		<th style="width:80px;">操作</th>
-		<th>SKU</th>
-		<th>Product ID</th>
-		<th>Product ID Type</th>
-		<th>价格</th>
-		<th>数量</th>
-		<th>产品链接</th>
-	</tr>
-{% for p in products %}
-	<tr id="tr_{{p.id}}">
-		<td><input name="product_ids" type="checkbox" class="checkone" value="{{p.id}}" /></td>
+		<td><input type="checkbox" class="checkall"/></td>
 		<td>操作</td>
-		<td>{{p.item_sku}}</td>
+		<td>SKU</td>
+		<td>Product ID</td>
+		<td>Product ID Type</td>
+		<td>价格</td>
+		<td>parent_child</td>
+		<td>产品链接</td>
+	</tr>
+	{% for p in products %}
+	<tr id="tr_{{p._id}}">
+		<td><input name="product_ids" type="checkbox" class="checkone" value="{{p.id}}" /></td>
+		<td>
+			<div class="dropdown">
+				<div class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+				操作<span class="caret"></span>
+				</div>
+				<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+					<li><a href="#">复制</a></li>
+					<li><a href="#">编辑</a></li>
+					{%ifequal p.parent_child "parent"%}
+					<li><a href="#" class="action_child" id-ref="{{p._id}}" data-toggle="modal" data-target="#child_products_modal">子产品</a></li>
+					{%endifequal%}
+					<li><a href="#" class="action_delete" id-ref="{{p._id}}">删除</a></li>
+				</ul>
+			</div>
+		</td>
+		<td>
+			<image src="{{p.main_image_url}}" style="width:50px;height:50px;" />
+			{{p.item_sku}}
+		</td>
 		<td>{{p.external_product_id}}</td>
 		<td>{{p.external_product_id_type}}</td>
 		<td>{{p.standard_price}}</td>
-		<td>{{p.quantity}}</td>
-		<td>{{p.product_link}}</td>
+		<td>{{p.parent_child}}</td>
+		<td><a href="{{p.product_link}}" target="_blank">查看</a></td>
 	</tr>
-{%endfor%}
+	{%endfor%}
 	<tr>
-		<td style="text-align:center;"><input type="checkbox" class="checkall"/></td><td colspan="20"><input type="submit" class="btn category_download_button" value="下载" /></td>
+		<td>
+		<input type="checkbox" class="checkall"/></td><td colspan="20">
+		<input type="submit" class="btn category_download_button" value="下载" />
+		</td>
 	</tr>
-</table>
+	</table>
 </div>
+	<!------------------------------------------------------->
+	<!-- Modal -->
+	<div class="modal " id="child_products_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel">生成子产品</h4>
+		  </div>
+		  <div class="modal-body" id="child_products_div">
+
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			<button type="button" id="passwd_user_btn" class="btn btn-primary">保存</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
 </body>
 </html>

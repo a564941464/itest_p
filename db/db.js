@@ -1,42 +1,39 @@
 var log = require("ringo/logging").getLogger(module.id);
-
+var utils = require("utils");
 // var mongo = require('ringo-mongodb');
 // var client = new mongo.MongoClient('localhost', 27017);
 // var db = client.getDB('test_database');
 
 var db = exports.db = require('mongodb/mongodb').connect('mongodb://localhost/ListingBuilder');
 
-var update = exports.update   = function(collection_name, object){
-	var col = db.getCollection(collection_name);	
-	col.update({"_id":object._id},  {$set:object});
+var remove  = exports.remove    = function(collection_name, object){
+	var col = db.getCollection(collection_name);
+	col.remove(object);
 }
 
 var save = exports.save   = function(collection_name, object){
 	var col = db.getCollection(collection_name);
-	var existed = find_one({"_id":object._id});
-	if(existed){
-		col.update({"_id":object._id},  {$set:object});
-	}else{
-		col.insert(object);
+	if(!object._id){
+		object._id = utils.time_key();
 	}
+	col.save(object);//insert or update
 }
 /**
 * @param query json 
 */
-var find_one = exports.find_one   = function(collection_name, query){
+var one = exports.one = function(collection_name, query){
 	var col = db.getCollection(collection_name);
 	var mdoc  = col.findOne (query);
 	if(mdoc){
-		log.info(mdoc.toJSON())
 		return JSON.parse(mdoc.toJSON());
 	}else{
 		return null;
 	}
 }
 
-var all = exports.all = function(collection_name){
+var all = exports.all = function(collection_name, query){
 	var col = db.getCollection(collection_name);
-	var curi = col.find();
+	var curi = col.find(query);
 	
 	var  objects = curi.toArray().map(function(item){
 		return JSON.parse(item.toJSON());
@@ -44,7 +41,7 @@ var all = exports.all = function(collection_name){
 	return objects;
 }
 	
-
+/////////////////////////////////////////////////////////////////////////////
 var health = exports.health = db.getCollection('Health');
 var watches = exports.watches = db.getCollection('Watches');
 var beauty = exports.beauty = db.getCollection('Beauty');

@@ -1,0 +1,108 @@
+var ext_keys = exports.ext_keys = ["ref_link","crt_time","update_time"];
+
+/**
+* @param type text, textarea, select, radio
+* sku for example 
+	"spc": "111",// single parent child 111
+	"key":"item_sku",
+	"en":"SKU",
+	"copy":true,
+	"type":"text", // text, textarea, select
+	"values":[], 
+	"func_in":null, //save
+	"func_out":null, //view 
+*/
+var item_sku = {
+	"spc": "111",
+	"key":"item_sku",
+	"en":"SKU",
+	"copy":true,
+	"type":"text", 
+}
+
+var item_name = {	
+	"spc": "111",
+	"key":"item_name",
+	"en":"Product Name",
+	"copy":true,
+	"type":"text", 
+}
+var external_product_id = {
+	"spc": "101",
+	"key":"external_product_id",
+	"en":"Product ID",
+	"copy":false,
+	"type":"text", 
+}
+
+var product_description = {
+	"spc": "111",
+	"key":"product_description",
+	"en":"Product Description",
+	"copy":true,
+	"type":"textarea", 
+	"func_in": function(desc){
+		if(desc&&desc.trim()){
+			return desc.trim().replace(/\n|(\r\n)/gm, "<br/>");
+		}
+	}, //save
+	"func_out":function(desc){
+		if(desc&&desc.trim()){
+			return desc.trim().replace(/<br\/>/gm, "\r\n");
+		}
+	}, //view 
+}//product_description
+
+var department_name = function(valid_values) {
+	return {
+		"spc": "111",
+		"key":"department_name",
+		"en":"Department",
+		"copy":true,
+		"type":"select", 
+		"values": valid_values, 
+	}
+}//department_name
+
+var variation_theme = function(valid_values) {
+	return {
+		"spc": "011",
+		"key":"variation_theme",
+		"en":"Variation Theme",
+		"copy":true,
+		"type":"select", 
+		"values": valid_values, 
+	}
+}//variation_theme
+
+var Clothing = exports.Clothing = {
+	"variable":true,//parent child 
+	"field":[ item_sku, item_name,external_product_id, product_description, 
+		department_name(["baby-boys","baby-girls","boys","girls","mens","unisex-baby","womens"]),
+		variation_theme(["Color","Size","sizecolor"]),
+		
+		],
+		
+	"single":	function(){return this.field.filter(function(item){return item.spc[0]=="1"})},
+	"parent":	function(){return this.field.filter(function(item){return item.spc[1]=="1"})},
+	"child"	:	function(){return this.field.filter(function(item){return item.spc[2]=="1"})},
+}
+
+
+
+
+// class for js
+// function Car(sColor,iDoors,iMpg) {
+  // this.color = sColor;
+  // this.doors = iDoors;
+  // this.mpg = iMpg;
+  // this.drivers = new Array("Mike","John");
+  
+  // if (typeof Car._initialized == "undefined") {
+    // Car.prototype.showColor = function() {
+      // alert(this.color);
+    // };
+	
+    // Car._initialized = true;
+  // }
+// }
