@@ -74,51 +74,48 @@
 	<div class="panel-body">
 		<ol class="breadcrumb">
 			<li><a href="/{{category}}/category.md">{{category}}</a></li>
-			<li class="active">Add a product</li>
+			<li class="active">Update a product</li>
 		</ol>
 		<div class="pull-right"><a class="btn btn-primary" id="save_btn" href="#" role="button">Save</a></div>
 		<div>
 			<!-- Nav tabs -->
 			<ul class="nav nav-tabs nav-pills" role="tablist">
-				<li role="presentation" class="active"><a href="#single" aria-controls="single" role="tab" data-toggle="tab">Single Product</a></li>
-			{% if variable %}
-				<li role="presentation"><a href="#parent" aria-controls="parent" role="tab" data-toggle="tab">Parent/Child Product</a></li>
-			{% endif %}
+				<li role="presentation" class="active"><a href="#{{product._id}}" aria-controls="single" role="tab" data-toggle="tab">{{spc_product}}</a></li>
 			</ul>
 			
 			<!-- Tab panes -->
 			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane active" id="single">
+				<div role="tabpanel" class="tab-pane active" id="{{product._id}}">
 					<br/>
 					<form class="form-horizontal">
 					<input type="hidden" name="category" value="{{category}}" />
 					<input type="hidden" name="spc" value="100" />
-					{%for fi in single %}
-						{% ifequal fi.type "hidden"%}
-							<input type="hidden" name="{{fi.key}}" id="{{fi.key}}" value="{{fi.value}}" />
-						{%else%}	
-						{% ifequal fi.type "text"%}
+					{%for dt in data %}
+						{% ifequal dt.type "hidden"%}
+							<input type="hidden" name="{{dt.key}}" id="{{dt.key}}" value="{{dt.value}}" />
+						{%else%}			
+						{% ifequal dt.type "text"%}
 						<div class="form-group">
-							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
+							<label for="{{dt.key}}" class="col-sm-2 control-label">{{dt.en}}</label>
 							<div class="col-sm-10">
-							<input type="text" class="form-control" name="{{fi.key}}" id="{{fi.key}}" placeholder="{{fi.en}}">
+							<input type="text" class="form-control" name="{{dt.key}}" id="{{dt.key}}" value="{{dt.value}}" placeholder="{{dt.en}}" />
 							</div>
 						</div>
 						{%else%}
-						{% ifequal fi.type "textarea"%}
+						{% ifequal dt.type "textarea"%}
 						<div class="form-group">
-							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
+							<label for="{{dt.key}}" class="col-sm-2 control-label">{{dt.en}}</label>
 							<div class="col-sm-10">
-							<textarea class="form-control" rows="3" name="{{fi.key}}" id="{{fi.key}}" placeholder="{{fi.en}}"></textarea>
+							<textarea class="form-control" rows="3" name="{{dt.key}}" id="{{dt.key}}" placeholder="{{dt.en}}"> {{dt.value}}</textarea>
 							</div>
 						</div>
 						{%else%}
-						{% ifequal fi.type "select"%}
+						{% ifequal dt.type "select"%}
 						<div class="form-group">
-							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
+							<label for="{{dt.key}}" class="col-sm-2 control-label">{{dt.en}}</label>
 							<div class="col-sm-10">
-							<select class="form-control" name="{{fi.key}}" id="{{fi.key}}">
-								{% for v in fi.values%}
+							<select class="form-control" name="{{dt.key}}" id="{{dt.key}}">
+								{% for v in dt.values%}
 								<option value="{{v}}">{{v}}</option>
 								{% endfor %}
 							</select>
@@ -132,55 +129,6 @@
 					{%endfor%}
 					</form>
 				</div>
-				{% if variable %}
-				<div role="tabpanel" class="tab-pane" id="parent">
-					<br/>
-					<form class="form-horizontal">
-					<input type="hidden" name="category" value="{{category}}" />
-					<input type="hidden" name="spc" value="010" />
-					<input type="hidden" name="parent_child" value="parent" />
-					<input type="hidden" name="relationship_type" value="Variation" />
-					{%for fi in parent %}						
-						{% ifequal fi.type "hidden"%}
-							<input type="hidden" name="{{fi.key}}" id="{{fi.key}}" value="{{fi.value}}" />
-						{%else%}
-						{% ifequal fi.type "text"%}
-						<div class="form-group">
-							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
-							<div class="col-sm-10">
-							<input type="text" class="form-control" name="{{fi.key}}" id="{{fi.key}}" placeholder="{{fi.en}}">
-							</div>
-						</div>
-						{%else%}
-						{% ifequal fi.type "textarea"%}
-						<div class="form-group">
-							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
-							<div class="col-sm-10">
-							<textarea class="form-control" name="{{fi.key}}" rows="3" id="{{fi.key}}" placeholder="{{fi.en}}"></textarea>
-							</div>
-						</div>
-						{%else%}
-						{% ifequal fi.type "select"%}
-						<div class="form-group">
-							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
-							<div class="col-sm-10">
-							<select class="form-control" name="{{fi.key}}" id="{{fi.key}}">
-								{% for v in fi.values%}
-								<option value="{{v}}">{{v}}</option>
-								{% endfor %}
-							</select>
-							</div>
-						</div>
-						{%else%}
-						{% endifequal%}
-						{% endifequal%}
-						{% endifequal%}
-						{% endifequal%}
-					{%endfor%}
-					</form>
-					
-				</div>
-				{% endif %}
 			</div>
 		</div>		
 	</div>	

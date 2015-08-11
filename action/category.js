@@ -15,28 +15,56 @@ var hline = require('headline');
 
 //////////////////////////////////////////////////////////////////////
 
-exports.generate_child_product = function(req) {
-    var category = req.postParams.category;
-    var spc = req.postParams.spc;
-	//var field = fd[category];
-	//log.info(typeof req.postParams)
-	
-	if(spc == "100"){
+exports.update_product = function(req) {
+	var product = db.one(category, {"_id":product_id});
+
+	return env.renderResponse("update_product_page.html",{
+		"product":product,
 		
-	}else if(spc == "010"){
-		
-	}
-	
-	var line_3 = hline[category+"_3"];
-	var product ={};
-	line_3.forEach(function(item){
-		product[item] = req.postParams[item];
 	});
+}
+exports.update_product_page = function(req, category, product_id) {
+	var product = db.one(category, {"_id":product_id});
+	var field = fd[category];
+	
+	var data, spc_product;
+	if(product.parent_child == "parent"){
+		data = field.parent();
+		spc_product = "Parent Product";
+	}else if(product.parent_child == "child"){
+		data = field.child();
+		spc_product = "Child Product";
+	}else{
+		data = field.single();
+		spc_product = "Single Product";
+	}
+	data.forEach(function(item){
+		item.value = product[item.key];		  
+	});	
+	return env.renderResponse("update_product_page.html",{
+		"product":	product,
+		"category":	category,
+		"data":		data,
+		"spc_product":		spc_product,
+		
+	});
+}
+
+
+exports.child_products_complete = function(req, category) {
+    var product_id = req.postParams.product_id;
+	var product = db.one(category, {"_id":product_id});
+	
+	product.item_sku = req.postParams.item_sku.trim();
+	product.main_image_url = req.postParams.main_image_url.trim();
+	product.other_image_url1 = req.postParams.other_image_url1?req.postParams.other_image_url1.trim():"";
+	product.other_image_url2 = req.postParams.other_image_url2?req.postParams.other_image_url2.trim():"";
+	
 	db.save(category, product);
 	return response.json({"status":200, "msg":"ok"});
 }
 
-exports.child_products = function(req, category, parent_product_id) {
+exports.child_products_complete_page = function(req, category, parent_product_id) {
 	var parent_product = db.one(category, {"_id":parent_product_id});
 	var child_products = db.all(category, {"parent_sku":parent_product.item_sku});
 	return env.renderResponse("child_products.html",{
@@ -49,13 +77,21 @@ exports.child_products = function(req, category, parent_product_id) {
 exports.add_product = function(req) {
     var category = req.postParams.category;
     var spc = req.postParams.spc;
-	//var field = fd[category];
+	var field = fd[category];
 	//log.info(typeof req.postParams)	
-	var line_3_ext = hline[category+"_3_ext"];
+	var key_list = [];
 	var product ={};
-	line_3_ext.forEach(function(item){
-		product[item] = req.postParams[item];
+	if(spc == "100"){
+		key_list = field.single().map(function(item){return item.key});
+	}else if(spc == "010"){
+		key_list = field.parent().map(function(item){return item.key});
+	}
+	
+	key_list.forEach(function(item){
+		product[item] = req.postParams[item]?req.postParams[item]:"";
 	});
+	
+	
 	if(spc == "100"){
 
 

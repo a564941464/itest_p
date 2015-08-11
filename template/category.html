@@ -37,7 +37,7 @@
 	<div class="panel-body">
 		<div class="pull-left">
 		<ol class="breadcrumb">
-			<li><a href="#">{{category}}</a></li>
+			<li><a href="/{{category}}/category.md">{{category}}</a></li>
 			<li class="active">Listings</li>
 		</ol>
 		</div>
@@ -66,7 +66,7 @@
 				</div>
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 					<li><a href="#">复制</a></li>
-					<li><a href="#">编辑</a></li>
+					<li><a href="/{{category}}/{{p._id}}/update_product_page.md">编辑</a></li>
 					{%ifequal p.parent_child "parent"%}
 					<li><a href="#" class="action_child" id-ref="{{p._id}}" data-toggle="modal" data-target="#child_products_modal">子产品</a></li>
 					{%endifequal%}
@@ -76,7 +76,7 @@
 		</td>
 		<td>
 			<image src="{{p.main_image_url}}" style="width:50px;height:50px;" />
-			{{p.item_sku}}
+			<br/>{{p.item_sku}}
 		</td>
 		<td>{{p.external_product_id}}</td>
 		<td>{{p.external_product_id_type}}</td>

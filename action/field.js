@@ -1,4 +1,4 @@
-var ext_keys = exports.ext_keys = ["ref_link","crt_time","update_time"];
+// var ext_keys = exports.ext_keys = ["ref_link","crt_time","update_time"];
 
 /**
 * @param type text, textarea, select, radio
@@ -9,11 +9,13 @@ var ext_keys = exports.ext_keys = ["ref_link","crt_time","update_time"];
 	"copy":true,
 	"type":"text", // text, textarea, select
 	"values":[], 
+	"value":value, 
 	"func_in":null, //save
 	"func_out":null, //view 
 */
 var item_sku = {
 	"spc": "111",
+	"edit": true,
 	"key":"item_sku",
 	"en":"SKU",
 	"copy":true,
@@ -22,6 +24,7 @@ var item_sku = {
 
 var item_name = {	
 	"spc": "111",
+	"edit": true,
 	"key":"item_name",
 	"en":"Product Name",
 	"copy":true,
@@ -29,6 +32,7 @@ var item_name = {
 }
 var external_product_id = {
 	"spc": "101",
+	"edit": true,
 	"key":"external_product_id",
 	"en":"Product ID",
 	"copy":false,
@@ -37,6 +41,7 @@ var external_product_id = {
 
 var product_description = {
 	"spc": "111",
+	"edit": true,
 	"key":"product_description",
 	"en":"Product Description",
 	"copy":true,
@@ -56,6 +61,7 @@ var product_description = {
 var department_name = function(valid_values) {
 	return {
 		"spc": "111",
+		"edit": true,
 		"key":"department_name",
 		"en":"Department",
 		"copy":true,
@@ -66,7 +72,8 @@ var department_name = function(valid_values) {
 
 var variation_theme = function(valid_values) {
 	return {
-		"spc": "011",
+		"spc": "010",
+		"edit": false,
 		"key":"variation_theme",
 		"en":"Variation Theme",
 		"copy":true,

@@ -1,18 +1,28 @@
-<form class="form-horizontal">
-
+<div class="form-horizontal">
 <div class="form-group">
-	<label class="col-sm-2 control-label">{{parent_product.variation_theme|default:""}}</label>
-	<div class="col-sm-10">
-
-	</div>
+	<label class="col-sm-1 control-label">{{parent_product.variation_theme|default:""}}</label>
+	<label class="col-sm-2 control-label">SKU</label>
+	<label class="col-sm-6 control-label">IMAGES</label>
+	
 </div>
-
+</div>
 {%for cp in child_products%}
+<form class="form-horizontal" id-ref = "{{cp._id}}">
+<input type="hidden" value="{{cp._id}}" name="product_id" />
 <div class="form-group">
-	<label for="{{cp.key}}" class="col-sm-2 control-label">{{cp.size_name}}{{cp.color_name}}</label>
-	<div class="col-sm-10">
-	<input type="text" class="form-control" name="{{fi.key}}" id="{{fi.key}}" placeholder="SKU ">
+	<label for="{{cp.key}}" class="col-sm-1 control-label">{{cp.size_name}}&nbsp;{{cp.color_name}}</label>
+	<div class="col-sm-2">
+		<input type="text" class="form-control" value="{{cp.item_sku}}" name="item_sku" id="{{cp._id}}" placeholder="SKU ">
+	</div>
+	<div class="col-sm-6">
+		<input type="text" class="form-control" value="{{cp.main_image_url}}" name="main_image_url" id="{{fi.key}}" placeholder="Main Image URL ">
+		<input type="text" class="form-control" value="{{cp.other_image_url1}}" name="other_image_url1" id="{{fi.key}}" placeholder="Other Image URL1 ">
+		<input type="text" class="form-control" value="{{cp.other_image_url2}}" name="other_image_url2" id="{{fi.key}}" placeholder="Other Image URL2 ">
+	</div>	
+	<div class="col-sm-2 control-label">
+		<span id="span_ok{{cp._id}}" class="sr-only glyphicon glyphicon-ok" aria-hidden="true"></span>
+		<span id="span_fail{{cp._id}}" class="sr-only glyphicon glyphicon-ok" aria-hidden="true"></span>
 	</div>
 </div>
-{%endfor%}
 </form>
+{%endfor%}

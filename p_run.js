@@ -33,8 +33,11 @@ var login = require("login");
 var category = require("category");
 var user_role = require("user_role");
 
-//app.post("/:category/:parent_product_id/generate_child_product.md", category.generate_child_product);
-app.get("/:category/:parent_product_id/child_products.md", category.child_products);
+app.post("/update_product.md", category.update_product);
+app.get("/:category/:product_id/update_product_page.md", category.update_product_page);
+
+app.post("/:category/child_products_complete.md", category.child_products_complete);
+app.get("/:category/:parent_product_id/child_products_complete_page.md", category.child_products_complete_page);
 
 app.get("/:category/:product_id/delete_product.md", category.delete_product);
 app.post("/add_product.md", category.add_product);
