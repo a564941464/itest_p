@@ -15,7 +15,7 @@ var remove  = exports.remove    = function(collection_name, object){
 var save = exports.save   = function(collection_name, object){
 	var col = db.getCollection(collection_name);
 	if(!object._id){
-		object._id = utils.time_key();
+		object._id = utils.guid();
 	}
 	col.save(object);//insert or update
 }
