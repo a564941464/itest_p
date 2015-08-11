@@ -14,12 +14,12 @@
 		<script src="/bootstrap/js/bootstrap.min.js"></script>
 		<script>
 			$(document).ready(function(){
-				$("#save_btn").click(function(){
+				$("#update_save_btn").click(function(){
 					var data = $(".tab-pane.active form").serialize();
 					
 					$.ajax({
 						type: "POST",
-						url: "/add_product.md",
+						url: "/update_product.md",
 						data: data,
 						success: function(json){
 							if(json.status == 200 && json.spc == "010"){
@@ -76,7 +76,7 @@
 			<li><a href="/{{category}}/category.md">{{category}}</a></li>
 			<li class="active">Update a product</li>
 		</ol>
-		<div class="pull-right"><a class="btn btn-primary" id="save_btn" href="#" role="button">Save</a></div>
+		<div class="pull-right"><a class="btn btn-primary" id="update_save_btn" href="#" role="button">Save</a></div>
 		<div>
 			<!-- Nav tabs -->
 			<ul class="nav nav-tabs nav-pills" role="tablist">
@@ -89,6 +89,7 @@
 					<br/>
 					<form class="form-horizontal">
 					<input type="hidden" name="category" value="{{category}}" />
+					<input type="hidden" name="product_id" value="{{product._id}}" />
 					<input type="hidden" name="spc" value="100" />
 					{%for dt in data %}
 						{% ifequal dt.type "hidden"%}

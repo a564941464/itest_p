@@ -9,9 +9,8 @@
 **/
 
 module.exports = (function(mongo) {
-
     require('fs').listTree(module.resolve('./jars')).forEach(function(path) {
-        if (path.match(/\.jar$/) && !addToClasspath(module.resolve('./jars/' + path))) {
+		if (path.match(/\.jar$/) && !addToClasspath(module.resolve('./jars/' + path.replace(/\\/g, "/")))) {
             throw new Error("Could not load jar '" + path + "'.");
         }
     });

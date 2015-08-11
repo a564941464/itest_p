@@ -81,7 +81,7 @@
 		<td>{{p.external_product_id}}</td>
 		<td>{{p.external_product_id_type}}</td>
 		<td>{{p.standard_price}}</td>
-		<td>{{p.parent_child}}</td>
+		<td>{%if p.parent_child%}{{p.parent_child|default:""}}{%endif%}</td>
 		<td><a href="{{p.product_link}}" target="_blank">查看</a></td>
 	</tr>
 	{%endfor%}

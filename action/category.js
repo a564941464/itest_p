@@ -16,12 +16,30 @@ var hline = require('headline');
 //////////////////////////////////////////////////////////////////////
 
 exports.update_product = function(req) {
+    var category = req.postParams.category;
+    var product_id = req.postParams.product_id;
+	
+	var spc = req.postParams.spc;
+	var field = fd[category];
+	
+	var fields = [];
 	var product = db.one(category, {"_id":product_id});
-
-	return env.renderResponse("update_product_page.html",{
-		"product":product,
-		
+	if(spc == "100"){
+		fields = field.single();
+	}else if(spc == "010"){
+		fields = field.parent();
+	}
+	
+	fields.forEach(function(item){
+		if(item.func_in){
+			product[item.key] = item.func_in(req.postParams[item.key]?req.postParams[item.key]:"");
+		}else{
+			product[item.key] = req.postParams[item.key]?req.postParams[item.key]:"";
+		}
 	});
+	
+	db.save(category, product);
+	return response.json({"status":200, "msg":"ok", "spc":spc, "product_id":product._id});
 }
 exports.update_product_page = function(req, category, product_id) {
 	var product = db.one(category, {"_id":product_id});
@@ -29,17 +47,21 @@ exports.update_product_page = function(req, category, product_id) {
 	
 	var data, spc_product;
 	if(product.parent_child == "parent"){
-		data = field.parent();
+		data = field.parent_edit();
 		spc_product = "Parent Product";
 	}else if(product.parent_child == "child"){
-		data = field.child();
+		data = field.child_edit();
 		spc_product = "Child Product";
 	}else{
-		data = field.single();
+		data = field.single_edit();
 		spc_product = "Single Product";
 	}
 	data.forEach(function(item){
-		item.value = product[item.key];		  
+		if(item.func_out){
+			item.value = item.func_out(product[item.key]);
+		}else{
+			item.value = product[item.key]; 
+		}
 	});	
 	return env.renderResponse("update_product_page.html",{
 		"product":	product,
@@ -79,16 +101,20 @@ exports.add_product = function(req) {
     var spc = req.postParams.spc;
 	var field = fd[category];
 	//log.info(typeof req.postParams)	
-	var key_list = [];
+	var fields = [];
 	var product ={};
 	if(spc == "100"){
-		key_list = field.single().map(function(item){return item.key});
+		fields = field.single();
 	}else if(spc == "010"){
-		key_list = field.parent().map(function(item){return item.key});
+		fields = field.parent();
 	}
 	
-	key_list.forEach(function(item){
-		product[item] = req.postParams[item]?req.postParams[item]:"";
+	fields.forEach(function(item){
+		if(item.func_in){
+			product[item.key] = item.func_in(req.postParams[item.key]?req.postParams[item.key]:"");
+		}else{
+			product[item.key] = req.postParams[item.key]?req.postParams[item.key]:"";
+		}
 	});
 	
 	

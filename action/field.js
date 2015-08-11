@@ -93,6 +93,10 @@ var Clothing = exports.Clothing = {
 	"single":	function(){return this.field.filter(function(item){return item.spc[0]=="1"})},
 	"parent":	function(){return this.field.filter(function(item){return item.spc[1]=="1"})},
 	"child"	:	function(){return this.field.filter(function(item){return item.spc[2]=="1"})},
+	
+	"single_edit":	function(){return this.field.filter(function(item){return item.spc[0]=="1" && item.edit})},
+	"parent_edit":	function(){return this.field.filter(function(item){return item.spc[1]=="1" && item.edit})},
+	"child_edit"	:	function(){return this.field.filter(function(item){return item.spc[2]=="1" && item.edit})},
 }
 
 
