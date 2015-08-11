@@ -138,8 +138,6 @@
 					<form class="form-horizontal">
 					<input type="hidden" name="category" value="{{category}}" />
 					<input type="hidden" name="spc" value="010" />
-					<input type="hidden" name="parent_child" value="parent" />
-					<input type="hidden" name="relationship_type" value="Variation" />
 					{%for fi in parent %}						
 						{% ifequal fi.type "hidden"%}
 							<input type="hidden" name="{{fi.key}}" id="{{fi.key}}" value="{{fi.value}}" />

@@ -126,18 +126,28 @@ exports.add_product = function(req) {
 		if(variation_theme == "Size"){
 			var variation_theme_size = req.postParams.variation_theme_size;
 			var sizelist = variation_theme_size.split(",").map(function(item){return item.trim()});
+			// log.info("sizelist:"+sizelist.length);log.info("=====================================");
 			sizelist.forEach(function(item, i){
 				var child_product = utils.clone(product);
+				// log.info("child_product_id1:"+child_product._id);
+
 				child_product.size_name = item;
 				child_product.parent_child = "child";
 				child_product.parent_sku = product.item_sku;
 				child_product.item_sku = product.item_sku + i;
 				child_product.item_name = product.item_name + " " +item;
 				db.save(category, child_product);
+				
+				
+				log.info(JSON.stringify(child_product));
+				// log.info("product_id:"+product._id);
+				// log.info("child_product_id2:"+child_product._id);
+				// log.info("----------------------------------:");
 			});
 		}else if(variation_theme == "Color"){
 			var variation_theme_color = req.postParams.variation_theme_color;
 			var colorlist = variation_theme_color.split(",").map(function(item){return item.trim()});
+			// log.info("colorlist:"+colorlist.length);
 			colorlist.forEach(function(item, i){
 				var child_product = utils.clone(product);
 				child_product.color_name = item;
@@ -146,6 +156,8 @@ exports.add_product = function(req) {
 				child_product.item_sku = product.item_sku + i;
 				child_product.item_name = product.item_name + " " +item;
 				db.save(category, child_product);
+				// log.info("product_id:"+product._id);
+				// log.info("child_product_id:"+child_product._id);
 			});
 			
 		}else if(variation_theme == "sizecolor"){
@@ -164,6 +176,7 @@ exports.add_product = function(req) {
 					
 					child_product.item_name = product.item_name + " " + sitem + " " + citem; 
 					db.save(category, child_product);
+					// log.info("child_product_id:"+child_product._id);
 				});
 			});
 		}

@@ -7,7 +7,7 @@
 	"key":"item_sku",
 	"en":"SKU",
 	"copy":true,
-	"type":"text", // text, textarea, select
+	"type":"text", // text, textarea, select, hidden, 
 	"values":[], 
 	"value":value, 
 	"func_in":null, //save
@@ -22,7 +22,7 @@ var item_sku = {
 	"type":"text", 
 }
 
-var item_name = {	
+var item_name = {
 	"spc": "111",
 	"edit": true,
 	"key":"item_name",
@@ -82,11 +82,37 @@ var variation_theme = function(valid_values) {
 	}
 }//variation_theme
 
+
+var parent_child = function(value) {
+	return {
+		"spc": "010",
+		"edit": false,
+		"key":"parent_child",
+		"en":"Parentage",
+		"copy":true,
+		"type":"hidden", 
+		"value": value, 
+	}
+}//parent_child
+
+var relationship_type = function(value) {
+	return {
+		"spc": "010",
+		"edit": false,
+		"key":"relationship_type",
+		"en":"Relationship Type",
+		"copy":true,
+		"type":"hidden", 
+		"value": value, 
+	}
+}//relationship_type
 var Clothing = exports.Clothing = {
 	"variable":true,//parent child 
 	"field":[ item_sku, item_name,external_product_id, product_description, 
 		department_name(["baby-boys","baby-girls","boys","girls","mens","unisex-baby","womens"]),
 		variation_theme(["Color","Size","sizecolor"]),
+		parent_child("parent"),
+		relationship_type("Variation"),
 		
 		],
 		
