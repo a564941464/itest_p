@@ -25,6 +25,21 @@
 						}
 					});
 				});
+				$('.checkall').click(function(){  
+					$(this).is(":checked")?$(".checkone").prop("checked",true):$(".checkone").prop("checked",false);  
+					$(this).is(":checked")?$(".checkall").prop("checked",true):$(".checkall").prop("checked",false);  
+				}); 				
+				$('#download_btn').click(function(){  
+					var product_ids = [];
+					$(".checkone:checked").each(function(){
+						product_ids.push($(this).val());
+						if(product_ids.length == 0){
+							alert("请选择下载的产品.");
+						}else{
+							window.location = "/{{category}}/" + JSON.stringify(product_ids) + "/get_inventory_file.md";
+						}
+					});
+				});  
 			});
 		</script>
 	</head>
@@ -58,7 +73,7 @@
 	</tr>
 	{% for p in products %}
 	<tr id="tr_{{p._id}}">
-		<td><input name="product_ids" type="checkbox" class="checkone" value="{{p.id}}" /></td>
+		<td><input name="product_ids[]" type="checkbox" class="checkone" value="{{p._id}}" /></td>
 		<td>
 			<div class="dropdown">
 				<div class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -88,7 +103,7 @@
 	<tr>
 		<td>
 		<input type="checkbox" class="checkall"/></td><td colspan="20">
-		<input type="submit" class="btn category_download_button" value="下载" />
+		<input type="submit" class="btn btn-primary btn-sm" id="download_btn" role="button" value="Download" />
 		</td>
 	</tr>
 	</table>

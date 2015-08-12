@@ -30,11 +30,21 @@ var item_name = {
 	"copy":true,
 	"type":"text", 
 }
+
 var external_product_id = {
 	"spc": "101",
 	"edit": true,
 	"key":"external_product_id",
 	"en":"Product ID",
+	"copy":false,
+	"type":"text", 
+}
+
+var standard_price = {
+	"spc": "101",
+	"edit": true,
+	"key":"standard_price",
+	"en":"Standard Price",
 	"copy":false,
 	"type":"text", 
 }
@@ -108,7 +118,7 @@ var relationship_type = function(value) {
 }//relationship_type
 var Clothing = exports.Clothing = {
 	"variable":true,//parent child 
-	"field":[ item_sku, item_name,external_product_id, product_description, 
+	"field":[ item_sku, item_name,external_product_id, standard_price, product_description, 
 		department_name(["baby-boys","baby-girls","boys","girls","mens","unisex-baby","womens"]),
 		variation_theme(["Color","Size","sizecolor"]),
 		parent_child("parent"),

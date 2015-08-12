@@ -15,6 +15,31 @@ var hline = require('headline');
 
 //////////////////////////////////////////////////////////////////////
 
+exports.get_inventory_file = function(req, category, json_product_ids){
+	var products = db.all(category, {"_id":{$in:JSON.parse(json_product_ids)}});
+	
+	var headline = hline[category];
+	var headline_3 = hline[category + "_3"];
+	
+	var body_content = [headline];
+	
+    products.forEach(function(p){
+        var r = "";
+		headline_3.forEach(function(h3){
+			r += ((p[h3]?p[h3]:"") + "\t");
+		});
+		r += "\n";
+        body_content.push(r);
+	});
+    var crt_time = utils.cur_time("yyyyMMddHHmmss");
+    return {
+        body: body_content,
+        headers: {"Content-disposition":"attachment;filename= Inventory_" + crt_time + ".txt",
+                "ContentType":  "text/txt", },
+        status: 200,
+   }
+}
+
 exports.update_product = function(req) {
     var category = req.postParams.category;
     var product_id = req.postParams.product_id;
@@ -41,6 +66,7 @@ exports.update_product = function(req) {
 	db.save(category, product);
 	return response.json({"status":200, "msg":"ok", "spc":spc, "product_id":product._id});
 }
+
 exports.update_product_page = function(req, category, product_id) {
 	var product = db.one(category, {"_id":product_id});
 	var field = fd[category];
@@ -135,9 +161,6 @@ exports.add_product = function(req) {
 				child_product.item_sku = product.item_sku + i;
 				child_product.item_name = product.item_name + " " +item;
 				db.save(category, child_product);
-				
-				
-				log.info(JSON.stringify(child_product));
 
 			});
 		}else if(variation_theme == "Color"){

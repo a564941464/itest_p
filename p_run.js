@@ -33,6 +33,8 @@ var login = require("login");
 var category = require("category");
 var user_role = require("user_role");
 
+app.get("/:category/:json_product_ids/get_inventory_file.md", category.get_inventory_file);
+
 app.post("/update_product.md", category.update_product);
 app.get("/:category/:product_id/update_product_page.md", category.update_product_page);
 

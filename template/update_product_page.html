@@ -25,6 +25,8 @@
 							if(json.status == 200 && json.spc == "010"){
 								$("#child_products_modal").modal('show');
 								$("#child_products_div").load("/{{category}}/"+json.product_id +"/child_products_complete_page.md");
+							}else if(json.status == 200 && json.spc == "100"){
+								location.href = "/{{category}}/category.md";
 							}else{
 								alert(json.msg);
 							}
