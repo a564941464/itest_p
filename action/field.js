@@ -1,4 +1,4 @@
-// var ext_keys = exports.ext_keys = ["ref_link","crt_time","update_time"];
+// var ext_keys = exports.ext_keys = ["refer_link","crt_time","update_time"];
 
 /**
 * @param type text, textarea, select, radio
@@ -116,13 +116,24 @@ var relationship_type = function(value) {
 		"value": value, 
 	}
 }//relationship_type
+
+
+var refer_link = {
+	"spc": "111",
+	"edit": true,
+	"key":"refer_link",
+	"en":"Product Link",
+	"copy":false,
+	"type":"text", 
+}//refer_link
+
 var Clothing = exports.Clothing = {
 	"variable":true,//parent child 
 	"field":[ item_sku, item_name,external_product_id, standard_price, product_description, 
 		department_name(["baby-boys","baby-girls","boys","girls","mens","unisex-baby","womens"]),
 		variation_theme(["Color","Size","sizecolor"]),
 		parent_child("parent"),
-		relationship_type("Variation"),
+		relationship_type("Variation"), refer_link, 
 		
 		],
 		

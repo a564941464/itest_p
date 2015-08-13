@@ -143,6 +143,8 @@ exports.add_product = function(req) {
 		}
 	});
 	
+	var user = req.session.data['user'];
+	var crt_time = utils.cur_time();
 	
 	if(spc == "100"){
 
@@ -160,6 +162,11 @@ exports.add_product = function(req) {
 				child_product.parent_sku = product.item_sku;
 				child_product.item_sku = product.item_sku + i;
 				child_product.item_name = product.item_name + " " +item;
+
+				product.user_id = user._id;
+				product.crt_time = crt_time;
+				product.dtimes = 0;
+				
 				db.save(category, child_product);
 
 			});
@@ -174,6 +181,11 @@ exports.add_product = function(req) {
 				child_product.parent_sku = product.item_sku;
 				child_product.item_sku = product.item_sku + i;
 				child_product.item_name = product.item_name + " " +item;
+
+				product.user_id = user._id;
+				product.crt_time = crt_time;
+				product.dtimes = 0;
+				
 				db.save(category, child_product);
 
 			});
@@ -193,12 +205,22 @@ exports.add_product = function(req) {
 					child_product.item_sku = product.item_sku + i + j;
 					
 					child_product.item_name = product.item_name + " " + sitem + " " + citem; 
+					
+					product.user_id = user._id;
+					product.crt_time = crt_time;
+					product.dtimes = 0;
+					
 					db.save(category, child_product);
 
 				});
 			});
 		}
 	}
+	
+	product.user_id = user._id;
+	product.crt_time = crt_time;
+	product.dtimes = 0;	
+	
 	db.save(category, product);
 	return response.json({"status":200, "msg":"ok", "spc":spc, "product_id":product._id});
 }
@@ -221,8 +243,10 @@ exports.delete_product = function(req, category, product_id) {
 	return response.json({"status":200, "msg":"delete ok"});
 }
 
-exports.category = function(req, category) {	
-	var  products = db.all(category);
+exports.category = function(req, category) {
+	var user = req.session.data['user'];
+	
+	var  products = db.all(category, {"user_id": user._id});
 	return env.renderResponse("category.html",{
 	   products:products,
 	   category:category,

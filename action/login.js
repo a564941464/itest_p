@@ -31,7 +31,6 @@ var login = exports.login = function(req) {
 	// log.info("md5_login_password:"+md5_login_password);
 	// log.info("user.password:"+user.password);
 	if(user.login_password == md5_login_password){
-        req.session.data['islogon'] =true;
         req.session.data['user'] = user;
 		 var cur_time = utils.cur_time();
 		 user.last_login_time = cur_time;
@@ -49,8 +48,8 @@ var login = exports.login = function(req) {
 
 
 var login_user_display_name = exports.login_user_display_name = function(req) {
-    if(req.session.data['islogon']){
-		return response.html(req.session.data['user'].display_name);
+    if(req.session.data['user']){
+		return response.html(req.session.data['user'].display_name + " welcome!");
 	}else{
 		return response.html('');
 	}

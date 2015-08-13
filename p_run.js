@@ -60,6 +60,7 @@ app.get("/user_role.md", user_role.user_role);
 app.post("/login.in", login.login);
 app.get("/logout.out", login.logout);
 app.get("/", login.to_login);
+app.get("/login_user_display_name.md", login.login_user_display_name);
 app.get("/index.html", login.to_login);
 
 if (require.main === module) {
