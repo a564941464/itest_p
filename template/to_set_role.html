@@ -1,0 +1,15 @@
+<form id="set_role_form">
+<input type="hidden" name="user_id" value="{{user._id}}" />
+<table border="1px" bordercolor="#ccc" class="table">
+	<tr>
+		<td>
+			<h5>当前用户:&nbsp;&nbsp;&nbsp;{{user.display_name}}&nbsp;|&nbsp;{{user.login_name}}&nbsp;</h5>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			&nbsp;&nbsp;<label class="checkbox-inline"><input type="checkbox" value="yes" name="is_super" {%if user.is_super%}checked{%endif%}/>超级用户</label>
+		</td>
+	</tr>
+</table>
+</form>

@@ -115,12 +115,17 @@
 					});
 				}
 			});
+			$(document).on("click", ".set_role", function(){
+                var _this = $(this);
+				var user_id = _this.attr("id-ref");
+				$("#set_role_div").load("/"+ user_id +"/to_set_role.md");
+			});
 			$(document).on("click", ".user_passwd", function(){
                 var _this = $(this);
 				var user_id = _this.attr("id-ref");
 				$("#passwd_user_div").load("/"+ user_id +"/user_to_passwd.md");
 			});
-			$(document).on("click", "#passwd_user_btn", function(){
+			$("#passwd_user_btn").on("click", function(){
                 var data = $("#passwd_user_form").serialize();
 				$.ajax({
 					type: "POST",
@@ -131,6 +136,23 @@
 						if(json.status==200){
 							alert("ok 修改成功!");
 							$("#passwd_user_modal").modal('hide');
+						}else{
+							alert(json.msg);
+						}
+					}
+				}); 
+			});
+			$("#set_role_save_btn").on("click", function(){
+                var data = $("#set_role_form").serialize();
+				$.ajax({
+					type: "POST",
+					url: "/set_role.md",
+					data: data,
+					dataType: "json",
+					success: function(json){
+						if(json.status==200){
+							alert("ok 设定成功!");
+							$("#set_role_modal").modal('hide');
 						}else{
 							alert(json.msg);
 						}
@@ -230,6 +252,25 @@
 		  <div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 			<button type="button" id="passwd_user_btn" class="btn btn-primary">保存</button>
+		  </div>
+		</div>
+	  </div>
+	</div>	
+	<!------------------------------------------------------->
+	<!-- Modal -->
+	<div class="modal " id="set_role_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel">设定角色</h4>
+		  </div>
+		  <div class="modal-body" id="set_role_div">
+
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			<button type="button" id="set_role_save_btn" class="btn btn-primary">保存</button>
 		  </div>
 		</div>
 	  </div>

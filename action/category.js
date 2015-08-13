@@ -57,9 +57,9 @@ exports.update_product = function(req) {
 	
 	fields.forEach(function(item){
 		if(item.func_in){
-			product[item.key] = item.func_in(req.postParams[item.key]?req.postParams[item.key]:"");
+			product[item.key] = item.func_in(req.postParams[item.key]?req.postParams[item.key].trim():"");
 		}else{
-			product[item.key] = req.postParams[item.key]?req.postParams[item.key]:"";
+			product[item.key] = req.postParams[item.key]?req.postParams[item.key].trim():"";
 		}
 	});
 	
@@ -137,9 +137,9 @@ exports.add_product = function(req) {
 	
 	fields.forEach(function(item){
 		if(item.func_in){
-			product[item.key] = item.func_in(req.postParams[item.key]?req.postParams[item.key]:"");
+			product[item.key] = item.func_in(req.postParams[item.key]?req.postParams[item.key].trim():"");
 		}else{
-			product[item.key] = req.postParams[item.key]?req.postParams[item.key]:"";
+			product[item.key] = req.postParams[item.key]?req.postParams[item.key].trim():"";
 		}
 	});
 	

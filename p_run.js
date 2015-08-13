@@ -48,6 +48,8 @@ app.get('/:category/category.md', category.category);
 app.get('/intro.md', category.intro);
 
 
+app.post("/set_role.md", user_role.set_role);
+app.get("/:user_id/to_set_role.md", user_role.to_set_role);
 app.post("/user_passwd.md", user_role.user_passwd);
 app.get("/:user_id/user_to_passwd.md", user_role.user_to_passwd);
 app.get("/:user_id/user_inactive.md", user_role.user_inactive);

@@ -5,6 +5,7 @@
         <td style="widtd:100px;">操作</td>
         <td>登陆名</td>
 		<td>显示名</td>
+        <td>超级用户</td>
         <td>最后一次登陆时间</td>
         <td>创建时间</td>
         <td>状态</td>
@@ -20,6 +21,7 @@
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 					<li><a href="#">编辑</a></li>
 					<li><a href="#" class="user_passwd" id-ref="{{user._id}}" data-toggle="modal" data-target="#passwd_user_modal">修改密码</a></li>
+					<li><a href="#" class="set_role" id-ref="{{user._id}}" data-toggle="modal" data-target="#set_role_modal">设定角色</a></li>
 					<li role="separator" class="divider"></li>
 					{% if user.is_enabled %}
 					<li><a href="#" class="user_inactive" id-ref="{{user._id}}">禁用</a></li>
@@ -31,6 +33,7 @@
 		</td>
         <td>{{user.login_name}}</td>
         <td>{{user.display_name}}</td>
+        <td>{{user.is_super}}</td>
         <td>{{user.last_login_time|default:""}}</td>
         <td>{{user.crt_time}}</td>
         <td id="userstatus{{user._id}}">{{user.is_enabled|yesno:"正常,禁用"}}</td>

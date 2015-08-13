@@ -11,6 +11,18 @@ var db = require('db');
 var utils = require('utils');
 
 ///////////////////////////////////////////////////////////////////
+var set_role = exports.set_role = function(req){
+	var user_id = req.postParams.user_id.trim();
+	var user = db.one("User", {"_id":user_id});
+	var is_super = req.postParams.is_super;
+	user.is_super = is_super == 'yes'?true:false;
+	db.save("User", user);
+    return response.json({"status":200, msg:"", "user":user});
+}
+var to_set_role = exports.to_set_role = function(req, user_id){
+	var user = db.one("User", {"_id":user_id});
+    return env.renderResponse('to_set_role.html',{"user":user});
+}
 
 var user_passwd = exports.user_passwd = function(req){
 	var user_id = req.postParams.user_id.trim();
