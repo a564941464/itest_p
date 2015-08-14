@@ -16,7 +16,7 @@ var hline = require('headline');
 //////////////////////////////////////////////////////////////////////
 
 exports.get_inventory_file = function(req, category, json_product_ids){
-	var products = db.all(category, {"_id":{$in:JSON.parse(json_product_ids)}});
+	var products = db.all(category, {"_id":{$in:JSON.parse(json_product_ids)}})["objects"];
 	
 	var headline = hline[category];
 	var headline_3 = hline[category + "_3"];
@@ -86,7 +86,7 @@ exports.update_product_page = function(req, category, product_id) {
 		if(item.func_out){
 			item.value = item.func_out(product[item.key]);
 		}else{
-			item.value = product[item.key]; 
+			item.value = product[item.key]?product[item.key]:""; 
 		}
 	});	
 	return env.renderResponse("update_product_page.html",{
@@ -243,14 +243,34 @@ exports.delete_product = function(req, category, product_id) {
 	return response.json({"status":200, "msg":"delete ok"});
 }
 
-exports.category = function(req, category) {
+exports.category = function(req, category, cur_page_num) {
 	var user = req.session.data['user'];
+	var page_size = 20;
+	var result = db.page(category, {"user_id": user._id}, cur_page_num, page_size);
+	var products = result['objects'];
+	var last_page_num = result['last_page_num'];
 	
-	var  products = db.all(category, {"user_id": user._id});
+	if(!cur_page_num || cur_page_num < 1){
+		cur_page_num = 1;
+	}
+	if(!page_size || page_size < 1){
+		page_size = 20;
+	}
+	
+	cur_page_num = result['cur_page_num'];
+	
 	return env.renderResponse("category.html",{
-	   products:products,
-	   category:category,
-	   
+		products:products,
+		category:category,
+
+		last_page_num:last_page_num, 
+		page_size: page_size, 
+		cur_page_num: cur_page_num, 
+		pre_page_num: parseInt(cur_page_num) - 1, 
+		next_page_num: parseInt(cur_page_num) + 1, 
+
+		url: "category.md", 
+		query_str_param: "",
 	});
 }
 

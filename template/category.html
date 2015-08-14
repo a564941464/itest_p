@@ -28,17 +28,17 @@
 				$('.checkall').click(function(){  
 					$(this).is(":checked")?$(".checkone").prop("checked",true):$(".checkone").prop("checked",false);  
 					$(this).is(":checked")?$(".checkall").prop("checked",true):$(".checkall").prop("checked",false);  
-				}); 				
+				});
 				$('#download_btn').click(function(){  
 					var product_ids = [];
 					$(".checkone:checked").each(function(){
 						product_ids.push($(this).val());
-						if(product_ids.length == 0){
-							alert("请选择下载的产品.");
-						}else{
-							window.location = "/{{category}}/" + JSON.stringify(product_ids) + "/get_inventory_file.md";
-						}
 					});
+					if(product_ids.length == 0){
+						alert("请选择下载的产品.");
+					}else{
+						window.location = "/{{category}}/" + JSON.stringify(product_ids) + "/get_inventory_file.md";
+					}
 				});  
 			});
 		</script>
@@ -107,6 +107,16 @@
 		</td>
 	</tr>
 	</table>
+	<br/><br/>
+	<!----------------------------page sliper --------------------------------->
+	<div class="form-inline" style="margin-right:20px;position:fixed; bottom:2px; right:2px;">
+		<a class="btn btn-default" href="/{{category}}/1/{{url}}"><span class="glyphicon glyphicon-step-backward"></span></a>
+		<a class="btn btn-default" href="/{{category}}/{{pre_page_num}}/{{url}}"><span class="glyphicon glyphicon-triangle-left"></span></a>
+		<input class="form-control input-sm" style="width:36px;" type="text" name="formGroupInputSmall" id="formGroupInputSmall" value="{{cur_page_num}}" onkeypress="if(event.keyCode==13){location.href='/{{category}}/'+this.value+'/{{url}}';}"/>
+		<label class="control-label" for="formGroupInputSmall">/{{last_page_num}}</label>
+		<a class="btn btn-default" href="/{{category}}/{{next_page_num}}/{{url}}"><span class="glyphicon glyphicon-triangle-right"></span></a>
+		<a class="btn btn-default" href="/{{category}}/{{last_page_num}}/{{url}}"><span class="glyphicon glyphicon-step-forward"></span></a>
+	</div>
 </div>
 	<!------------------------------------------------------->
 	<!-- Modal -->
@@ -127,6 +137,8 @@
 		</div>
 	  </div>
 	</div>
+
+
 
 </body>
 </html>

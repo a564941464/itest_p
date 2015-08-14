@@ -113,7 +113,7 @@
 							</div>
 						</div>
 						{%else%}
-						{% ifequal dt.type "select"%}
+						{% ifequal dt.type "select_1"%}
 						<div class="form-group">
 							<label for="{{dt.key}}" class="col-sm-2 control-label">{{dt.en}}</label>
 							<div class="col-sm-10">
@@ -125,6 +125,19 @@
 							</div>
 						</div>
 						{%else%}
+						{% ifequal dt.type "select_2"%}
+						<div class="form-group">
+							<label for="{{dt.key}}" class="col-sm-2 control-label">{{dt.en}}</label>
+							<div class="col-sm-10">
+							<select class="form-control" name="{{dt.key}}" id="{{dt.key}}">
+								{% for v in dt.values%}
+								<option value="{{v.0}}" {%ifequal dt.value v.0%}selected{%endifequal%}>{{v.1}}</option>
+								{% endfor %}
+							</select>
+							</div>
+						</div>
+						{%else%}
+						{% endifequal%}
 						{% endifequal%}
 						{% endifequal%}
 						{% endifequal%}

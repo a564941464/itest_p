@@ -4,8 +4,8 @@ var utils = require("utils");
 // var client = new mongo.MongoClient('localhost', 27017);
 // var db = client.getDB('test_database');
 
-var db = exports.db = require('mongodb/mongodb').connect('mongodb://localhost:20147/ListingBuilder');//home
-// var db = exports.db = require('mongodb/mongodb').connect('mongodb://localhost/ListingBuilder');//office
+var db = exports.db = require('mongodb/mongodb').connect('mongodb://localhost:20147/ListingBuilder');// office 
+// var db = exports.db = require('mongodb/mongodb').connect('mongodb://localhost/ListingBuilder');// home
 // var db = exports.db = require('mongodb/mongodb').connect('mongodb://localhost:27017/ListingBuilder');//ali
 
 var remove  = exports.remove    = function(collection_name, object){
@@ -32,6 +32,33 @@ var one = exports.one = function(collection_name, query){
 		return null;
 	}
 }
+/**
+* @param cur_page_num, page_size 
+*/
+var page = exports.page = function(collection_name, query, cur_page_num, page_size){
+	
+	var col = db.getCollection(collection_name);
+	var curi = col.find(query);
+	
+	if(!cur_page_num || cur_page_num < 1){
+		cur_page_num = 1;
+	}
+	if(!page_size || page_size < 1){
+		page_size = 20;
+	}
+	
+	var last_page_num = Math.ceil(curi.count()/page_size);
+    last_page_num =  last_page_num < 1 ? 1 : last_page_num;
+	
+	cur_page_num = last_page_num < cur_page_num ?last_page_num:cur_page_num;
+	
+	curi = curi.skip(page_size * (cur_page_num - 1)).limit(page_size);
+	var  objects = curi.toArray().map(function(item){
+		return JSON.parse(item.toJSON());
+	});
+	
+	return {"objects":objects, "last_page_num": last_page_num, "cur_page_num":cur_page_num};
+}
 
 var all = exports.all = function(collection_name, query){
 	var col = db.getCollection(collection_name);
@@ -42,7 +69,7 @@ var all = exports.all = function(collection_name, query){
 	});
 	return objects;
 }
-	
+
 /////////////////////////////////////////////////////////////////////////////
 var health = exports.health = db.getCollection('Health');
 var watches = exports.watches = db.getCollection('Watches');
