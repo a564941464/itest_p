@@ -16,7 +16,7 @@ var hline = require('headline');
 //////////////////////////////////////////////////////////////////////
 
 exports.get_inventory_file = function(req, category, json_product_ids){
-	var products = db.all(category, {"_id":{$in:JSON.parse(json_product_ids)}})["objects"];
+	var products = db.all(category, {"_id":{$in:JSON.parse(json_product_ids)}});
 	
 	var headline = hline[category];
 	var headline_3 = hline[category + "_3"];
@@ -118,7 +118,6 @@ exports.child_products_complete_page = function(req, category, parent_product_id
 	return env.renderResponse("child_products.html",{
 		"parent_product":parent_product,
 		"child_products":child_products,
-		
 	});
 }
 
@@ -245,7 +244,7 @@ exports.delete_product = function(req, category, product_id) {
 
 exports.category = function(req, category, cur_page_num) {
 	var user = req.session.data['user'];
-	var page_size = 20;
+	var page_size = 15;
 	var result = db.page(category, {"user_id": user._id}, cur_page_num, page_size);
 	var products = result['objects'];
 	var last_page_num = result['last_page_num'];
@@ -253,9 +252,7 @@ exports.category = function(req, category, cur_page_num) {
 	if(!cur_page_num || cur_page_num < 1){
 		cur_page_num = 1;
 	}
-	if(!page_size || page_size < 1){
-		page_size = 20;
-	}
+
 	
 	cur_page_num = result['cur_page_num'];
 	

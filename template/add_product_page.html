@@ -173,7 +173,7 @@
 							</div>
 						</div>
 						{%else%}
-						{% ifequal fi.type "select"%}
+						{% ifequal fi.type "select_1"%}
 						<div class="form-group">
 							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
 							<div class="col-sm-10">
@@ -185,6 +185,19 @@
 							</div>
 						</div>
 						{%else%}
+						{% ifequal fi.type "select_2"%}
+						<div class="form-group">
+							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
+							<div class="col-sm-10">
+							<select class="form-control" name="{{fi.key}}" id="{{fi.key}}">
+								{% for v in fi.values%}
+								<option value="{{v.0}}">{{v.1}}</option>
+								{% endfor %}
+							</select>
+							</div>
+						</div>
+						{%else%}
+						{% endifequal%}
 						{% endifequal%}
 						{% endifequal%}
 						{% endifequal%}

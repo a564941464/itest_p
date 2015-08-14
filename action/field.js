@@ -86,7 +86,8 @@ var quantity = {
 	"key":"quantity",
 	"en":"Quantity",
 	"copy":true,
-	"type":"hidden", 
+	"type":"text", 
+	"value":30,
 }//quantity
 
 var bullet_point1 = {
@@ -197,6 +198,24 @@ var other_image_url1 = {
 	"type":"text", 
 }//other_image_url1
 
+var size_name = {
+	"spc": "101",
+	"edit": true,
+	"key":"size_name",
+	"en":"Size",
+	"copy":false,
+	"type":"text", 
+}//size_name
+
+var color_name = {
+	"spc": "101",
+	"edit": true,
+	"key":"color_name",
+	"en":"Colour",
+	"copy":false,
+	"type":"text", 
+}//color_name
+
 var other_image_url2 = {
 	"spc": "111",
 	"edit": true,
@@ -288,7 +307,7 @@ var Clothing = exports.Clothing = {
 	"variable":true,//parent child 
 	"field":[ item_sku, item_name, brand_name, external_product_id, external_product_id_type, standard_price, product_description, 
 		department_name(["baby-boys","baby-girls","boys","girls","mens","unisex-baby","womens"]),
-		variation_theme(["Color","Size","sizecolor"]),quantity, 
+		variation_theme(["Color","Size","sizecolor"]),quantity, size_name, color_name,
 		bullet_point1, bullet_point2, bullet_point3, bullet_point4, bullet_point5,
 		main_image_url, other_image_url1, other_image_url2,
 		generic_keywords1, generic_keywords2, generic_keywords3,generic_keywords4, generic_keywords5,
