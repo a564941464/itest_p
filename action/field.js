@@ -86,7 +86,7 @@ var quantity = {
 	"key":"quantity",
 	"en":"Quantity",
 	"copy":true,
-	"type":"hidden", 
+	"type":"text", 
 	"value":30,
 }//quantity
 
@@ -303,20 +303,108 @@ var refer_link = {
 	"type":"text", 
 }//refer_link
 
-var Clothing = exports.Clothing = {
+var feed_product_type = function(value){
+	return {
+		"spc": "111",
+		"edit": false,
+		"key":"feed_product_type",
+		"en":"Product Type",
+		"copy":true,
+		"type":"hidden", 
+		"value":value, 
+	}
+}//feed_product_type
+
+var condition_type = {
+	"spc": "111",
+	"edit": false,
+	"key":"condition_type",
+	"en":"Item Condition",
+	"copy":true,
+	"type":"hidden", 
+	"value":"New",
+}//condition_type
+
+var target_audience_keywords1 = function(valid_values){
+	return {
+		"spc": "111",
+		"edit": true,
+		"key":"target_audience_keywords1",
+		"en":"Target Audience1",
+		"copy":true,
+		"type":"select_1", 
+		"values":valid_values,
+	}
+}//target_audience_keywords1
+var target_audience_keywords2 = function(valid_values){
+	return {
+		"spc": "111",
+		"edit": true,
+		"key":"target_audience_keywords2",
+		"en":"Target Audience2",
+		"copy":true,
+		"type":"select_1", 
+		"values":valid_values,
+	}
+}//target_audience_keywords2
+
+var target_audience_keywords3 = function(valid_values){
+	return {
+		"spc": "111",
+		"edit": true,
+		"key":"target_audience_keywords3",
+		"en":"Target Audience3",
+		"copy":true,
+		"type":"select_1", 
+		"values":valid_values,
+	}
+}//target_audience_keywords3
+
+var PetSupplies = exports.PetSupplies = {
 	"variable":true,//parent child 
-	"field":[ refer_link, item_sku, item_name, brand_name, external_product_id, external_product_id_type, standard_price, product_description, 
-		department_name(["baby-boys","baby-girls","boys","girls","mens","unisex-baby","womens"]),
-		variation_theme(["Color","Size","sizecolor"]),quantity, size_name, color_name,
+	"field":[ item_sku, item_name, brand_name, external_product_id, external_product_id_type, standard_price, product_description, 
+		feed_product_type("PetSuppliesMisc"),
 		bullet_point1, bullet_point2, bullet_point3, bullet_point4, bullet_point5,
-		
 		generic_keywords1, generic_keywords2, generic_keywords3,generic_keywords4, generic_keywords5,
+		
+		target_audience_keywords1(["amphibians","birds","chinchillas","dogs","ferrets","fish","guinea-pigs","hamsters","horses","house-cats","insects","mice","rabbits","rats","reptiles"]),
+		target_audience_keywords2(["amphibians","birds","chinchillas","dogs","ferrets","fish","guinea-pigs","hamsters","horses","house-cats","insects","mice","rabbits","rats","reptiles"]),
+		target_audience_keywords3(["amphibians","birds","chinchillas","dogs","ferrets","fish","guinea-pigs","hamsters","horses","house-cats","insects","mice","rabbits","rats","reptiles"]),
+		
+		variation_theme(["Color","Size","sizecolor"]), quantity, size_name, color_name,
+		main_image_url, other_image_url1, other_image_url2,
 		item_type([
 			["infant-and-toddler-hats","Hats & Caps"],["dresses","Dresses"],
 		]),
 		parent_child("parent"),
-		relationship_type("Variation"), 
+		relationship_type("Variation"), refer_link, 
+		
+		],
+		
+	"single":	function(){return this.field.filter(function(item){return item.spc[0]=="1"})},
+	"parent":	function(){return this.field.filter(function(item){return item.spc[1]=="1"})},
+	"child"	:	function(){return this.field.filter(function(item){return item.spc[2]=="1"})},
+	
+	"single_edit":	function(){return this.field.filter(function(item){return item.spc[0]=="1" && item.edit})},
+	"parent_edit":	function(){return this.field.filter(function(item){return item.spc[1]=="1" && item.edit})},
+	"child_edit"	:function(){return this.field.filter(function(item){return item.spc[2]=="1" && item.edit})},
+}
+
+
+var Clothing = exports.Clothing = {
+	"variable":true,//parent child 
+	"field":[ item_sku, item_name, brand_name, external_product_id, external_product_id_type, standard_price, product_description, 
+		department_name(["baby-boys","baby-girls","boys","girls","mens","unisex-baby","womens"]),
+		variation_theme(["Color","Size","sizecolor"]),quantity, size_name, color_name,
+		bullet_point1, bullet_point2, bullet_point3, bullet_point4, bullet_point5,
 		main_image_url, other_image_url1, other_image_url2,
+		generic_keywords1, generic_keywords2, generic_keywords3,generic_keywords4, generic_keywords5,
+		item_type([
+			["infant-and-toddler-hats","Hats & Caps"],["dresses","Dresses"],["fashion-scarves", "Scarves"],
+		]),
+		parent_child("parent"),
+		relationship_type("Variation"), refer_link, 
+		
 		],
 		
 	"single":	function(){return this.field.filter(function(item){return item.spc[0]=="1"})},

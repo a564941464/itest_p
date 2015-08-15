@@ -10,14 +10,15 @@ exports.middleware = function (next) {
    return function(req) {
 		// return next(req);   
         var path = req.pathInfo;
-		// log.info(path)
         if(path.indexOf(".md") != -1){
-			log.info(path)
             var user = req.session.data['iluser'];            
             if(user && user.is_enabled){
-				return next(req);                
-            }else{
-			log.info("md5_login_password:-------------------------");
+				if(!user.is_super && path.indexOf("user_role.md")!=-1){
+					return response.html("<script>alert('no auth!');history.back();</script>");
+				}else{
+					return next(req); 
+				}
+            } else{
 				return response.html("<script>location.href='/index.html';</script>");    
 			}  
         }else{

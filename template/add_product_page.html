@@ -51,10 +51,15 @@
 							url: "/{{category}}/child_products_complete.md",
 							data: data,
 							success: function(json){
+								var all_ok = true;
 								if(json.status == 200){
 									$("#span_ok"+product_id).removeClass("sr-only");
 								}else{
+									all_ok = false;
 									$("#span_fail"+product_id).removeClass("sr-only");
+								}
+								if(all_ok){
+									location.href = "/{{category}}/category.md";
 								}
 							},
 							error: function(){

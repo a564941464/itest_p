@@ -1,16 +1,16 @@
 <div class="form-horizontal">
-<div class="form-group">
-	<label class="col-sm-1 control-label">{{parent_product.variation_theme|default:""}}</label>
-	<label class="col-sm-2 control-label">SKU</label>
-	<label class="col-sm-6 control-label">IMAGES</label>
-	
-</div>
+	<div class="form-group">
+		<label class="col-sm-1 control-label">{{parent_product.variation_theme|default:""}}</label>
+		<label class="col-sm-2 control-label">SKU</label>
+		<label class="col-sm-6 control-label">IMAGES</label>
+		
+	</div>
 </div>
 {%for cp in child_products%}
 <form class="form-horizontal" id-ref = "{{cp._id}}">
 <input type="hidden" value="{{cp._id}}" name="product_id" />
 <div class="form-group">
-	<label for="{{cp.key}}" class="col-sm-1 control-label">
+	<label for="{{cp._id}}" class="col-sm-1 control-label">
 		{%if cp.size_name%}{{cp.size_name}}{%endif%}
 		{%if cp.color_name %}&nbsp;{{cp.color_name}}{%endif%}
 	</label>

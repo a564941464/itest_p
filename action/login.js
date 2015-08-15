@@ -21,7 +21,7 @@ var login = exports.login = function(req) {
 	
    var user = db.one("User", {"login_name":login_name});
    // log.info("===========================================");
-   // log.info("login:"+JSON.stringify(user));
+   log.info("login:"+JSON.stringify(user));
    if(!user || user.is_enabled == false){
         return response.html("user is not existed! <a href='javascript:history.back()'>back.</a>");
         //return response.html("<script>alert('"+ all_chinese[166] +"');history.back();</script>"); 

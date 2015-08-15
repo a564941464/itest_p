@@ -115,6 +115,7 @@ exports.child_products_complete = function(req, category) {
 exports.child_products_complete_page = function(req, category, parent_product_id) {
 	var parent_product = db.one(category, {"_id":parent_product_id});
 	var child_products = db.all(category, {"parent_sku":parent_product.item_sku});
+
 	return env.renderResponse("child_products.html",{
 		"parent_product":parent_product,
 		"child_products":child_products,
@@ -245,15 +246,14 @@ exports.delete_product = function(req, category, product_id) {
 exports.category = function(req, category, cur_page_num) {
 	var user = req.session.data['iluser'];
 	var page_size = 15;
-	// var result = db.page(category, {"user_id": user._id}, cur_page_num, page_size, {"crt_time":1});
 	var result = db.page(category, {"user_id": user._id}, cur_page_num, page_size, {"crt_time":-1});
-	
 	var products = result['objects'];
 	var last_page_num = result['last_page_num'];
 	
 	if(!cur_page_num || cur_page_num < 1){
 		cur_page_num = 1;
 	}
+
 	
 	cur_page_num = result['cur_page_num'];
 	
