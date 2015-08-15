@@ -20,6 +20,11 @@ var item_sku = {
 	"en":"SKU",
 	"copy":true,
 	"type":"text", 
+	"func_in": function(sku){
+		if(sku&&sku.trim()){
+			return sku.trim().toUpperCase();
+		}
+	}, //save
 }//item_sku
 
 var item_name = {
@@ -55,8 +60,8 @@ var external_product_id_type = {
 	"key":"external_product_id_type",
 	"en":"Product ID Type",
 	"copy":false,
-	"type":"select_1", 
-	"values":['UPC'],
+	"type":"select_2", 
+	"values":[['UPC','UPC']],
 }//external_product_id_type
 
 var item_type = function(valid_values){
@@ -225,6 +230,33 @@ var other_image_url2 = {
 	"type":"text", 
 }//other_image_url2
 
+var other_image_url3 = {
+	"spc": "111",
+	"edit": true,
+	"key":"other_image_url3",
+	"en":"Other Image URL3",
+	"copy":true,
+	"type":"text", 
+}//other_image_url3
+
+var other_image_url4 = {
+	"spc": "111",
+	"edit": true,
+	"key":"other_image_url4",
+	"en":"Other Image URL4",
+	"copy":true,
+	"type":"text", 
+}//other_image_url4
+
+var other_image_url5 = {
+	"spc": "111",
+	"edit": true,
+	"key":"other_image_url5",
+	"en":"Other Image URL5",
+	"copy":true,
+	"type":"text", 
+}//other_image_url5
+
 var product_description = {
 	"spc": "111",
 	"edit": true,
@@ -362,7 +394,8 @@ var target_audience_keywords3 = function(valid_values){
 
 var PetSupplies = exports.PetSupplies = {
 	"variable":true,//parent child 
-	"field":[ item_sku, item_name, brand_name, external_product_id, external_product_id_type, standard_price, product_description, 
+	"field":[ refer_link, item_sku, item_name, brand_name, external_product_id, external_product_id_type, standard_price, product_description, 
+		
 		feed_product_type("PetSuppliesMisc"),
 		bullet_point1, bullet_point2, bullet_point3, bullet_point4, bullet_point5,
 		generic_keywords1, generic_keywords2, generic_keywords3,generic_keywords4, generic_keywords5,
@@ -370,15 +403,15 @@ var PetSupplies = exports.PetSupplies = {
 		target_audience_keywords1(["amphibians","birds","chinchillas","dogs","ferrets","fish","guinea-pigs","hamsters","horses","house-cats","insects","mice","rabbits","rats","reptiles"]),
 		target_audience_keywords2(["amphibians","birds","chinchillas","dogs","ferrets","fish","guinea-pigs","hamsters","horses","house-cats","insects","mice","rabbits","rats","reptiles"]),
 		target_audience_keywords3(["amphibians","birds","chinchillas","dogs","ferrets","fish","guinea-pigs","hamsters","horses","house-cats","insects","mice","rabbits","rats","reptiles"]),
+		relationship_type("Variation"),
+		quantity, size_name, color_name,
 		
-		variation_theme(["Color","Size","sizecolor"]), quantity, size_name, color_name,
-		main_image_url, other_image_url1, other_image_url2,
 		item_type([
 			["infant-and-toddler-hats","Hats & Caps"],["dresses","Dresses"],
 		]),
 		parent_child("parent"),
-		relationship_type("Variation"), refer_link, 
-		
+		variation_theme(["Color","SizeName","SizeNameColorName","Flavor","FlavorSize","PatternName"]), 
+		main_image_url, other_image_url1, other_image_url2, other_image_url3, other_image_url4,other_image_url5,
 		],
 		
 	"single":	function(){return this.field.filter(function(item){return item.spc[0]=="1"})},
@@ -397,13 +430,13 @@ var Clothing = exports.Clothing = {
 		department_name(["baby-boys","baby-girls","boys","girls","mens","unisex-baby","womens"]),
 		variation_theme(["Color","Size","sizecolor"]),quantity, size_name, color_name,
 		bullet_point1, bullet_point2, bullet_point3, bullet_point4, bullet_point5,
-		main_image_url, other_image_url1, other_image_url2,
 		generic_keywords1, generic_keywords2, generic_keywords3,generic_keywords4, generic_keywords5,
 		item_type([
 			["infant-and-toddler-hats","Hats & Caps"],["dresses","Dresses"],["fashion-scarves", "Scarves"],
 		]),
 		parent_child("parent"),
 		relationship_type("Variation"), refer_link, 
+		main_image_url, other_image_url1, other_image_url2, other_image_url3, other_image_url4,other_image_url5,
 		
 		],
 		

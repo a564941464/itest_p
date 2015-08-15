@@ -146,11 +146,16 @@ exports.add_product = function(req) {
 	var user = req.session.data['iluser'];
 	var crt_time = utils.cur_time();
 	
+	product.user_id = user._id;
+	product.crt_time = crt_time;
+	product.dtimes = 0;
+	
 	if(spc == "100"){
 
 
 	}else if(spc == "010"){
 		var variation_theme = req.postParams.variation_theme;
+		
 		if(variation_theme == "Size"){
 			var variation_theme_size = req.postParams.variation_theme_size;
 			var sizelist = variation_theme_size.split(",").map(function(item){return item.trim()});
@@ -160,13 +165,9 @@ exports.add_product = function(req) {
 				child_product.size_name = item;
 				child_product.parent_child = "child";
 				child_product.parent_sku = product.item_sku;
-				child_product.item_sku = product.item_sku + i;
+				child_product.item_sku = product.item_sku + item.toUpperCase();
 				child_product.item_name = product.item_name + " " +item;
 
-				product.user_id = user._id;
-				product.crt_time = crt_time;
-				product.dtimes = 0;
-				
 				db.save(category, child_product);
 
 			});
@@ -179,13 +180,9 @@ exports.add_product = function(req) {
 				child_product.color_name = item;
 				child_product.parent_child = "child";
 				child_product.parent_sku = product.item_sku;
-				child_product.item_sku = product.item_sku + i;
+				child_product.item_sku = product.item_sku + item.toUpperCase();
 				child_product.item_name = product.item_name + " " +item;
 
-				product.user_id = user._id;
-				product.crt_time = crt_time;
-				product.dtimes = 0;
-				
 				db.save(category, child_product);
 
 			});
@@ -202,25 +199,18 @@ exports.add_product = function(req) {
 					child_product.color_name = citem;
 					child_product.parent_child = "child";
 					child_product.parent_sku = product.item_sku;
-					child_product.item_sku = product.item_sku + i + j;
+					child_product.item_sku = product.item_sku + citem.toUpperCase() + sitem.toUpperCase();
 					
 					child_product.item_name = product.item_name + " " + sitem + " " + citem; 
 					
-					product.user_id = user._id;
-					product.crt_time = crt_time;
-					product.dtimes = 0;
-					
+
 					db.save(category, child_product);
 
 				});
 			});
 		}
 	}
-	
-	product.user_id = user._id;
-	product.crt_time = crt_time;
-	product.dtimes = 0;	
-	
+
 	db.save(category, product);
 	return response.json({"status":200, "msg":"ok", "spc":spc, "product_id":product._id});
 }
@@ -252,9 +242,7 @@ exports.category = function(req, category, cur_page_num) {
 	
 	if(!cur_page_num || cur_page_num < 1){
 		cur_page_num = 1;
-	}
-
-	
+	}	
 	cur_page_num = result['cur_page_num'];
 	
 	return env.renderResponse("category.html",{
