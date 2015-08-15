@@ -86,7 +86,7 @@ var quantity = {
 	"key":"quantity",
 	"en":"Quantity",
 	"copy":true,
-	"type":"text", 
+	"type":"hidden", 
 	"value":30,
 }//quantity
 
@@ -305,18 +305,18 @@ var refer_link = {
 
 var Clothing = exports.Clothing = {
 	"variable":true,//parent child 
-	"field":[ item_sku, item_name, brand_name, external_product_id, external_product_id_type, standard_price, product_description, 
+	"field":[ refer_link, item_sku, item_name, brand_name, external_product_id, external_product_id_type, standard_price, product_description, 
 		department_name(["baby-boys","baby-girls","boys","girls","mens","unisex-baby","womens"]),
 		variation_theme(["Color","Size","sizecolor"]),quantity, size_name, color_name,
 		bullet_point1, bullet_point2, bullet_point3, bullet_point4, bullet_point5,
-		main_image_url, other_image_url1, other_image_url2,
+		
 		generic_keywords1, generic_keywords2, generic_keywords3,generic_keywords4, generic_keywords5,
 		item_type([
 			["infant-and-toddler-hats","Hats & Caps"],["dresses","Dresses"],
 		]),
 		parent_child("parent"),
-		relationship_type("Variation"), refer_link, 
-		
+		relationship_type("Variation"), 
+		main_image_url, other_image_url1, other_image_url2,
 		],
 		
 	"single":	function(){return this.field.filter(function(item){return item.spc[0]=="1"})},

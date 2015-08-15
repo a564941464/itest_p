@@ -142,7 +142,7 @@ exports.add_product = function(req) {
 		}
 	});
 	
-	var user = req.session.data['user'];
+	var user = req.session.data['iluser'];
 	var crt_time = utils.cur_time();
 	
 	if(spc == "100"){
@@ -243,16 +243,17 @@ exports.delete_product = function(req, category, product_id) {
 }
 
 exports.category = function(req, category, cur_page_num) {
-	var user = req.session.data['user'];
+	var user = req.session.data['iluser'];
 	var page_size = 15;
-	var result = db.page(category, {"user_id": user._id}, cur_page_num, page_size);
+	// var result = db.page(category, {"user_id": user._id}, cur_page_num, page_size, {"crt_time":1});
+	var result = db.page(category, {"user_id": user._id}, cur_page_num, page_size, {"crt_time":-1});
+	
 	var products = result['objects'];
 	var last_page_num = result['last_page_num'];
 	
 	if(!cur_page_num || cur_page_num < 1){
 		cur_page_num = 1;
 	}
-
 	
 	cur_page_num = result['cur_page_num'];
 	

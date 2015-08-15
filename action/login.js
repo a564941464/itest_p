@@ -31,11 +31,12 @@ var login = exports.login = function(req) {
 	// log.info("md5_login_password:"+md5_login_password);
 	// log.info("user.password:"+user.password);
 	if(user.login_password == md5_login_password){
-        req.session.data['user'] = user;
-		 var cur_time = utils.cur_time();
-		 user.last_login_time = cur_time;
-		 db.save("User", user);
+		req.session.data['iluser'] = user;
+		var cur_time = utils.cur_time();
+		user.last_login_time = cur_time;
+		db.save("User", user);
         if(redirect_path){
+			// log.info("md5_login_password:"+md5_login_password);
             return response.redirect(base64.decode(redirect_path, "utf-8"));
         }else{
             return response.redirect("/intro.md");
@@ -48,8 +49,8 @@ var login = exports.login = function(req) {
 
 
 var login_user_display_name = exports.login_user_display_name = function(req) {
-    if(req.session.data['user']){
-		return response.html(req.session.data['user'].display_name + " welcome!");
+    if(req.session.data['iluser']){
+		return response.html(req.session.data['iluser'].display_name + " welcome!");
 	}else{
 		return response.html('');
 	}
@@ -57,7 +58,7 @@ var login_user_display_name = exports.login_user_display_name = function(req) {
 
 var logout = exports.logout = function(req) {
     req.session.data['islogon'] = false;    
-    req.session.data['user'] = null;
+    req.session.data['iluser'] = null;
     return response.redirect("/index.html");
 }
 var to_login = exports.to_login = function(req, redirect_path) {

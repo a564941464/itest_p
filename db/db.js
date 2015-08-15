@@ -4,8 +4,8 @@ var utils = require("utils");
 // var client = new mongo.MongoClient('localhost', 27017);
 // var db = client.getDB('test_database');
 
-var db = exports.db = require('mongodb/mongodb').connect('mongodb://localhost:20147/ListingBuilder');// office 
-// var db = exports.db = require('mongodb/mongodb').connect('mongodb://localhost/ListingBuilder');// home
+// var db = exports.db = require('mongodb/mongodb').connect('mongodb://localhost:20147/ListingBuilder');// office 
+var db = exports.db = require('mongodb/mongodb').connect('mongodb://localhost/ListingBuilder');// home
 // var db = exports.db = require('mongodb/mongodb').connect('mongodb://localhost:27017/ListingBuilder');//ali
 
 var remove  = exports.remove    = function(collection_name, object){
@@ -35,7 +35,7 @@ var one = exports.one = function(collection_name, query){
 /**
 * @param cur_page_num, page_size 
 */
-var page = exports.page = function(collection_name, query, cur_page_num, page_size){
+var page = exports.page = function(collection_name, query, cur_page_num, page_size, order_by){
 	
 	var col = db.getCollection(collection_name);
 	var curi = col.find(query);
@@ -52,21 +52,27 @@ var page = exports.page = function(collection_name, query, cur_page_num, page_si
 	
 	cur_page_num = last_page_num < cur_page_num ?last_page_num:cur_page_num;
 	
-	curi = curi.skip(page_size * (cur_page_num - 1)).limit(page_size);
-	var  objects = curi.toArray().map(function(item){
-		return JSON.parse(item.toJSON());
-	});
+	// curi = curi.sort(order_by).skip(page_size * (cur_page_num - 1)).limit(page_size);
+	// var  objects = curi.toArray().map(function(item){
+		// return JSON.parse(item.toJSON());
+	// });
 	
-	return {"objects":objects, "last_page_num": last_page_num, "cur_page_num":cur_page_num};
+	// return {"objects":objects, "last_page_num": last_page_num, "cur_page_num":cur_page_num};
+	
+	return {"objects":curi.sort_page(order_by, page_size * (cur_page_num - 1), page_size),
+			"last_page_num": last_page_num, "cur_page_num":cur_page_num};
+}
+
+var all_sort = exports.all_sort = function(collection_name, query, order_by){
+	var col = db.getCollection(collection_name);
+	var objects = col.find(query).sort(order_by);
+	return objects;
 }
 
 var all = exports.all = function(collection_name, query){
 	var col = db.getCollection(collection_name);
-	var curi = col.find(query);
+	var objects = col.find(query);
 	
-	var  objects = curi.toArray().map(function(item){
-		return JSON.parse(item.toJSON());
-	});
 	return objects;
 }
 

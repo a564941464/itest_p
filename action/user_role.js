@@ -97,14 +97,14 @@ var add_user = exports.add_user = function(req){
 }
 
 var user_list = exports.user_list = function(req){
-	var users = db.all('User');
+	var users = db.all_sort('User',{},{"crt_time": 1});
     return env.renderResponse('user_list.html', {
 		"users":users,
 	});
 }
 
 var role_list = exports.role_list = function(req){
-	var roles = db.all('Role');
+	var roles = db.all_sort('Role',{},{"crt_time": 1});
     return env.renderResponse('role_list.html', {
 		"roles":roles,
 	});

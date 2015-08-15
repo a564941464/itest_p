@@ -92,7 +92,7 @@
 			<div class="tab-content">
 				<div role="tabpanel" class="tab-pane active" id="single">
 					<br/>
-					<form class="form-horizontal">
+					<form class="">
 					<input type="hidden" name="category" value="{{category}}" />
 					<input type="hidden" name="spc" value="100" />
 					{%for fi in single %}
@@ -102,7 +102,7 @@
 						{% ifequal fi.type "text"%}
 						<div class="form-group">
 							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
-							<div class="col-sm-10">
+							<div class="col-sm-4">
 							<input type="text" class="form-control" name="{{fi.key}}" id="{{fi.key}}" placeholder="{{fi.en}}">
 							</div>
 						</div>
@@ -110,7 +110,7 @@
 						{% ifequal fi.type "textarea"%}
 						<div class="form-group">
 							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
-							<div class="col-sm-10">
+							<div class="col-sm-4">
 							<textarea class="form-control" rows="3" name="{{fi.key}}" id="{{fi.key}}" placeholder="{{fi.en}}"></textarea>
 							</div>
 						</div>
@@ -118,7 +118,7 @@
 						{% ifequal fi.type "select_1"%}
 						<div class="form-group">
 							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
-							<div class="col-sm-10">
+							<div class="col-sm-4">
 							<select class="form-control" name="{{fi.key}}" id="{{fi.key}}">
 								{% for v in fi.values%}
 								<option value="{{v}}">{{v}}</option>
@@ -130,7 +130,7 @@
 						{% ifequal fi.type "select_2"%}
 						<div class="form-group">
 							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
-							<div class="col-sm-10">
+							<div class="col-sm-4">
 							<select class="form-control" name="{{fi.key}}" id="{{fi.key}}">
 								{% for v in fi.values%}
 								<option value="{{v.0}}">{{v.1}}</option>
@@ -150,7 +150,7 @@
 				{% if variable %}
 				<div role="tabpanel" class="tab-pane" id="parent">
 					<br/>
-					<form class="form-horizontal">
+					<form class="">
 					<input type="hidden" name="category" value="{{category}}" />
 					<input type="hidden" name="spc" value="010" />
 					{%for fi in parent %}						
@@ -160,7 +160,7 @@
 						{% ifequal fi.type "text"%}
 						<div class="form-group">
 							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
-							<div class="col-sm-10">
+							<div class="col-sm-4">
 							<input type="text" class="form-control" name="{{fi.key}}" id="{{fi.key}}" placeholder="{{fi.en}}">
 							</div>
 						</div>
@@ -168,7 +168,7 @@
 						{% ifequal fi.type "textarea"%}
 						<div class="form-group">
 							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
-							<div class="col-sm-10">
+							<div class="col-sm-4">
 							<textarea class="form-control" name="{{fi.key}}" rows="3" id="{{fi.key}}" placeholder="{{fi.en}}"></textarea>
 							</div>
 						</div>
@@ -176,7 +176,7 @@
 						{% ifequal fi.type "select_1"%}
 						<div class="form-group">
 							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
-							<div class="col-sm-10">
+							<div class="col-sm-4">
 							<select class="form-control" name="{{fi.key}}" id="{{fi.key}}">
 								{% for v in fi.values%}
 								<option value="{{v}}">{{v}}</option>
@@ -188,7 +188,7 @@
 						{% ifequal fi.type "select_2"%}
 						<div class="form-group">
 							<label for="{{fi.key}}" class="col-sm-2 control-label">{{fi.en}}</label>
-							<div class="col-sm-10">
+							<div class="col-sm-4">
 							<select class="form-control" name="{{fi.key}}" id="{{fi.key}}">
 								{% for v in fi.values%}
 								<option value="{{v.0}}">{{v.1}}</option>
@@ -215,7 +215,7 @@
 <div id="Color" style="display:none;">
 	<div class="form-group variation_theme_content">
 		<label for="variation_theme_color" class="col-sm-2 control-label">Variation Theme Color</label>
-		<div class="col-sm-10">
+		<div class="col-sm-4">
 		<input type="text" class="form-control" name="variation_theme_color" id="variation_theme_color" placeholder="Variation Theme Color">
 		</div>
 	</div>
@@ -223,7 +223,7 @@
 <div id="Size" style="display:none;">
 	<div class="form-group variation_theme_content">
 		<label for="variation_theme_size" class="col-sm-2 control-label">Variation Theme Size</label>
-		<div class="col-sm-10">
+		<div class="col-sm-4">
 		<input type="text" class="form-control" name="variation_theme_size" id="variation_theme_size" placeholder="Variation Theme Size">
 		</div>
 	</div>
@@ -231,13 +231,13 @@
 <div id="sizecolor" style="display:none;">
 	<div class="form-group variation_theme_content">
 		<label for="variation_theme_color" class="col-sm-2 control-label">Variation Theme Color</label>
-		<div class="col-sm-10">
+		<div class="col-sm-4">
 		<input type="text" class="form-control" name="variation_theme_color" id="variation_theme_color" placeholder="Variation Theme Color">
 		</div>
 	</div>
 	<div class="form-group variation_theme_content">
 		<label for="variation_theme_size" class="col-sm-2 control-label">Variation Theme Size</label>
-		<div class="col-sm-10">
+		<div class="col-sm-4">
 		<input type="text" class="form-control" name="variation_theme_size" id="variation_theme_size" placeholder="Variation Theme Size">
 		</div>
 	</div>

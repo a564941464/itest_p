@@ -89,7 +89,7 @@
 			<div class="tab-content">
 				<div role="tabpanel" class="tab-pane active" id="{{product._id}}">
 					<br/>
-					<form class="form-horizontal">
+					<form class="">
 					<input type="hidden" name="category" value="{{category}}" />
 					<input type="hidden" name="product_id" value="{{product._id}}" />
 					<input type="hidden" name="spc" value="100" />
@@ -100,7 +100,7 @@
 						{% ifequal dt.type "text"%}
 						<div class="form-group">
 							<label for="{{dt.key}}" class="col-sm-2 control-label">{{dt.en}}</label>
-							<div class="col-sm-10">
+							<div class="col-sm-4">
 							<input type="text" class="form-control" name="{{dt.key}}" id="{{dt.key}}" value="{%if dt.value%}{{dt.value}}{%endif%}" placeholder="{{dt.en}}" />
 							</div>
 						</div>
@@ -108,7 +108,7 @@
 						{% ifequal dt.type "textarea"%}
 						<div class="form-group">
 							<label for="{{dt.key}}" class="col-sm-2 control-label">{{dt.en}}</label>
-							<div class="col-sm-10">
+							<div class="col-sm-4">
 							<textarea class="form-control" rows="3" name="{{dt.key}}" id="{{dt.key}}" placeholder="{{dt.en}}">{%if dt.value%}{{dt.value}}{%endif%}</textarea>
 							</div>
 						</div>
@@ -116,7 +116,7 @@
 						{% ifequal dt.type "select_1"%}
 						<div class="form-group">
 							<label for="{{dt.key}}" class="col-sm-2 control-label">{{dt.en}}</label>
-							<div class="col-sm-10">
+							<div class="col-sm-4">
 							<select class="form-control" name="{{dt.key}}" id="{{dt.key}}">
 								{% for v in dt.values%}
 								<option value="{{v}}" {%ifequal dt.value v%}selected{%endifequal%}>{{v}}</option>
@@ -128,7 +128,7 @@
 						{% ifequal dt.type "select_2"%}
 						<div class="form-group">
 							<label for="{{dt.key}}" class="col-sm-2 control-label">{{dt.en}}</label>
-							<div class="col-sm-10">
+							<div class="col-sm-4">
 							<select class="form-control" name="{{dt.key}}" id="{{dt.key}}">
 								{% for v in dt.values%}
 								<option value="{{v.0}}" {%ifequal dt.value v.0%}selected{%endifequal%}>{{v.1}}</option>
@@ -153,7 +153,7 @@
 <div id="Color" style="display:none;">
 	<div class="form-group variation_theme_content">
 		<label for="variation_theme_color" class="col-sm-2 control-label">Variation Theme Color</label>
-		<div class="col-sm-10">
+		<div class="col-sm-4">
 		<input type="text" class="form-control" name="variation_theme_color" id="variation_theme_color" placeholder="Variation Theme Color">
 		</div>
 	</div>
@@ -161,7 +161,7 @@
 <div id="Size" style="display:none;">
 	<div class="form-group variation_theme_content">
 		<label for="variation_theme_size" class="col-sm-2 control-label">Variation Theme Size</label>
-		<div class="col-sm-10">
+		<div class="col-sm-4">
 		<input type="text" class="form-control" name="variation_theme_size" id="variation_theme_size" placeholder="Variation Theme Size">
 		</div>
 	</div>
@@ -169,13 +169,13 @@
 <div id="sizecolor" style="display:none;">
 	<div class="form-group variation_theme_content">
 		<label for="variation_theme_color" class="col-sm-2 control-label">Variation Theme Color</label>
-		<div class="col-sm-10">
+		<div class="col-sm-4">
 		<input type="text" class="form-control" name="variation_theme_color" id="variation_theme_color" placeholder="Variation Theme Color">
 		</div>
 	</div>
 	<div class="form-group variation_theme_content">
 		<label for="variation_theme_size" class="col-sm-2 control-label">Variation Theme Size</label>
-		<div class="col-sm-10">
+		<div class="col-sm-4">
 		<input type="text" class="form-control" name="variation_theme_size" id="variation_theme_size" placeholder="Variation Theme Size">
 		</div>
 	</div>

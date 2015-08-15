@@ -608,6 +608,22 @@ module.exports = (function(mongo) {
                 return new mongo.MongoDocument(self.collection, r);
             });
         },
+		/**
+		 * @method sort
+		 * @param {orderBy} eg. {"_id":1} asc {"_id":1} desc
+		 * @return {Array} javascript array
+		 **/
+        sort: function(orderBy) {
+            return mongo2Object(this.__javaObj.sort(object2Mongo(orderBy)).toArray());
+        },
+		/**
+		 * @method sort
+		 * @param {orderBy} eg. {"_id":1} asc {"_id":1} desc
+		 * @return {Array} javascript array
+		 **/
+        sort_page: function(orderBy, offset, limit) {
+            return mongo2Object(this.__javaObj.sort(object2Mongo(orderBy)).skip(offset).limit(limit).toArray());
+        },
         toString: function() {
             return "[Mongo" + this.__javaObj.toString() + "]";
         },
