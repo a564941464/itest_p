@@ -6,6 +6,9 @@ var vtmap = exports.vtmap =  {
 	'Size':['size_name'],
 	'SizeName':['size_name'],
 	'Style':['style_name'],
+	'Flavor':['flavor_name'],
+	'FlavorSize':['flavor_name','size_name'],
+	'PatternName':['pattern_name'],
 	
 }
 /**
@@ -405,6 +408,7 @@ var PetSupplies = exports.PetSupplies = {
 	"field":[ refer_link, item_sku, item_name, brand_name, external_product_id, external_product_id_type, standard_price, product_description, 
 		
 		feed_product_type("PetSuppliesMisc"),
+		variation_theme(["Color","SizeName","SizeNameColorName","Flavor","FlavorSize","PatternName"]), 
 		bullet_point1, bullet_point2, bullet_point3, bullet_point4, bullet_point5,
 		generic_keywords1, generic_keywords2, generic_keywords3,generic_keywords4, generic_keywords5,
 		
@@ -418,7 +422,6 @@ var PetSupplies = exports.PetSupplies = {
 			["infant-and-toddler-hats","Hats & Caps"],["dresses","Dresses"],
 		]),
 		parent_child("parent"),
-		variation_theme(["Color","SizeName","SizeNameColorName","Flavor","FlavorSize","PatternName"]), 
 		main_image_url, other_image_url1, other_image_url2, other_image_url3, other_image_url4,other_image_url5,
 		],
 		

@@ -157,7 +157,7 @@ exports.add_product = function(req) {
 		var variation_theme = req.postParams.variation_theme;
 		var vtmclist2v = req.postParams.variation_theme_content.trim().split("/\r\n|\n/").filter(function(item){return item.trim()!=''}).map(function(itm){return itm.split(",")});
 		
-		var vtlist = field.vtmap[variation_theme];
+		var vtlist = fd.vtmap[variation_theme];
 		//////////////////////
 		// variation_theme_content [[],[]]
 		if(vtmclist2v.length == 0){
@@ -196,8 +196,9 @@ exports.add_product = function(req) {
 				});
 			}			
 		}
-		generate_child_product(vtmclist2v, [], "", "");
-		//////////////////////
+	generate_child_product(vtmclist2v, [], "", "");
+	}
+	//////////////////////
 	db.save(category, product);
 	return response.json({"status":200, "msg":"ok", "spc":spc, "product_id":product._id});
 }
