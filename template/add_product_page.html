@@ -41,7 +41,7 @@
 					var _this = $(this);
 					$("#parent .variation_theme_content").remove();
 					//_this.parent().parent().after($("#"+_this.val()).html());
-					_this.parent().parent().after($("#sizecolor").html());
+					_this.parent().parent().after($("#variation_theme_content_div").html());
 				});
 				$("#child_product_additionalinfo_save_btn").click(function(){
 					$("#child_products_div form").each(function(){
@@ -218,33 +218,11 @@
 	</div>	
 </div>
 
-<div id="Color" style="display:none;">
+<div id="variation_theme_content_div" style="display:none;">
 	<div class="form-group variation_theme_content">
-		<label for="variation_theme_color" class="col-sm-2 control-label">Variation Theme Color</label>
+		<label for="variation_theme_content" class="col-sm-2 control-label">Variation Theme Color</label>
 		<div class="col-sm-4">
-		<input type="text" class="form-control" name="variation_theme_color" id="variation_theme_color" placeholder="Variation Theme Color">
-		</div>
-	</div>
-</div>
-<div id="Size" style="display:none;">
-	<div class="form-group variation_theme_content">
-		<label for="variation_theme_size" class="col-sm-2 control-label">Variation Theme Size</label>
-		<div class="col-sm-4">
-		<input type="text" class="form-control" name="variation_theme_size" id="variation_theme_size" placeholder="Variation Theme Size">
-		</div>
-	</div>
-</div>
-<div id="sizecolor" style="display:none;">
-	<div class="form-group variation_theme_content">
-		<label for="variation_theme_color" class="col-sm-2 control-label">Variation Theme Color</label>
-		<div class="col-sm-4">
-		<input type="text" class="form-control" name="variation_theme_color" id="variation_theme_color" placeholder="Variation Theme Color">
-		</div>
-	</div>
-	<div class="form-group variation_theme_content">
-		<label for="variation_theme_size" class="col-sm-2 control-label">Variation Theme Size</label>
-		<div class="col-sm-4">
-		<input type="text" class="form-control" name="variation_theme_size" id="variation_theme_size" placeholder="Variation Theme Size">
+		<input type="text" class="form-control" name="variation_theme_content" id="variation_theme_content" placeholder="Variation Theme Conent">
 		</div>
 	</div>
 </div>

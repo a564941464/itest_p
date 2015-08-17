@@ -155,62 +155,49 @@ exports.add_product = function(req) {
 
 	}else if(spc == "010"){
 		var variation_theme = req.postParams.variation_theme;
+		var vtmclist2v = req.postParams.variation_theme_content.trim().split("/\r\n|\n/").filter(function(item){return item.trim()!=''}).map(function(itm){return itm.split(",")});
 		
-		if(variation_theme == "Size"){
-			var variation_theme_size = req.postParams.variation_theme_size;
-			var sizelist = variation_theme_size.split(",").map(function(item){return item.trim()});
-			sizelist.forEach(function(item, i){
-				var child_product = utils.clone(product);
-
-				child_product.size_name = item;
-				child_product.parent_child = "child";
-				child_product.parent_sku = product.item_sku;
-				child_product.item_sku = product.item_sku + item.toUpperCase();
-				child_product.item_name = product.item_name + " " +item;
-
-				db.save(category, child_product);
-
-			});
-		}else if(variation_theme == "Color"){
-			var variation_theme_color = req.postParams.variation_theme_color;
-			var colorlist = variation_theme_color.split(",").map(function(item){return item.trim()});
-
-			colorlist.forEach(function(item, i){
-				var child_product = utils.clone(product);
-				child_product.color_name = item;
-				child_product.parent_child = "child";
-				child_product.parent_sku = product.item_sku;
-				child_product.item_sku = product.item_sku + item.toUpperCase();
-				child_product.item_name = product.item_name + " " +item;
-
-				db.save(category, child_product);
-
-			});
-			
-		}else if(variation_theme == "sizecolor"){
-			var variation_theme_size = req.postParams.variation_theme_size;
-			var variation_theme_color = req.postParams.variation_theme_color;
-			var sizelist = variation_theme_size.split(",").map(function(item){return item.trim()});
-			var colorlist = variation_theme_color.split(",").map(function(item){return item.trim()});
-			sizelist.forEach(function(sitem, i){
-				colorlist.forEach(function(citem, j){
+		var vtlist = field.vtmap[variation_theme];
+		//////////////////////
+		// variation_theme_content [[],[]]
+		if(vtmclist2v.length == 0){
+			return response.json({"status":301, "msg":"variation_theme_content can not be empty!"});
+		}
+		var s_len = vtmclist2v.length;
+		var vtname_vtvalue_list = [];
+		
+		function generate_child_product(vtmclist2v, vtname_vtvalue_list, add_to_sku, add_to_name){
+			if(vtmclist2v.length == 1){
+				var vtname = vtlist[s_len - vtmclist2v.length];
+				var vtmclist1v = vtmclist2v.shift();
+				vtmclist1v.forEach(function(item){
+					add_to_sku += item;
+					add_to_name += " " + item;
+					vtname_vtvalue_list.push([vtname,item]);
+					
 					var child_product = utils.clone(product);
-					child_product.size_name = sitem;
-					child_product.color_name = citem;
+					vtname_vtvalue_list.forEach(function(nv){
+						child_product[nv[0]] = nv[1];
+					});
 					child_product.parent_child = "child";
 					child_product.parent_sku = product.item_sku;
-					child_product.item_sku = product.item_sku + citem.toUpperCase() + sitem.toUpperCase();
-					
-					child_product.item_name = product.item_name + " " + sitem + " " + citem; 
-					
-
+					child_product.item_sku = product.item_sku + add_to_sku.toUpperCase();
+					child_product.item_name = product.item_name + " " + add_to_name;
 					db.save(category, child_product);
-
 				});
-			});
+			}else{				
+				var vtname = vtlist[s_len - vtmclist2v.length];
+				var vtmclist1v = vtmclist2v.shift();
+				vtmclist1v.forEach(function(item){
+					add_to_sku += item;
+					add_to_name += " " + item;
+					vtname_vtvalue_list.push([vtname,item]);
+					generate_child_product(vtmclist2v, vtname_vtvalue_list, add_to_sku, add_to_name);
+				});
+			}			
 		}
-	}
-
+		generate_child_product(vtmclist2v, [], "", "");
+		//////////////////////
 	db.save(category, product);
 	return response.json({"status":200, "msg":"ok", "spc":spc, "product_id":product._id});
 }

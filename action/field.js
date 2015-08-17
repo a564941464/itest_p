@@ -1,5 +1,13 @@
 // var ext_keys = exports.ext_keys = ["refer_link","crt_time","update_time"];
-
+var vtmap = exports.vtmap =  {
+	'sizecolor':['color_name','size_name'],
+	'SizeNameColorName':['color_name','size_name'],
+	'Color':['color_name'],
+	'Size':['size_name'],
+	'SizeName':['size_name'],
+	'Style':['style_name'],
+	
+}
 /**
 * @param type text, textarea, select_1, select_2, radio
 * sku for example 
@@ -428,7 +436,7 @@ var Clothing = exports.Clothing = {
 	"variable":true,//parent child 
 	"field":[ item_sku, item_name, brand_name, external_product_id, external_product_id_type, standard_price, product_description, 
 		department_name(["baby-boys","baby-girls","boys","girls","mens","unisex-baby","womens"]),
-		variation_theme(["Color","Size","sizecolor"]),quantity, size_name, color_name,
+		variation_theme(["sizecolor"]), quantity, size_name, color_name,
 		bullet_point1, bullet_point2, bullet_point3, bullet_point4, bullet_point5,
 		generic_keywords1, generic_keywords2, generic_keywords3,generic_keywords4, generic_keywords5,
 		item_type([
