@@ -165,12 +165,14 @@ exports.add_product = function(req) {
 		}
 		var s_len = vtmclist2v.length;
 		var vtname_vtvalue_list = [];
-		
+		var add_to_sku = "";
+		var add_to_name = "";
 		function generate_child_product(vtmclist2v, vtname_vtvalue_list, add_to_sku, add_to_name){
 			if(vtmclist2v.length == 1){
 				var vtname = vtlist[s_len - vtmclist2v.length];
 				var vtmclist1v = vtmclist2v.shift();
 				vtmclist1v.forEach(function(item){
+					item = item.trim();
 					add_to_sku += item;
 					add_to_name += " " + item;
 					vtname_vtvalue_list.push([vtname,item]);
@@ -183,12 +185,14 @@ exports.add_product = function(req) {
 					child_product.parent_sku = product.item_sku;
 					child_product.item_sku = product.item_sku + add_to_sku.toUpperCase();
 					child_product.item_name = product.item_name + " " + add_to_name;
+					
 					db.save(category, child_product);
 				});
-			}else{				
+			}else{
 				var vtname = vtlist[s_len - vtmclist2v.length];
 				var vtmclist1v = vtmclist2v.shift();
 				vtmclist1v.forEach(function(item){
+					item = item.trim();
 					add_to_sku += item;
 					add_to_name += " " + item;
 					vtname_vtvalue_list.push([vtname,item]);
@@ -196,7 +200,7 @@ exports.add_product = function(req) {
 				});
 			}			
 		}
-	generate_child_product(vtmclist2v, [], "", "");
+	generate_child_product(vtmclist2v, vtname_vtvalue_list, add_to_sku, add_to_name);
 	}
 	//////////////////////
 	db.save(category, product);

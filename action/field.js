@@ -419,7 +419,7 @@ var PetSupplies = exports.PetSupplies = {
 		quantity, size_name, color_name,
 		
 		item_type([
-			["infant-and-toddler-hats","Hats & Caps"],["dresses","Dresses"],
+			["pet-bed-blankets","Bed Blankets"],["pet-squeak-toys","Squeak Toys"],["pet-toys","Other (Toys)"],["pet-chew-toys","Chew Toys"],["pet-toy-balls","Balls"],["pet-toy-ropes","Ropes"],
 		]),
 		parent_child("parent"),
 		main_image_url, other_image_url1, other_image_url2, other_image_url3, other_image_url4,other_image_url5,
