@@ -11,8 +11,7 @@
 <input type="hidden" value="{{cp._id}}" name="product_id" />
 <div class="form-group">
 	<label for="{{cp._id}}" class="col-sm-2 control-label">
-		{%if cp.size_name%}{{cp.size_name}}{%endif%}
-		{%if cp.color_name %}&nbsp;{{cp.color_name}}{%endif%}
+		{{cp.vtcontents}}
 	</label>
 	<div class="col-sm-2">
 		<input type="text" class="form-control" value="{{cp.item_sku}}" name="item_sku" id="{{cp._id}}" placeholder="SKU ">

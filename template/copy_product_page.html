@@ -14,7 +14,7 @@
 		<script src="/bootstrap/js/bootstrap.min.js"></script>
 		<script>
 			$(document).ready(function(){
-				$("#update_save_btn").click(function(){
+				$("#copy_save_btn").click(function(){
 					var data = $(".tab-pane.active form").serialize();
 					
 					$.ajax({
@@ -39,8 +39,8 @@
 				});
 				$("#child_product_additionalinfo_save_btn").click(function(){
 					$("#child_products_div form").each(function(){
-						var product_id = $(this).attr("id-ref");						
-						var data = $(this).serialize();						
+						var product_id = $(this).attr("id-ref");
+						var data = $(this).serialize();
 						$.ajax({
 							type: "POST",
 							url: "/{{category}}/child_products_complete.md",
@@ -71,9 +71,9 @@
 	<div class="panel-body">
 		<ol class="breadcrumb">
 			<li><a href="/{{category}}/category.md">{{category}}</a></li>
-			<li class="active">Update a product</li>
+			<li class="active">Copy a product</li>
 		</ol>
-		<div class="pull-right"><a class="btn btn-primary" id="update_save_btn" href="#" role="button">Save</a></div>
+		<div class="pull-right"><a class="btn btn-primary" id="copy_save_btn" href="#" role="button">Save</a></div>
 		<div>
 			<!-- Nav tabs -->
 			<ul class="nav nav-tabs nav-pills" role="tablist">

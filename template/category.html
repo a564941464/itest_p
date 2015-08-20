@@ -80,8 +80,10 @@
 				操作<span class="caret"></span>
 				</div>
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-					<li><a href="#">复制</a></li>
 					<li><a href="/{{category}}/{{p._id}}/update_product_page.md">编辑</a></li>
+					{%ifnotequal p.parent_child "parent"%}
+					<li><a href="/{{category}}/{{p._id}}/copy_product_page.md">复制</a></li>
+					{%endifnotequal%}
 					{%ifequal p.parent_child "parent"%}
 					<li><a href="#" class="action_child" id-ref="{{p._id}}" data-toggle="modal" data-target="#child_products_modal">子产品</a></li>
 					{%endifequal%}
@@ -96,7 +98,7 @@
 		<td>{{p.item_name}}</td>
 		<td>{{p.external_product_id_type}}</td>
 		<td>{{p.standard_price}}</td>
-		<td>{%if p.parent_child%}{{p.parent_child|default:""}}{%endif%}</td>
+		<td>{%if p.parent_child%}{{p.parent_child|default:""}}{%else%}single{%endif%}</td>
 		<td><a href="{{p.product_link}}" target="_blank">查看</a></td>
 	</tr>
 	{%endfor%}

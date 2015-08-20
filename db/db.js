@@ -58,7 +58,7 @@ var page = exports.page = function(collection_name, query, cur_page_num, page_si
 	// });
 	
 	// return {"objects":objects, "last_page_num": last_page_num, "cur_page_num":cur_page_num};
-	log.info(order_by,page_size * (cur_page_num - 1), page_size )
+	// log.info(order_by,page_size * (cur_page_num - 1), page_size )
 	return {"objects":curi.sort_page(order_by, page_size * (cur_page_num - 1), page_size),
 			"last_page_num": last_page_num, "cur_page_num":cur_page_num};
 }

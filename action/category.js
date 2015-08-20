@@ -15,6 +15,37 @@ var hline = require('headline');
 
 //////////////////////////////////////////////////////////////////////
 
+exports.copy_product_page = function(req, category, product_id) {
+	var product = db.one(category, {"_id":product_id});
+	var field = fd[category];
+	
+	var data, spc_product;
+	if(product.parent_child == "parent"){
+		data = field.parent_edit();
+		spc_product = "Parent Product";
+	}else if(product.parent_child == "child"){
+		data = field.child_edit();
+		spc_product = "Child Product";
+	}else{
+		data = field.single_edit();
+		spc_product = "Single Product";
+	}
+	data.forEach(function(item){
+		if(item.func_out){
+			item.value = item.func_out(product[item.key]);
+		}else{
+			item.value = product[item.key]?product[item.key]:""; 
+		}
+	});	
+	return env.renderResponse("update_product_page.html",{
+		"product":	product,
+		"category":	category,
+		"data":		data,
+		"spc_product":		spc_product,
+		
+	});
+}
+
 exports.get_inventory_file = function(req, category, json_product_ids){
 	var products = db.all(category, {"_id":{$in:JSON.parse(json_product_ids)}});
 	
@@ -115,7 +146,17 @@ exports.child_products_complete = function(req, category) {
 exports.child_products_complete_page = function(req, category, parent_product_id) {
 	var parent_product = db.one(category, {"_id":parent_product_id});
 	var child_products = db.all(category, {"parent_sku":parent_product.item_sku});
-
+	var vtlist = fd.vtmap[parent_product.variation_theme];
+	child_products.forEach(function(cp){
+		cp.vtcontents = "";
+		vtlist.forEach(function(vt,i){
+			if(i == 0){
+				cp.vtcontents += cp[vt];
+			}else{
+				cp.vtcontents += "/" + cp[vt];
+			}
+		});
+	});
 	return env.renderResponse("child_products.html",{
 		"parent_product":parent_product,
 		"child_products":child_products,
@@ -195,7 +236,7 @@ exports.add_product = function(req) {
 			
 			rs.forEach(function(item, i){
 				item = item.trim();
-				child_product[item] = vtlist[i];
+				child_product[vtlist[i]] = item;
 				add_to_name += " " + item;
 				add_to_sku += item;
 			});
@@ -223,6 +264,7 @@ exports.add_product_page = function(req, category) {
 	   
 	});
 }
+
 exports.delete_product = function(req, category, product_id) {
 	var product = db.one(category, {"_id":product_id});
 	db.remove(category, product);

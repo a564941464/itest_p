@@ -15,8 +15,7 @@
 		<script>
 			$(document).ready(function(){
 				$("#add_save_btn").click(function(){
-					var data = $(".tab-pane.active form").serialize();
-					
+					var data = $(".tab-pane.active form").serialize();					
 					$.ajax({
 						type: "POST",
 						url: "/add_product.md",
