@@ -1,7 +1,7 @@
 // var ext_keys = exports.ext_keys = ["refer_link","crt_time","update_time"];
 var vtmap = exports.vtmap =  {
-	'sizecolor':['color_name','size_name'],
-	'SizeNameColorName':['color_name','size_name'],
+	'sizecolor':['size_name','color_name'],
+	'SizeNameColorName':['size_name','color_name'],
 	'Color':['color_name'],
 	'Size':['size_name'],
 	'SizeName':['size_name'],
@@ -287,6 +287,15 @@ var product_description = {
 	}, //view 
 }//product_description
 
+var variation_theme_content = {
+	"spc": "010",
+	"edit": false,
+	"key":"variation_theme_content",
+	"en":"Variation Theme Content",
+	"copy":true,
+	"type":"textarea", 
+}//variation_theme_content
+
 var department_name = function(valid_values) {
 	return {
 		"spc": "111",
@@ -408,7 +417,7 @@ var PetSupplies = exports.PetSupplies = {
 	"field":[ refer_link, item_sku, item_name, brand_name, external_product_id, external_product_id_type, standard_price, product_description, 
 		
 		feed_product_type("PetSuppliesMisc"),
-		variation_theme(["Color","SizeName","SizeNameColorName","Flavor","FlavorSize","PatternName"]), 
+		variation_theme(["Color","SizeName","SizeNameColorName","Flavor","FlavorSize","PatternName"]), variation_theme_content,
 		bullet_point1, bullet_point2, bullet_point3, bullet_point4, bullet_point5,
 		generic_keywords1, generic_keywords2, generic_keywords3,generic_keywords4, generic_keywords5,
 		
@@ -439,7 +448,7 @@ var Clothing = exports.Clothing = {
 	"variable":true,//parent child 
 	"field":[ item_sku, item_name, brand_name, external_product_id, external_product_id_type, standard_price, product_description, 
 		department_name(["baby-boys","baby-girls","boys","girls","mens","unisex-baby","womens"]),
-		variation_theme(["sizecolor"]), quantity, size_name, color_name,
+		variation_theme(["sizecolor"]), variation_theme_content, quantity, size_name, color_name,
 		bullet_point1, bullet_point2, bullet_point3, bullet_point4, bullet_point5,
 		generic_keywords1, generic_keywords2, generic_keywords3,generic_keywords4, generic_keywords5,
 		item_type([

@@ -155,52 +155,56 @@ exports.add_product = function(req) {
 
 	}else if(spc == "010"){
 		var variation_theme = req.postParams.variation_theme;
-		var vtmclist2v = req.postParams.variation_theme_content.trim().split("/\r\n|\n/").filter(function(item){return item.trim()!=''}).map(function(itm){return itm.split(",")});
-		
+		var vtmclist2v = req.postParams.variation_theme_content.trim().split(/\r\n|\n/).filter(function(item){return item.trim()!=''}).map(function(itm){return itm.split(",")});
+		// log.info("vtmclist2v:"+JSON.stringify(vtmclist2v));
 		var vtlist = fd.vtmap[variation_theme];
 		//////////////////////
 		// variation_theme_content [[],[]]
 		if(vtmclist2v.length == 0){
 			return response.json({"status":301, "msg":"variation_theme_content can not be empty!"});
 		}
-		var s_len = vtmclist2v.length;
-		var vtname_vtvalue_list = [];
-		var add_to_sku = "";
-		var add_to_name = "";
-		function generate_child_product(vtmclist2v, vtname_vtvalue_list, add_to_sku, add_to_name){
-			if(vtmclist2v.length == 1){
-				var vtname = vtlist[s_len - vtmclist2v.length];
-				var vtmclist1v = vtmclist2v.shift();
-				vtmclist1v.forEach(function(item){
-					item = item.trim();
-					add_to_sku += item;
-					add_to_name += " " + item;
-					vtname_vtvalue_list.push([vtname,item]);
-					
-					var child_product = utils.clone(product);
-					vtname_vtvalue_list.forEach(function(nv){
-						child_product[nv[0]] = nv[1];
-					});
-					child_product.parent_child = "child";
-					child_product.parent_sku = product.item_sku;
-					child_product.item_sku = product.item_sku + add_to_sku.toUpperCase();
-					child_product.item_name = product.item_name + " " + add_to_name;
-					
-					db.save(category, child_product);
+
+		function generate_zuhe(vtmclist2v){
+			var vtmclist1v = vtmclist2v.pop();
+			if(vtmclist2v.length == 0){
+				var r = vtmclist1v.map(function(item){
+					return [item.trim()];
 				});
+				// log.info("end:" + JSON.stringify(r));
+				return r;
 			}else{
-				var vtname = vtlist[s_len - vtmclist2v.length];
-				var vtmclist1v = vtmclist2v.shift();
-				vtmclist1v.forEach(function(item){
-					item = item.trim();
-					add_to_sku += item;
-					add_to_name += " " + item;
-					vtname_vtvalue_list.push([vtname,item]);
-					generate_child_product(vtmclist2v, vtname_vtvalue_list, add_to_sku, add_to_name);
+				var re = generate_zuhe(vtmclist2v);
+				var result = []; 
+				vtmclist1v.forEach(function(vt){
+					vt = vt.trim();
+					re.forEach(function(rt){
+						result.push(rt.concat([vt]));
+					});
 				});
-			}			
+				// log.info("end:" + JSON.stringify(result));
+				return result;
+			}
 		}
-	generate_child_product(vtmclist2v, vtname_vtvalue_list, add_to_sku, add_to_name);
+		var results = generate_zuhe(vtmclist2v);
+		// log.info(JSON.stringify(results));
+		results.forEach(function(rs){
+			var child_product = utils.clone(product);
+			
+			var add_to_sku ="";
+			var add_to_name ="";
+			
+			rs.forEach(function(item, i){
+				item = item.trim();
+				child_product[item] = vtlist[i];
+				add_to_name += " " + item;
+				add_to_sku += item;
+			});
+			child_product.parent_child = "child";
+			child_product.parent_sku = product.item_sku;
+			child_product.item_sku = product.item_sku + add_to_sku.toUpperCase();
+			child_product.item_name = product.item_name + " " + add_to_name;
+			db.save(category, child_product);
+		});
 	}
 	//////////////////////
 	db.save(category, product);
