@@ -4,9 +4,9 @@ var utils = require("utils");
 // var client = new mongo.MongoClient('localhost', 27017);
 // var db = client.getDB('test_database');
 
-var db = exports.db = require('mongodb/mongodb').connect('mongodb://localhost:20147/ListingBuilder');// office 
+// var db = exports.db = require('mongodb/mongodb').connect('mongodb://localhost:20147/ListingBuilder');// office 
 // var db = exports.db = require('mongodb/mongodb').connect('mongodb://localhost/ListingBuilder');// home
-// var db = exports.db = require('mongodb/mongodb').connect('mongodb://localhost:27017/ListingBuilder');//ali
+var db = exports.db = require('mongodb/mongodb').connect('mongodb://localhost:27017/ListingBuilder');//ali
 
 var remove  = exports.remove    = function(collection_name, object){
 	var col = db.getCollection(collection_name);
