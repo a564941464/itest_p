@@ -8,7 +8,7 @@ var utils = require('utils');
 
 exports.middleware = function (next) {
    return function(req) {
-		return next(req);   
+		// return next(req);   
         var path = req.pathInfo;
         if(path.indexOf(".md") != -1){
             var user = req.session.data['iluser'];            
