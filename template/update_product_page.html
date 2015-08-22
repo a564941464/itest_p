@@ -71,7 +71,7 @@
 	<div class="panel-body">
 		<ol class="breadcrumb">
 			<li><a href="/{{category}}/category.md">{{category}}</a></li>
-			<li class="active">Update a product</li>
+			<li class="active">Edit a product</li>
 		</ol>
 		<div class="pull-right"><a class="btn btn-primary" id="update_save_btn" href="#" role="button">Save</a></div>
 		<div>
@@ -90,13 +90,13 @@
 					<input type="hidden" name="spc" value="100" />
 					{%for dt in data %}
 						{% ifequal dt.type "hidden"%}
-							<input type="hidden" name="{{dt.key}}" id="{{dt.key}}" value="{%if dt.value%}{{dt.value}}{%endif%}" />
+							<input type="hidden" name="{{dt.key}}" id="{{dt.key}}" value="{%if dt.value%}{{dt.value}}{%endif%}" {{dt.edit}}/>
 						{%else%}			
 						{% ifequal dt.type "text"%}
 						<div class="form-group">
 							<label for="{{dt.key}}" class="col-sm-2 control-label">{{dt.en}}</label>
 							<div class="col-sm-4">
-							<input type="text" class="form-control" name="{{dt.key}}" id="{{dt.key}}" value="{%if dt.value%}{{dt.value}}{%endif%}" placeholder="{{dt.en}}" />
+							<input type="text" class="form-control" name="{{dt.key}}" id="{{dt.key}}" value="{%if dt.value%}{{dt.value}}{%endif%}" placeholder="{{dt.en}}" {{dt.edit}}/>
 							</div>
 						</div>
 						{%else%}
@@ -104,7 +104,7 @@
 						<div class="form-group">
 							<label for="{{dt.key}}" class="col-sm-2 control-label">{{dt.en}}</label>
 							<div class="col-sm-4">
-							<textarea class="form-control" rows="3" name="{{dt.key}}" id="{{dt.key}}" placeholder="{{dt.en}}">{%if dt.value%}{{dt.value}}{%endif%}</textarea>
+							<textarea class="form-control" rows="3" name="{{dt.key}}" id="{{dt.key}}" placeholder="{{dt.en}}" {{dt.edit}}>{%if dt.value%}{{dt.value}}{%endif%}</textarea>
 							</div>
 						</div>
 						{%else%}
@@ -112,7 +112,7 @@
 						<div class="form-group">
 							<label for="{{dt.key}}" class="col-sm-2 control-label">{{dt.en}}</label>
 							<div class="col-sm-4">
-							<select class="form-control" name="{{dt.key}}" id="{{dt.key}}">
+							<select class="form-control" name="{{dt.key}}" id="{{dt.key}}" {{dt.edit}}>
 								{% for v in dt.values%}
 								<option value="{{v}}" {%ifequal dt.value v%}selected{%endifequal%}>{{v}}</option>
 								{% endfor %}
@@ -124,7 +124,7 @@
 						<div class="form-group">
 							<label for="{{dt.key}}" class="col-sm-2 control-label">{{dt.en}}</label>
 							<div class="col-sm-4">
-							<select class="form-control" name="{{dt.key}}" id="{{dt.key}}">
+							<select class="form-control" name="{{dt.key}}" id="{{dt.key}}" {{dt.edit}}>
 								{% for v in dt.values%}
 								<option value="{{v.0}}" {%ifequal dt.value v.0%}selected{%endifequal%}>{{v.1}}</option>
 								{% endfor %}

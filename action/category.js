@@ -15,33 +15,33 @@ var hline = require('headline');
 
 //////////////////////////////////////////////////////////////////////
 
-exports.copy_product_page = function(req, category, product_id) {
+exports.copy_product_page = function(req, category, product_id, spc) {
 	var product = db.one(category, {"_id":product_id});
 	var field = fd[category];
 	
-	var data, spc_product;
+	var data = field[spc](), spc_product;
 	if(product.parent_child == "parent"){
-		data = field.parent_edit();
 		spc_product = "Parent Product";
 	}else if(product.parent_child == "child"){
-		data = field.child_edit();
 		spc_product = "Child Product";
 	}else{
-		data = field.single_edit();
 		spc_product = "Single Product";
 	}
 	data.forEach(function(item){
-		if(item.func_out){
-			item.value = item.func_out(product[item.key]);
-		}else{
-			item.value = product[item.key]?product[item.key]:""; 
+		if(item.copy){
+			if(item.func_out){
+				item.value = item.func_out(product[item.key]);
+			}else{
+				item.value = product[item.key]?product[item.key]:""; 
+			}
 		}
 	});	
-	return env.renderResponse("update_product_page.html",{
+	return env.renderResponse("copy_product_page.html",{
 		"product":	product,
 		"category":	category,
 		"data":		data,
-		"spc_product":		spc_product,
+		"spc":		spc,
+		"spc_product":	spc_product,
 		
 	});
 }
@@ -80,11 +80,8 @@ exports.update_product = function(req) {
 	
 	var fields = [];
 	var product = db.one(category, {"_id":product_id});
-	if(spc == "100"){
-		fields = field.single();
-	}else if(spc == "010"){
-		fields = field.parent();
-	}
+
+	fields = field[spc]();
 	
 	fields.forEach(function(item){
 		if(item.func_in){
@@ -104,13 +101,13 @@ exports.update_product_page = function(req, category, product_id) {
 	
 	var data, spc_product;
 	if(product.parent_child == "parent"){
-		data = field.parent_edit();
+		data = field['010']();
 		spc_product = "Parent Product";
-	}else if(product.parent_child == "child"){
-		data = field.child_edit();
+	}else if(product.parent_child == "child"){		
+		data = field['001']();
 		spc_product = "Child Product";
-	}else{
-		data = field.single_edit();
+	}else{		
+		data = field['100']();
 		spc_product = "Single Product";
 	}
 	data.forEach(function(item){
@@ -124,7 +121,7 @@ exports.update_product_page = function(req, category, product_id) {
 		"product":	product,
 		"category":	category,
 		"data":		data,
-		"spc_product":		spc_product,
+		"spc_product":	spc_product,
 		
 	});
 }
@@ -170,11 +167,8 @@ exports.add_product = function(req) {
 	//log.info(typeof req.postParams)	
 	var fields = [];
 	var product ={};
-	if(spc == "100"){
-		fields = field.single();
-	}else if(spc == "010"){
-		fields = field.parent();
-	}
+
+	fields = field[spc]();
 	
 	fields.forEach(function(item){
 		if(item.func_in){
@@ -191,10 +185,7 @@ exports.add_product = function(req) {
 	product.crt_time = crt_time;
 	product.dtimes = 0;
 	
-	if(spc == "100"){
-
-
-	}else if(spc == "010"){
+	if(spc == "010"){
 		var variation_theme = req.postParams.variation_theme;
 		var vtmclist2v = req.postParams.variation_theme_content.trim().split(/\r\n|\n/).filter(function(item){return item.trim()!=''}).map(function(itm){return itm.split(",")});
 		// log.info("vtmclist2v:"+JSON.stringify(vtmclist2v));
@@ -246,6 +237,10 @@ exports.add_product = function(req) {
 			child_product.item_name = product.item_name + " " + add_to_name;
 			db.save(category, child_product);
 		});
+	}else if(spc == "100"){
+
+	}else if(spc == "001"){
+		
 	}
 	//////////////////////
 	db.save(category, product);
@@ -259,8 +254,8 @@ exports.add_product_page = function(req, category) {
 	return env.renderResponse("add_product_page.html",{
 	   category:category,
 	   variable:field.variable,
-	   single:field.single(),
-	   parent:field.parent(),
+	   single:field['100'],
+	   parent:field['010'],
 	   
 	});
 }

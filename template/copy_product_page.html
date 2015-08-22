@@ -16,10 +16,9 @@
 			$(document).ready(function(){
 				$("#copy_save_btn").click(function(){
 					var data = $(".tab-pane.active form").serialize();
-					
 					$.ajax({
 						type: "POST",
-						url: "/update_product.md",
+						url: "/add_product.md",
 						data: data,
 						success: function(json){
 							if(json.status == 200 && json.spc == "010"){
@@ -39,17 +38,22 @@
 				});
 				$("#child_product_additionalinfo_save_btn").click(function(){
 					$("#child_products_div form").each(function(){
-						var product_id = $(this).attr("id-ref");
-						var data = $(this).serialize();
+						var product_id = $(this).attr("id-ref");						
+						var data = $(this).serialize();						
 						$.ajax({
 							type: "POST",
 							url: "/{{category}}/child_products_complete.md",
 							data: data,
 							success: function(json){
+								var all_ok = true;
 								if(json.status == 200){
 									$("#span_ok"+product_id).removeClass("sr-only");
 								}else{
+									all_ok = false;
 									$("#span_fail"+product_id).removeClass("sr-only");
+								}
+								if(all_ok){
+									location.href = "/{{category}}/category.md";
 								}
 							},
 							error: function(){
@@ -86,8 +90,7 @@
 					<br/>
 					<form class="">
 					<input type="hidden" name="category" value="{{category}}" />
-					<input type="hidden" name="product_id" value="{{product._id}}" />
-					<input type="hidden" name="spc" value="100" />
+					<input type="hidden" name="spc" value="{{spc}}" />
 					{%for dt in data %}
 						{% ifequal dt.type "hidden"%}
 							<input type="hidden" name="{{dt.key}}" id="{{dt.key}}" value="{%if dt.value%}{{dt.value}}{%endif%}" />

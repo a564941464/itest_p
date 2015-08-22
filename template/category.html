@@ -63,7 +63,7 @@
   <table class="table">
 	<tr>
 		<td><input type="checkbox" class="checkall"/></td>
-		<td>操作</td>
+		<td>Action</td>
 		<td>SKU</td>
 		<td>Product Name</td>
 		<td>Product ID Type</td>
@@ -77,17 +77,25 @@
 		<td>
 			<div class="dropdown">
 				<div class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-				操作<span class="caret"></span>
+				Action<span class="caret"></span>
 				</div>
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-					<li><a href="/{{category}}/{{p._id}}/update_product_page.md">编辑</a></li>
-					{%ifnotequal p.parent_child "parent"%}
-					<li><a href="/{{category}}/{{p._id}}/copy_product_page.md">复制</a></li>
-					{%endifnotequal%}
+					<li><a href="/{{category}}/{{p._id}}/update_product_page.md">Edit</a></li>
+					
+					{%ifequal p.parent_child "parent"%}
+					<li><a href="/{{category}}/{{p._id}}/010/copy_product_page.md">Copy to Parent</a></li>
+					{%else%}
+						{%ifequal p.parent_child "child"%}
+						<li><a href="/{{category}}/{{p._id}}/001/copy_product_page.md">Copy to Child</a></li>
+						<li><a href="/{{category}}/{{p._id}}/100/copy_product_page.md">Copy to Single</a></li>
+						{%else%}
+						<li><a href="/{{category}}/{{p._id}}/100/copy_product_page.md">Copy to Single</a></li>
+						{%endifequal%}
+					{%endifequal%}
 					{%ifequal p.parent_child "parent"%}
 					<li><a href="#" class="action_child" id-ref="{{p._id}}" data-toggle="modal" data-target="#child_products_modal">子产品</a></li>
 					{%endifequal%}
-					<li><a href="#" class="action_delete" id-ref="{{p._id}}">删除</a></li>
+					<li><a href="#" class="action_delete" id-ref="{{p._id}}">Delete</a></li>
 				</ul>
 			</div>
 		</td>
@@ -99,7 +107,7 @@
 		<td>{{p.external_product_id_type}}</td>
 		<td>{{p.standard_price}}</td>
 		<td>{%if p.parent_child%}{{p.parent_child|default:""}}{%else%}single{%endif%}</td>
-		<td><a href="{{p.product_link}}" target="_blank">查看</a></td>
+		<td><a href="{{p.product_link}}" target="_blank">View</a></td>
 	</tr>
 	{%endfor%}
 	<tr>

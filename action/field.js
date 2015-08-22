@@ -26,7 +26,7 @@ var vtmap = exports.vtmap =  {
 */
 var item_sku = {
 	"spc": "111",
-	"edit": true,
+	"edit": "",
 	"key":"item_sku",
 	"en":"SKU",
 	"copy":true,
@@ -40,7 +40,7 @@ var item_sku = {
 
 var item_name = {
 	"spc": "111",
-	"edit": true,
+	"edit": "",
 	"key":"item_name",
 	"en":"Product Name",
 	"copy":true,
@@ -49,7 +49,7 @@ var item_name = {
 
 var brand_name = {
 	"spc": "111",
-	"edit": true,
+	"edit": "",
 	"key":"brand_name",
 	"en":"Brand Name",
 	"copy":true,
@@ -58,7 +58,7 @@ var brand_name = {
 
 var external_product_id = {
 	"spc": "101",
-	"edit": true,
+	"edit": "",
 	"key":"external_product_id",
 	"en":"Product ID",
 	"copy":false,
@@ -67,7 +67,7 @@ var external_product_id = {
 
 var external_product_id_type = {
 	"spc": "101",
-	"edit": true,
+	"edit": "",
 	"key":"external_product_id_type",
 	"en":"Product ID Type",
 	"copy":false,
@@ -78,7 +78,7 @@ var external_product_id_type = {
 var item_type = function(valid_values){
 	return {
 		"spc": "111",
-		"edit": true,
+		"edit": "",
 		"key":"item_type",
 		"en":"Item Type Keyword",
 		"copy":false,
@@ -89,7 +89,7 @@ var item_type = function(valid_values){
 
 var standard_price = {
 	"spc": "101",
-	"edit": true,
+	"edit": "",
 	"key":"standard_price",
 	"en":"Standard Price",
 	"copy":false,
@@ -98,7 +98,7 @@ var standard_price = {
 
 var quantity = {
 	"spc": "101",
-	"edit": true,
+	"edit": "",
 	"key":"quantity",
 	"en":"Quantity",
 	"copy":true,
@@ -108,7 +108,7 @@ var quantity = {
 
 var bullet_point1 = {
 	"spc": "111",
-	"edit": true,
+	"edit": "",
 	"key":"bullet_point1",
 	"en":"Key Product Features1",
 	"copy":true,
@@ -117,7 +117,7 @@ var bullet_point1 = {
 
 var bullet_point2 = {
 	"spc": "111",
-	"edit": true,
+	"edit": "",
 	"key":"bullet_point2",
 	"en":"Key Product Features2",
 	"copy":true,
@@ -126,7 +126,7 @@ var bullet_point2 = {
 
 var bullet_point3 = {
 	"spc": "111",
-	"edit": true,
+	"edit": "",
 	"key":"bullet_point3",
 	"en":"Key Product Features3",
 	"copy":true,
@@ -135,7 +135,7 @@ var bullet_point3 = {
 
 var bullet_point4 = {
 	"spc": "111",
-	"edit": true,
+	"edit": "",
 	"key":"bullet_point4",
 	"en":"Key Product Features4",
 	"copy":true,
@@ -144,7 +144,7 @@ var bullet_point4 = {
 
 var bullet_point5 = {
 	"spc": "111",
-	"edit": true,
+	"edit": "",
 	"key":"bullet_point5",
 	"en":"Key Product Features5",
 	"copy":true,
@@ -153,7 +153,7 @@ var bullet_point5 = {
 
 var generic_keywords1 = {
 	"spc": "111",
-	"edit": true,
+	"edit": "",
 	"key":"generic_keywords1",
 	"en":"Search Terms1",
 	"copy":true,
@@ -162,7 +162,7 @@ var generic_keywords1 = {
 
 var generic_keywords2 = {
 	"spc": "111",
-	"edit": true,
+	"edit": "",
 	"key":"generic_keywords2",
 	"en":"Search Terms2",
 	"copy":true,
@@ -171,7 +171,7 @@ var generic_keywords2 = {
 
 var generic_keywords3 = {
 	"spc": "111",
-	"edit": true,
+	"edit": "",
 	"key":"generic_keywords3",
 	"en":"Search Terms3",
 	"copy":true,
@@ -180,7 +180,7 @@ var generic_keywords3 = {
 
 var generic_keywords4 = {
 	"spc": "111",
-	"edit": true,
+	"edit": "",
 	"key":"generic_keywords4",
 	"en":"Search Terms4",
 	"copy":true,
@@ -189,34 +189,16 @@ var generic_keywords4 = {
 
 var generic_keywords5 = {
 	"spc": "111",
-	"edit": true,
+	"edit": "",
 	"key":"generic_keywords5",
 	"en":"Search Terms5",
 	"copy":true,
 	"type":"text", 
 }//generic_keywords5
 
-var main_image_url = {
-	"spc": "111",
-	"edit": true,
-	"key":"main_image_url",
-	"en":"Main Image URL",
-	"copy":true,
-	"type":"text", 
-}//main_image_url
-
-var other_image_url1 = {
-	"spc": "111",
-	"edit": true,
-	"key":"other_image_url1",
-	"en":"Other Image URL1",
-	"copy":true,
-	"type":"text", 
-}//other_image_url1
-
 var size_name = {
 	"spc": "101",
-	"edit": true,
+	"edit": "",
 	"key":"size_name",
 	"en":"Size",
 	"copy":false,
@@ -225,52 +207,70 @@ var size_name = {
 
 var color_name = {
 	"spc": "101",
-	"edit": true,
+	"edit": "",
 	"key":"color_name",
 	"en":"Colour",
 	"copy":false,
 	"type":"text", 
 }//color_name
 
+var main_image_url = {
+	"spc": "111",
+	"edit": "",
+	"key":"main_image_url",
+	"en":"Main Image URL",
+	"copy":false,
+	"type":"text", 
+}//main_image_url
+
+var other_image_url1 = {
+	"spc": "111",
+	"edit": "",
+	"key":"other_image_url1",
+	"en":"Other Image URL1",
+	"copy":false,
+	"type":"text", 
+}//other_image_url1
+
 var other_image_url2 = {
 	"spc": "111",
-	"edit": true,
+	"edit": "",
 	"key":"other_image_url2",
 	"en":"Other Image URL2",
-	"copy":true,
+	"copy":false,
 	"type":"text", 
 }//other_image_url2
 
 var other_image_url3 = {
 	"spc": "111",
-	"edit": true,
+	"edit": "",
 	"key":"other_image_url3",
 	"en":"Other Image URL3",
-	"copy":true,
+	"copy":false,
 	"type":"text", 
 }//other_image_url3
 
 var other_image_url4 = {
 	"spc": "111",
-	"edit": true,
+	"edit": "",
 	"key":"other_image_url4",
 	"en":"Other Image URL4",
-	"copy":true,
+	"copy":false,
 	"type":"text", 
 }//other_image_url4
 
 var other_image_url5 = {
 	"spc": "111",
-	"edit": true,
+	"edit": "",
 	"key":"other_image_url5",
 	"en":"Other Image URL5",
-	"copy":true,
+	"copy":false,
 	"type":"text", 
 }//other_image_url5
 
 var product_description = {
 	"spc": "111",
-	"edit": true,
+	"edit": "",
 	"key":"product_description",
 	"en":"Product Description",
 	"copy":true,
@@ -289,7 +289,7 @@ var product_description = {
 
 var variation_theme_content = {
 	"spc": "010",
-	"edit": false,
+	"edit": "disabled",
 	"key":"variation_theme_content",
 	"en":"Variation Theme Content",
 	"copy":true,
@@ -299,7 +299,7 @@ var variation_theme_content = {
 var department_name = function(valid_values) {
 	return {
 		"spc": "111",
-		"edit": true,
+		"edit": "",
 		"key":"department_name",
 		"en":"Department",
 		"copy":true,
@@ -311,7 +311,7 @@ var department_name = function(valid_values) {
 var variation_theme = function(valid_values) {
 	return {
 		"spc": "010",
-		"edit": false,
+		"edit": "disabled",
 		"key":"variation_theme",
 		"en":"Variation Theme",
 		"copy":true,
@@ -324,7 +324,7 @@ var variation_theme = function(valid_values) {
 var parent_child = function(value) {
 	return {
 		"spc": "010",
-		"edit": false,
+		"edit": "disabled",
 		"key":"parent_child",
 		"en":"Parentage",
 		"copy":true,
@@ -336,7 +336,7 @@ var parent_child = function(value) {
 var relationship_type = function(value) {
 	return {
 		"spc": "010",
-		"edit": false,
+		"edit": "disabled",
 		"key":"relationship_type",
 		"en":"Relationship Type",
 		"copy":true,
@@ -348,7 +348,7 @@ var relationship_type = function(value) {
 
 var refer_link = {
 	"spc": "111",
-	"edit": true,
+	"edit": "",
 	"key":"refer_link",
 	"en":"Product Link",
 	"copy":false,
@@ -358,7 +358,7 @@ var refer_link = {
 var feed_product_type = function(value){
 	return {
 		"spc": "111",
-		"edit": false,
+		"edit": "disabled",
 		"key":"feed_product_type",
 		"en":"Product Type",
 		"copy":true,
@@ -369,7 +369,7 @@ var feed_product_type = function(value){
 
 var condition_type = {
 	"spc": "111",
-	"edit": false,
+	"edit": "disabled",
 	"key":"condition_type",
 	"en":"Item Condition",
 	"copy":true,
@@ -380,7 +380,7 @@ var condition_type = {
 var target_audience_keywords1 = function(valid_values){
 	return {
 		"spc": "111",
-		"edit": true,
+		"edit": "",
 		"key":"target_audience_keywords1",
 		"en":"Target Audience1",
 		"copy":true,
@@ -391,7 +391,7 @@ var target_audience_keywords1 = function(valid_values){
 var target_audience_keywords2 = function(valid_values){
 	return {
 		"spc": "111",
-		"edit": true,
+		"edit": "",
 		"key":"target_audience_keywords2",
 		"en":"Target Audience2",
 		"copy":true,
@@ -403,7 +403,7 @@ var target_audience_keywords2 = function(valid_values){
 var target_audience_keywords3 = function(valid_values){
 	return {
 		"spc": "111",
-		"edit": true,
+		"edit": "",
 		"key":"target_audience_keywords3",
 		"en":"Target Audience3",
 		"copy":true,
@@ -460,13 +460,9 @@ var Clothing = exports.Clothing = {
 		
 		],
 		
-	"single":	function(){return this.field.filter(function(item){return item.spc[0]=="1"})},
-	"parent":	function(){return this.field.filter(function(item){return item.spc[1]=="1"})},
-	"child"	:	function(){return this.field.filter(function(item){return item.spc[2]=="1"})},
-	
-	"single_edit":	function(){return this.field.filter(function(item){return item.spc[0]=="1" && item.edit})},
-	"parent_edit":	function(){return this.field.filter(function(item){return item.spc[1]=="1" && item.edit})},
-	"child_edit"	:function(){return this.field.filter(function(item){return item.spc[2]=="1" && item.edit})},
+	"100":	function(){return this.field.filter(function(item){return item.spc[0]=="1"})},
+	"010":	function(){return this.field.filter(function(item){return item.spc[1]=="1"})},
+	"001"	:	function(){return this.field.filter(function(item){return item.spc[2]=="1"})},
 }
 
 

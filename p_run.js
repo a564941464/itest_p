@@ -35,6 +35,7 @@ var user_role = require("user_role");
 
 app.get("/:category/:json_product_ids/get_inventory_file.md", category.get_inventory_file);
 
+app.get("/:category/:product_id/:spc/copy_product_page.md", category.copy_product_page);
 app.post("/update_product.md", category.update_product);
 app.get("/:category/:product_id/update_product_page.md", category.update_product_page);
 
@@ -43,7 +44,7 @@ app.get("/:category/:parent_product_id/child_products_complete_page.md", categor
 
 app.get("/:category/:product_id/delete_product.md", category.delete_product);
 app.post("/add_product.md", category.add_product);
-app.get("/:category/:product_id/copy_product_page.md", category.copy_product_page);
+
 app.get("/:category/add_product_page.md", category.add_product_page);
 app.get('/:category/category.md', category.category);
 app.get('/:category/:cur_page_num/category.md', category.category);
