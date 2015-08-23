@@ -434,13 +434,10 @@ var PetSupplies = exports.PetSupplies = {
 		main_image_url, other_image_url1, other_image_url2, other_image_url3, other_image_url4,other_image_url5,
 		],
 		
-	"single":	function(){return this.field.filter(function(item){return item.spc[0]=="1"})},
-	"parent":	function(){return this.field.filter(function(item){return item.spc[1]=="1"})},
-	"child"	:	function(){return this.field.filter(function(item){return item.spc[2]=="1"})},
+	"100":	function(){return this.field.filter(function(item){return item.spc[0]=="1"})},
+	"010":	function(){return this.field.filter(function(item){return item.spc[1]=="1"})},
+	"001":	function(){return this.field.filter(function(item){return item.spc[2]=="1"})},
 	
-	"single_edit":	function(){return this.field.filter(function(item){return item.spc[0]=="1" && item.edit})},
-	"parent_edit":	function(){return this.field.filter(function(item){return item.spc[1]=="1" && item.edit})},
-	"child_edit"	:function(){return this.field.filter(function(item){return item.spc[2]=="1" && item.edit})},
 }
 
 
@@ -462,7 +459,7 @@ var Clothing = exports.Clothing = {
 		
 	"100":	function(){return this.field.filter(function(item){return item.spc[0]=="1"})},
 	"010":	function(){return this.field.filter(function(item){return item.spc[1]=="1"})},
-	"001"	:	function(){return this.field.filter(function(item){return item.spc[2]=="1"})},
+	"001":	function(){return this.field.filter(function(item){return item.spc[2]=="1"})},
 }
 
 

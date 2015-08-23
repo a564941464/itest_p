@@ -29,16 +29,31 @@
 					$(this).is(":checked")?$(".checkone").prop("checked",true):$(".checkone").prop("checked",false);  
 					$(this).is(":checked")?$(".checkall").prop("checked",true):$(".checkall").prop("checked",false);  
 				});
-				$('#download_btn').click(function(){  
+				$("#download_btn").click(function(){
+					var product_ids = [];
+						$(".checkone:checked").each(function(){
+							product_ids.push($(this).val());
+						});
+						if(product_ids.length == 0){
+							$("#download_alert_modal").modal('show');
+						}else{
+							$("#download_modal").modal('show');
+						}
+				});				
+				
+				$('#with_upc_btn').click(function(){  
 					var product_ids = [];
 					$(".checkone:checked").each(function(){
 						product_ids.push($(this).val());
 					});
-					if(product_ids.length == 0){
-						alert("请选择下载的产品.");
-					}else{
-						window.location = "/{{category}}/" + JSON.stringify(product_ids) + "/get_inventory_file.md";
-					}
+					window.location = "/{{category}}/" + JSON.stringify(product_ids) + "/1/get_inventory_file.md";
+				});				
+				$('#without_upc_btn').click(function(){  
+					var product_ids = [];
+					$(".checkone:checked").each(function(){
+						product_ids.push($(this).val());
+					});
+					window.location = "/{{category}}/" + JSON.stringify(product_ids) + "/0/get_inventory_file.md";
 				});  
 			});
 		</script>
@@ -113,7 +128,10 @@
 	<tr>
 		<td>
 		<input type="checkbox" class="checkall"/></td><td colspan="20">
-		<input type="submit" class="btn btn-primary btn-sm" id="download_btn" role="button" value="Download" />
+		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-primary btn-sm" id="download_btn" data-toggle="modal">
+		  Download
+		</button>
 		</td>
 	</tr>
 	</table>
@@ -148,6 +166,43 @@
 	  </div>
 	</div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="download_alert_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">提示</h4>
+      </div>
+      <div class="modal-body">
+		请选择产品!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="download_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">提示</h4>
+      </div>
+      <div class="modal-body">
+		填充UPC?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="with_upc_btn">Download With UPC</button>
+        <button type="button" class="btn btn-primary" id="without_upc_btn">Download Without UPC</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 </body>

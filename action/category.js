@@ -46,7 +46,7 @@ exports.copy_product_page = function(req, category, product_id, spc) {
 	});
 }
 
-exports.get_inventory_file = function(req, category, json_product_ids){
+exports.get_inventory_file = function(req, category, json_product_ids, upc){
 	var products = db.all(category, {"_id":{$in:JSON.parse(json_product_ids)}});
 	
 	var headline = hline[category];
@@ -55,6 +55,13 @@ exports.get_inventory_file = function(req, category, json_product_ids){
 	var body_content = [headline];
 	
     products.forEach(function(p){
+		if(upc=='1'){
+			if(p.parent_child != 'parent'){
+				p.external_product_id_type = 'UPC';
+				p.external_product_id = 'UPC';//////////////WAITING CODE
+				db.save(category, p);
+			}
+		}
         var r = "";
 		headline_3.forEach(function(h3){
 			r += ((p[h3]?p[h3]:"") + "\t");
@@ -171,6 +178,7 @@ exports.add_product = function(req) {
 	fields = field[spc]();
 	
 	fields.forEach(function(item){
+		
 		if(item.func_in){
 			product[item.key] = item.func_in(req.postParams[item.key]?req.postParams[item.key].trim():"");
 		}else{
@@ -254,8 +262,8 @@ exports.add_product_page = function(req, category) {
 	return env.renderResponse("add_product_page.html",{
 	   category:category,
 	   variable:field.variable,
-	   single:field['100'],
-	   parent:field['010'],
+	   single:field['100'](),
+	   parent:field['010'](),
 	   
 	});
 }
