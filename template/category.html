@@ -47,6 +47,7 @@
 						product_ids.push($(this).val());
 					});
 					window.location = "/{{category}}/" + JSON.stringify(product_ids) + "/1/get_inventory_file.md";
+					$("#download_modal").modal('hide');
 				});				
 				$('#without_upc_btn').click(function(){  
 					var product_ids = [];
@@ -54,6 +55,7 @@
 						product_ids.push($(this).val());
 					});
 					window.location = "/{{category}}/" + JSON.stringify(product_ids) + "/0/get_inventory_file.md";
+					$("#download_modal").modal('hide');
 				});  
 			});
 		</script>

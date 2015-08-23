@@ -1,3 +1,5 @@
 300: 用户名已存在
 301: variation_theme_content不能为空
+302: upc文件不能为空
+303: import error
 200: ok

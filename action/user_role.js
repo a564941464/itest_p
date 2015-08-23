@@ -2,15 +2,53 @@ var {Environment} = require('reinhardt/reinhardt');
 var env = new Environment({
    loader: module.resolve('../template/')
 });
+importPackage(java.text);
 
 var log = require("ringo/logging").getLogger(module.id);
 var response = require('ringo/jsgi/response');
 var strings = require("ringo/utils/strings");
+var fs = require("fs");
 
 var db = require('db');
 var utils = require('utils');
 
 ///////////////////////////////////////////////////////////////////
+
+var upc_file_import = exports.upc_file_import = function(req){
+    var upc_file = req.postParams['upc_file'];
+
+	if(upc_file.value.length == 0){
+		return response.json({"status": 302, "msg": 'upc file can not be empty!'});
+	}
+	
+	var sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    var crt_time = sf.format(new Date());
+    
+    var savefilename = "./upload/upc/" + utils.cur_time("yyyyMMddHHmmssSS") + ".txt";
+    fs.write(savefilename, upc_file.value);
+    
+	try{
+		var txtStream = fs.open(savefilename);
+		txtStream.forEach(function(line) {
+			line = line.trim();
+			if(line){
+				var upc = {'barcode':line,'used':false};
+				db.save('UPC',upc);
+			}
+		});
+		txtStream.close();
+		return response.json({"status": 200, "msg": 'ok'});
+	}catch(e){
+		txtStream.close();
+		return response.json({"status": 303, "msg": 'import error'});
+	} 
+	
+}
+
+var upc = exports.upc = function(req){
+	var upcs = db.all('UPC');
+    return env.renderResponse('upc.html',{'upcs':upcs});
+}
 var set_role = exports.set_role = function(req){
 	var user_id = req.postParams.user_id.trim();
 	var user = db.one("User", {"_id":user_id});
@@ -19,6 +57,7 @@ var set_role = exports.set_role = function(req){
 	db.save("User", user);
     return response.json({"status":200, msg:"", "user":user});
 }
+
 var to_set_role = exports.to_set_role = function(req, user_id){
 	var user = db.one("User", {"_id":user_id});
     return env.renderResponse('to_set_role.html',{"user":user});

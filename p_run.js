@@ -33,7 +33,7 @@ var login = require("login");
 var category = require("category");
 var user_role = require("user_role");
 
-app.get("/:category/:json_product_ids/:upc/get_inventory_file.md", category.get_inventory_file);//upc 1-> yes, 0->no
+app.get("/:category/:json_product_ids/:withupc/get_inventory_file.md", category.get_inventory_file);//upc 1-> yes, 0->no
 
 app.get("/:category/:product_id/:spc/copy_product_page.md", category.copy_product_page);
 app.post("/update_product.md", category.update_product);
@@ -50,6 +50,8 @@ app.get('/:category/category.md', category.category);
 app.get('/:category/:cur_page_num/category.md', category.category);
 app.get('/intro.md', category.intro);
 
+app.post("/upc_file_import.md", user_role.upc_file_import);
+app.get("/upc.md", user_role.upc);
 
 app.post("/set_role.md", user_role.set_role);
 app.get("/:user_id/to_set_role.md", user_role.to_set_role);

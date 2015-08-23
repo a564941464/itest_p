@@ -1,0 +1,8 @@
+<div class="row">
+<button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#upc_import_modal">导入UPC</button>
+</div>
+<div class="row">
+{%for upc in upcs%}
+<div class="col-sm-2 {{upc.used|yesno:'text-danger,text-primary'}}">{{upc.barcode}}</div>
+{%endfor%}
+</div>

@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>用户角色 - iListing</title>
+        <title>Users - iListing</title>
 
 		<link rel="icon" type="image/vnd.microsoft.icon" href="/icon/favicon.png" />
         <link rel="shortcut icon" type="image/x-icon" href="/icon/favicon.png" />
@@ -159,6 +159,28 @@
 					}
 				}); 
 			});
+			
+			$("#upc_file_import_btn").click(function(){
+				$("#upc_import_modal").modal('hide');
+				var formData = new FormData($("#upc_file_form")[0]);
+				var xhr = new XMLHttpRequest();    
+				xhr.open("POST" ,"/upc_file_import.md" , true);
+				xhr.send(formData);
+				xhr.onload = function(e) {
+					if (this.status == 200) {
+						var json = JSON.parse(this.responseText);
+						if(json.status == 200){
+							alert('ok');							
+							$(".left_menu.active").click();
+						}else{
+							alert(json.msg);
+						}
+					}else{
+						alert("系统错误!");
+					}
+				};
+			});
+			
         });
     
         -->
@@ -173,11 +195,11 @@
 
     <div class="panel-body main">
         <div class="left">
-            <ul>
-                <li class="left_menu user_list" data-ref="/user_list.md">用户列表</li>
-                <li class="left_menu role_list" data-ref="/role_list.md">角色列表</li>
-                
-            </ul>
+			<ul class="nav nav-pills nav-stacked">
+				<li role="presentation" class="left_menu user_list" data-ref="/user_list.md"><a href="#">Users</a></li>
+				<li role="presentation" class="left_menu role_list" data-ref="/role_list.md"><a href="#">Roles</a></li>
+				<li role="presentation" class="left_menu upc" data-ref="/upc.md"><a href="#">UPC</a></li>
+			</ul>
         </div>
 		
         <div class="right" id="container">
@@ -258,12 +280,12 @@
 	</div>	
 	<!------------------------------------------------------->
 	<!-- Modal -->
-	<div class="modal " id="set_role_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal " id="set_role_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabe2">
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="myModalLabel">设定角色</h4>
+			<h4 class="modal-title" id="myModalLabe2">设定角色</h4>
 		  </div>
 		  <div class="modal-body" id="set_role_div">
 
@@ -271,6 +293,27 @@
 		  <div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 			<button type="button" id="set_role_save_btn" class="btn btn-primary">保存</button>
+		  </div>
+		</div>
+	  </div>
+	</div>	
+	<!------------------------------------------------------->
+	<!-- Modal -->
+	<div class="modal " id="upc_import_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabe3">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabe3">导入UPC文件</h4>
+		  </div>
+		  <div class="modal-body">
+			<form id="upc_file_form" enctype="multipart/form-data">
+			<input type="file" name="upc_file" id="upc_file" accept="text/txt" />&nbsp;
+			</form>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			<button type="button" id="upc_file_import_btn" class="btn btn-primary">导入</button>
 		  </div>
 		</div>
 	  </div>

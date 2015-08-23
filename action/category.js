@@ -46,7 +46,7 @@ exports.copy_product_page = function(req, category, product_id, spc) {
 	});
 }
 
-exports.get_inventory_file = function(req, category, json_product_ids, upc){
+exports.get_inventory_file = function(req, category, json_product_ids, withupc){
 	var products = db.all(category, {"_id":{$in:JSON.parse(json_product_ids)}});
 	
 	var headline = hline[category];
@@ -54,12 +54,23 @@ exports.get_inventory_file = function(req, category, json_product_ids, upc){
 	
 	var body_content = [headline];
 	
-    products.forEach(function(p){
-		if(upc=='1'){
+	var upc_enough = true;
+	for(var i in products){
+		var p = products[i];
+		if(withupc == '1'){
 			if(p.parent_child != 'parent'){
-				p.external_product_id_type = 'UPC';
-				p.external_product_id = 'UPC';//////////////WAITING CODE
-				db.save(category, p);
+				if(!p.external_product_id){
+					p.external_product_id_type = 'UPC';
+					var upc = db.one('UPC', {'used':false});
+					if(!upc){
+						upc_enough = false;
+						break;
+					}
+					p.external_product_id = upc.barcode;
+					upc.used = true;
+					db.save('UPC', upc);
+					db.save(category, p);
+				}
 			}
 		}
         var r = "";
@@ -68,7 +79,10 @@ exports.get_inventory_file = function(req, category, json_product_ids, upc){
 		});
 		r += "\n";
         body_content.push(r);
-	});
+	}
+	if(!upc_enough){
+		return response.html('<script>alert("upc is not enough");history.back();</script>');
+	}
     var crt_time = utils.cur_time("yyyyMMddHHmmss");
     return {
         body: body_content,

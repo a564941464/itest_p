@@ -17,4 +17,4 @@ var product = {
 
 var categories = ["Clothing","Office","FoodAndBeverages","Beauty","Health","Outdoors","Watches", "Toys","Baby","Home"];
 
-
+var upc = {'barcode':'123456789011', 'used': true};
