@@ -47,7 +47,9 @@ var upc_file_import = exports.upc_file_import = function(req){
 
 var upc = exports.upc = function(req){
 	var upcs = db.all('UPC');
-    return env.renderResponse('upc.html',{'upcs':upcs});
+    return env.renderResponse('upc.html',{
+		'upcs':upcs,
+	});
 }
 var set_role = exports.set_role = function(req){
 	var user_id = req.postParams.user_id.trim();
@@ -60,7 +62,10 @@ var set_role = exports.set_role = function(req){
 
 var to_set_role = exports.to_set_role = function(req, user_id){
 	var user = db.one("User", {"_id":user_id});
-    return env.renderResponse('to_set_role.html',{"user":user});
+    return env.renderResponse('to_set_role.html',{
+		"user":user,
+		"csrftoken":req.getCsrfToken(),
+	});
 }
 
 var user_passwd = exports.user_passwd = function(req){
@@ -83,7 +88,10 @@ var user_passwd = exports.user_passwd = function(req){
 }
 var user_to_passwd = exports.user_to_passwd = function(req, user_id){
 	var user = db.one("User", {"_id":user_id});
-    return env.renderResponse('user_passwd.html',{"user":user});
+    return env.renderResponse('user_passwd.html',{
+		"user":user,
+		"csrftoken":req.getCsrfToken(),
+	});
 }
 
 var user_inactive = exports.user_inactive = function(req, user_id){
@@ -150,5 +158,8 @@ var role_list = exports.role_list = function(req){
 }
 
 var user_role = exports.user_role = function(req){
-	return env.renderResponse('user_role.html', {"category": "user_role"});
+	return env.renderResponse('user_role.html', {
+		"category": "user_role",
+		"csrftoken":req.getCsrfToken(),
+		});
 }

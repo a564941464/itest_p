@@ -42,7 +42,7 @@ exports.copy_product_page = function(req, category, product_id, spc) {
 		"data":		data,
 		"spc":		spc,
 		"spc_product":	spc_product,
-		
+		"csrftoken":req.getCsrfToken(),
 	});
 }
 
@@ -75,7 +75,7 @@ exports.get_inventory_file = function(req, category, json_product_ids, withupc){
 		}
         var r = "";
 		headline_3.forEach(function(h3){
-			r += ((p[h3]?p[h3]:"") + "\t");
+			r += ((p[h3]?p[h3].trim():"") + "\t");
 		});
 		r += "\n";
         body_content.push(r);
@@ -143,7 +143,7 @@ exports.update_product_page = function(req, category, product_id) {
 		"category":	category,
 		"data":		data,
 		"spc_product":	spc_product,
-		
+		"csrftoken":req.getCsrfToken(),
 	});
 }
 
@@ -178,6 +178,7 @@ exports.child_products_complete_page = function(req, category, parent_product_id
 	return env.renderResponse("child_products.html",{
 		"parent_product":parent_product,
 		"child_products":child_products,
+		"csrftoken":req.getCsrfToken(),
 	});
 }
 
@@ -278,7 +279,7 @@ exports.add_product_page = function(req, category) {
 	   variable:field.variable,
 	   single:field['100'](),
 	   parent:field['010'](),
-	   
+	   "csrftoken":req.getCsrfToken(),
 	});
 }
 

@@ -64,5 +64,6 @@ var logout = exports.logout = function(req) {
 var to_login = exports.to_login = function(req, redirect_path) {
     return env.renderResponse('index.html', {
         "redirect_path":redirect_path,
+        "csrftoken":req.rotateCsrfToken(),
     });
 }
