@@ -138,3 +138,27 @@ Object.defineProperty(exports, 'upload', {
 Object.defineProperty(exports, 'cookies', {
     get: function() require('./middleware/cookies')
 });
+
+/**
+ * Middleware for [CORS support](./cors/index.html).
+ * @name cookies
+ */
+Object.defineProperty(exports, 'cors', {
+    get: function() require('./middleware/cors')
+});
+
+/**
+ * Middleware for [CSRF support](./csrf/index.html).
+ * @name csrf
+ */
+Object.defineProperty(exports, 'csrf', {
+    get: function() require('./middleware/csrf')
+});
+
+/**
+ * Middleware for [HTTP content negotiation](./accept/index.html).
+ * @name accept
+ */
+Object.defineProperty(exports, 'accept', {
+    get: function() require('./middleware/accept')
+});
