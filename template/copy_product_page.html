@@ -89,6 +89,7 @@
 				<div role="tabpanel" class="tab-pane active" id="{{product._id}}">
 					<br/>
 					<form class="">
+					<input type="hidden" name="csrftoken" value="{{csrftoken}}"/>
 					<input type="hidden" name="category" value="{{category}}" />
 					<input type="hidden" name="spc" value="{{spc}}" />
 					{%for dt in data %}

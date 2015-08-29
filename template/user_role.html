@@ -220,6 +220,7 @@
 		  </div>
 		  <div class="modal-body">
 			<form id="add_user_form">
+			<input type="hidden" name="csrftoken" value="{{csrftoken}}"/>
 			<table border="1px" bordercolor="#ccc" class="table">
 				<tr>
 					<td>
@@ -308,7 +309,8 @@
 		  </div>
 		  <div class="modal-body">
 			<form id="upc_file_form" enctype="multipart/form-data">
-			<input type="file" name="upc_file" id="upc_file" accept="text/txt" />&nbsp;
+			<input type="hidden" name="csrftoken" value="{{csrftoken}}"/>
+			<input type="file" name="upc_file" id="upc_file" accept="text/txt" value="" />&nbsp;
 			</form>
 		  </div>
 		  <div class="modal-footer">

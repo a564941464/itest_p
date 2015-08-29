@@ -8,6 +8,7 @@
 </div>
 {%for cp in child_products%}
 <form class="form-horizontal" id-ref = "{{cp._id}}">
+<input type="hidden" name="csrftoken" value="{{csrftoken}}"/>
 <input type="hidden" value="{{cp._id}}" name="product_id" />
 <div class="form-group">
 	<label for="{{cp._id}}" class="col-sm-2 control-label">
