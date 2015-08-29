@@ -16,9 +16,18 @@ var app = exports.app = Application();//***********
 
 app.configure('route');
 app.configure("notfound", "mount", "static");
-app.configure(require('stick/middleware/upload'));
-app.configure('params');
+
+app.configure("csrf");
+app.csrf({
+    "tokenLength": 64,
+	"checkReferrer":true,
+    "rotate": false,
+	"safeMethods":["GET", "HEAD", "OPTIONS", "TRACE"],
+});
+app.configure('upload');
+app.configure("method");
 app.configure(require("auth"));
+app.configure('params');
 app.configure('session');
 
 app.static(module.resolve("./static"), "index.html");
