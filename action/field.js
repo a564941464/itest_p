@@ -3,12 +3,15 @@ var vtmap = exports.vtmap =  {
 	'sizecolor':['size_name','color_name'],
 	'SizeNameColorName':['size_name','color_name'],
 	'Color':['color_name'],
+	'ColorName':['color_name'],
 	'Size':['size_name'],
 	'SizeName':['size_name'],
 	'Style':['style_name'],
+	'StyleName':['style_name'],
 	'Flavor':['flavor_name'],
 	'FlavorSize':['flavor_name','size_name'],
 	'PatternName':['pattern_name'],
+	'MetalType':['metal_type'],
 	
 }
 /**
@@ -355,15 +358,15 @@ var refer_link = {
 	"type":"text", 
 }//refer_link
 
-var feed_product_type = function(value){
+var feed_product_type = function(valid_values){
 	return {
 		"spc": "111",
 		"edit": "disabled",
 		"key":"feed_product_type",
 		"en":"Product Type",
 		"copy":true,
-		"type":"hidden", 
-		"value":value, 
+		"type":"select_1", 
+		"values":valid_values, 
 	}
 }//feed_product_type
 
@@ -412,11 +415,177 @@ var target_audience_keywords3 = function(valid_values){
 	}
 }//target_audience_keywords3
 
+var manufacturer = {
+		"spc": "111",
+		"edit": "",
+		"key":"manufacturer",
+		"en":"Manufacturer",
+		"copy":true,
+		"type":"text", 
+}//manufacturer
+
+var model = {
+		"spc": "111",
+		"edit": "",
+		"key":"model",
+		"en":"Model Number",
+		"copy":true,
+		"type":"text", 
+}//model
+
+
+var currency = {
+		"spc": "101",
+		"edit": "",
+		"key":"currency",
+		"en":"Currency",
+		"copy":true,
+		"type":"hidden", 
+		"value":"USD",
+}//currency
+
+
+var display_dimensions_unit_of_measure = {
+		"spc": "101",
+		"edit": "",
+		"key":"display_dimensions_unit_of_measure",
+		"en":"测量单位",
+		"copy":true,
+		"type":"select_1", 
+		"values":["CM","FT","IN","M","MM"],
+}//display_dimensions_unit_of_measure
+
+var metal_type = function(valid_values){
+	return {
+		"spc": "101",
+		"edit": "",
+		"key":"metal_type",
+		"en":"Metal Type",
+		"copy":true,
+		"type":"select_2", 
+		"values":valid_values,
+	};
+}//metal_type
+
+var material_type1 = function(valid_values){
+	return {
+		"spc": "101",
+		"edit": "",
+		"key":"material_type1",
+		"en":"Material Type1",
+		"copy":true,
+		"type":"select_2", 
+		"values":valid_values,
+	};
+}//material_type1
+
+
+var material_type2 = function(valid_values){
+	return {
+		"spc": "101",
+		"edit": "",
+		"key":"material_type2",
+		"en":"Material Type2",
+		"copy":true,
+		"type":"select_2", 
+		"values":valid_values,
+	};
+}//material_type2
+var material_type3 = function(valid_values){
+	return {
+		"spc": "101",
+		"edit": "",
+		"key":"material_type3",
+		"en":"Material Type3",
+		"copy":true,
+		"type":"select_2", 
+		"values":valid_values,
+	};
+}//material_type3
+
+
+var metal_stamp = function(valid_values){
+	return {
+		"spc": "101",
+		"edit": "",
+		"key":"metal_stamp",
+		"en":"Metal Stamp",
+		"copy":true,
+		"type":"select_1", 
+		"values":valid_values,
+	};
+}//metal_stamp
+
+var gem_type1 = function(valid_values){
+	return {
+		"spc": "101",
+		"edit": "",
+		"key":"gem_type1",
+		"en":"Gem Type1",
+		"copy":true,
+		"type":"select_2", 
+		"values":valid_values,
+	};
+}//gem_type1
+
+
+
+var Jewelry = exports.Jewelry = {
+	"variable":true,//parent child 
+	"field":[ refer_link, item_sku, item_name, manufacturer, model, brand_name,currency,quantity, 
+		feed_product_type("FashionEarring","FashionNecklaceBraceletAnklet", "FashionRing", "FashionOther"),  standard_price, product_description, 
+		item_type([
+			["cuff-bracelets", "开口手镯"],["bracelets", "其他bracelets"],["	wrap-bracelets", "缠绕手链"],["link-bracelets", "链子手链"],["stretch-bracelets", "松紧手链"],["identification-bracelets", "识别手环"],["anklets", "脚链,踝环"],["bangle-bracelets", "圆环手镯"],
+			["earrings", "耳环,耳饰"],
+			["rings", "戒指"],
+			["chain-necklaces", "链子项链"],["choker-necklaces", "脖子项链"],["locket-necklaces", "吊坠可打开项链"],["y-shaped-necklaces", "Y字形项链"],
+		]),
+		display_dimensions_unit_of_measure,
+		bullet_point1, bullet_point2, bullet_point3, bullet_point4, bullet_point5,
+		generic_keywords1, generic_keywords2, generic_keywords3,generic_keywords4, generic_keywords5,
+		parent_child("parent"),
+		department_name(["womens","boys","girls","mens","unisex-adult","unisex-child",]),
+		metal_type([
+			["alloy", "合金"],["no-metal-type", "无金属"],["brass", "黄铜"],["brass-plated-gold", "黄铜镀金"],
+			["bronze", "青铜"],["cobalt", "钴"],["copper", "铜"],["nickel", "镍"],["pewter", "锡"],["rose-gold", "玫瑰金"],
+			["titanium", "钛"],["tungsten", "钨"],["stainless-steel", "不锈钢"],["silver-plated-base", "银镀普通金属"],
+			
+		]),
+		metal_stamp(["no-metal-stamp","stainless-steel"]),
+		material_type1([
+			["NA","无"],["bamboo","竹子"],["ceramic","陶器"],["coral","珊瑚"],["crystal","水晶,水钻"],["enamel","珐琅,瓷釉"],
+			["epoxy","环氧树脂"],["glass","玻璃"],["leather","皮革"],["mother-of-pearl","珍珠母"],["pearl","珍珠"],["resin","松香"],
+			["rhinestone","人造钻石"],["rubber","橡胶"],["shell","贝壳"],["synthetic-resin","合成树脂"],["wood"," 木头, 木材, 木制品"],
+		]),		
+		material_type2([
+			["NA","无"],["bamboo","竹子"],["ceramic","陶器"],["coral","珊瑚"],["crystal","水晶,水钻"],["enamel","珐琅,瓷釉"],
+			["epoxy","环氧树脂"],["glass","玻璃"],["leather","皮革"],["mother-of-pearl","珍珠母"],["pearl","珍珠"],["resin","松香"],
+			["rhinestone","人造钻石"],["rubber","橡胶"],["shell","贝壳"],["synthetic-resin","合成树脂"],["wood"," 木头, 木材, 木制品"],
+		]),	
+		material_type3([
+			["NA","无"],["bamboo","竹子"],["ceramic","陶器"],["coral","珊瑚"],["crystal","水晶,水钻"],["enamel","珐琅,瓷釉"],
+			["epoxy","环氧树脂"],["glass","玻璃"],["leather","皮革"],["mother-of-pearl","珍珠母"],["pearl","珍珠"],["resin","松香"],
+			["rhinestone","人造钻石"],["rubber","橡胶"],["shell","贝壳"],["synthetic-resin","合成树脂"],["wood"," 木头, 木材, 木制品"],
+		]),
+		gem_type1([
+			["NA","无"],["agate","玛瑙"],["quartz","石英"],["quartzite","石英岩"],
+		]),
+		variation_theme(["ColorName","StyleName","MetalType",]), variation_theme_content, color_name,
+		relationship_type("Variation"), 
+		main_image_url, other_image_url1, other_image_url2, other_image_url3, other_image_url4,other_image_url5,
+		
+		],
+		
+	"100":	function(){return this.field.filter(function(item){return item.spc[0]=="1"})},
+	"010":	function(){return this.field.filter(function(item){return item.spc[1]=="1"})},
+	"001":	function(){return this.field.filter(function(item){return item.spc[2]=="1"})},
+}
+
 var PetSupplies = exports.PetSupplies = {
 	"variable":true,//parent child 
 	"field":[ refer_link, item_sku, item_name, brand_name, external_product_id, external_product_id_type, standard_price, product_description, 
-		
-		feed_product_type("PetSuppliesMisc"),
+		currency,
+		feed_product_type(["PetSuppliesMisc"]),
 		variation_theme(["Color","SizeName","SizeNameColorName","Flavor","FlavorSize","PatternName"]), variation_theme_content,
 		bullet_point1, bullet_point2, bullet_point3, bullet_point4, bullet_point5,
 		generic_keywords1, generic_keywords2, generic_keywords3,generic_keywords4, generic_keywords5,
@@ -428,7 +597,8 @@ var PetSupplies = exports.PetSupplies = {
 		quantity, size_name, color_name,
 		
 		item_type([
-			["pet-bed-blankets","Bed Blankets"],["pet-squeak-toys","Squeak Toys"],["pet-toys","Other (Toys)"],["pet-chew-toys","Chew Toys"],["pet-toy-balls","Balls"],["pet-toy-ropes","Ropes"],
+			["pet-sweaters","毛衣,运动衫"],["pet-sunglasses","眼镜"],["pet-raincoats","雨衣"],["pet-necklaces","项链"],["pet-lifejackets","夹克"],["pet-hats","帽子"],["pet-hair-accessories","头饰"],["pet-dresses","连衣裙"],["pet-coats","外套"],["pet-paw-protectors","爪子保护器"],["pet-backpacks","背包"],
+			["pet-bed-blankets","床毯"],["pet-squeak-toys","发声玩具"],["pet-toys","其他(玩具)"],["pet-chew-toys","咀嚼玩具"],["pet-toy-balls","玩具球"],["pet-toy-ropes","玩具绳"],
 		]),
 		parent_child("parent"),
 		main_image_url, other_image_url1, other_image_url2, other_image_url3, other_image_url4,other_image_url5,
@@ -443,16 +613,17 @@ var PetSupplies = exports.PetSupplies = {
 
 var Clothing = exports.Clothing = {
 	"variable":true,//parent child 
-	"field":[ item_sku, item_name, brand_name, external_product_id, external_product_id_type, standard_price, product_description, 
+	"field":[ refer_link, item_sku, item_name, brand_name, external_product_id, external_product_id_type, standard_price, product_description, currency,
 		department_name(["baby-boys","baby-girls","boys","girls","mens","unisex-baby","womens"]),
 		variation_theme(["sizecolor"]), variation_theme_content, quantity, size_name, color_name,
 		bullet_point1, bullet_point2, bullet_point3, bullet_point4, bullet_point5,
 		generic_keywords1, generic_keywords2, generic_keywords3,generic_keywords4, generic_keywords5,
 		item_type([
-			["infant-and-toddler-hats","Hats & Caps"],["dresses","Dresses"],["fashion-scarves", "Scarves"],
+			["tights", "Tights"],["slipper-socks", "连袜便鞋"],["pantyhose", " 袜裤; 长筒袜裤"],["fashion-liner-socks", "No Show & Liner Socks"],["leg-warmers", "Leg Warmers"],["dress-socks", "Dress & Trouser Socks"], ["casual-socks", "休闲袜"], ["athletic-socks", "运动袜"],
+			["infant-and-toddler-hats","Hats & Caps"],["dresses","连衣裙"],["fashion-scarves", "围巾"],
 		]),
 		parent_child("parent"),
-		relationship_type("Variation"), refer_link, 
+		relationship_type("Variation"), 
 		main_image_url, other_image_url1, other_image_url2, other_image_url3, other_image_url4,other_image_url5,
 		
 		],
