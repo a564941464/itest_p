@@ -83,8 +83,8 @@
 		<td>Action</td>
 		<td>SKU</td>
 		<td>Product Name</td>
-		<td>Product ID Type</td>
 		<td>价格</td>
+		<td>数量</td>
 		<td>parent_child</td>
 		<td>产品链接</td>
 	</tr>
@@ -121,8 +121,8 @@
 			<br/>{{p.item_sku}}
 		</td>
 		<td>{{p.item_name}}</td>
-		<td>{{p.external_product_id_type}}</td>
 		<td>{{p.standard_price}}</td>
+		<td>{{p.quantity}}</td>
 		<td>{%if p.parent_child%}{{p.parent_child|default:""}}{%else%}single{%endif%}</td>
 		<td><a href="{{p.product_link}}" target="_blank">View</a></td>
 	</tr>

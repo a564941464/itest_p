@@ -92,7 +92,7 @@ var item_type = function(valid_values){
 }//item_type
 
 var standard_price = {
-	"spc": "101",
+	"spc": "111",// just for child, not for parent
 	"edit": "",
 	"key":"standard_price",
 	"en":"Standard Price",
@@ -101,12 +101,12 @@ var standard_price = {
 }//standard_price
 
 var quantity = {
-	"spc": "101",
+	"spc": "111",// not for parent, just for child
 	"edit": "",
 	"key":"quantity",
 	"en":"Quantity",
 	"copy":true,
-	"type":"text", 
+	"type":"hidden", 
 	"value":30,
 }//quantity
 
@@ -584,7 +584,7 @@ var Jewelry = exports.Jewelry = {
 
 var PetSupplies = exports.PetSupplies = {
 	"variable":true,//parent child 
-	"field":[ refer_link, item_sku, item_name, brand_name, external_product_id, external_product_id_type, standard_price, product_description, 
+	"field":[ refer_link, item_sku, item_name, brand_name, standard_price, product_description, 
 		currency,
 		feed_product_type(["PetSuppliesMisc"]),
 		variation_theme(["Color","SizeName","SizeNameColorName","Flavor","FlavorSize","PatternName"]), variation_theme_content,
@@ -614,7 +614,7 @@ var PetSupplies = exports.PetSupplies = {
 
 var Clothing = exports.Clothing = {
 	"variable":true,//parent child 
-	"field":[ refer_link, item_sku, model, item_name, brand_name, external_product_id, external_product_id_type, standard_price, product_description, currency,
+	"field":[ refer_link, item_sku, model, item_name, brand_name, standard_price, product_description, currency,
 		department_name(["baby-boys","baby-girls","boys","girls","mens","unisex-baby","womens"]),
 		variation_theme(["sizecolor"]), variation_theme_content, quantity, size_name, color_name,
 		bullet_point1, bullet_point2, bullet_point3, bullet_point4, bullet_point5,

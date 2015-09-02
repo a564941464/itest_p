@@ -52,15 +52,14 @@ exports.get_inventory_file = function(req, category, json_product_ids, withupc){
 	var headline = hline[category];
 	var headline_3 = hline[category + "_3"];
 	
-	var body_content = [headline];
-	
-	var upc_enough = true;
-	for(var i in products){
-		var p = products[i];
-		if(withupc == '1'){
+	var body_content = [headline];	
+
+	if(withupc == '1'){
+		var upc_enough = true;
+		for(var i in products){
+			var p = products[i];
 			if(p.parent_child != 'parent'){
-				if(!p.external_product_id){
-					p.external_product_id_type = 'UPC';
+				if(!p.external_product_id){					
 					var upc = db.one('UPC', {'used':false});
 					if(!upc){
 						upc_enough = false;
@@ -70,19 +69,34 @@ exports.get_inventory_file = function(req, category, json_product_ids, withupc){
 					upc.used = true;
 					db.save('UPC', upc);
 					db.save(category, p);
+					p.external_product_id_type = 'UPC';
 				}
-			}
+			}        
+			var r = "";
+			headline_3.forEach(function(h3){
+				r += ((p[h3]?p[h3].trim():"") + "\t");
+			});
+			r += "\n";
+			body_content.push(r);
 		}
-        var r = "";
-		headline_3.forEach(function(h3){
-			r += ((p[h3]?p[h3].trim():"") + "\t");
-		});
-		r += "\n";
-        body_content.push(r);
+		if(!upc_enough){
+			return response.html('<script>alert("upc is not enough");history.back();</script>');
+		}
+	}else{
+		for(var i in products){
+			var p = products[i];
+			if(p.parent_child != 'parent'){
+				p.external_product_id_type = 'GCID';
+			}
+			var r = "";
+			headline_3.forEach(function(h3){
+				r += ((p[h3]?p[h3].trim():"") + "\t");
+			});
+			r += "\n";
+			body_content.push(r);
+		}
 	}
-	if(!upc_enough){
-		return response.html('<script>alert("upc is not enough");history.back();</script>');
-	}
+
     var crt_time = utils.cur_time("yyyyMMddHHmmss");
     return {
         body: body_content,
@@ -153,6 +167,7 @@ exports.child_products_complete = function(req, category) {
 	var product = db.one(category, {"_id":product_id});
 	
 	product.item_sku = req.postParams.item_sku.trim();
+	product.standard_price = req.postParams.standard_price.trim();
 	product.main_image_url = req.postParams.main_image_url.trim();
 	product.other_image_url1 = req.postParams.other_image_url1?req.postParams.other_image_url1.trim():"";
 	product.other_image_url2 = req.postParams.other_image_url2?req.postParams.other_image_url2.trim():"";
@@ -260,12 +275,17 @@ exports.add_product = function(req) {
 			child_product.item_name = product.item_name + " " + add_to_name;
 			db.save(category, child_product);
 		});
+		//chu li mu lei mei you de shu xing 
+		product.quantity = "";
+		product.standard_price = "";
 	}else if(spc == "100"){
 
 	}else if(spc == "001"){
 		
 	}
 	//////////////////////
+
+	
 	db.save(category, product);
 	return response.json({"status":200, "msg":"ok", "spc":spc, "product_id":product._id});
 }

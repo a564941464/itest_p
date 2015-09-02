@@ -2,7 +2,10 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">{{parent_product.variation_theme|default:""}}</label>
 		<label class="col-sm-2 control-label">SKU</label>
-		<label class="col-sm-6 control-label">IMAGES</label>
+		<label class="col-sm-2 control-label">Price</label>
+		<label class="col-sm-2 control-label">Model Number</label>
+		<label class="col-sm-2 control-label">IMAGES</label>
+		<label class="col-sm-2 control-label">Status</label>
 		
 	</div>
 </div>
@@ -15,18 +18,23 @@
 		{{cp.vtcontents}}
 	</label>
 	<div class="col-sm-2">
-		<input type="text" class="form-control" value="{{cp.item_sku}}" name="item_sku" id="{{cp._id}}" placeholder="SKU ">
+		<input type="text" class="form-control" value="{{cp.item_sku}}" name="item_sku" id="{{cp._id}}" placeholder=" ">
+	</div>	
+	<div class="col-sm-2">
+		<input type="text" class="form-control" value="{{cp.standard_price}}" name="standard_price" id="{{cp._id}}" placeholder=" ">
 	</div>
-	<div class="col-sm-6">
+	<div class="col-sm-2">
+		<input type="text" class="form-control" value="{{cp.item_sku}}" name="model" id="{{cp._id}}" placeholder=" ">
+	</div>
+	<div class="col-sm-2">
 		<!--
 		<input type="text" class="form-control" value="{%if cp.main_image_url%}{{cp.main_image_url|default:""}}{%endif%}" name="main_image_url" id="{{fi.key}}" placeholder="Main Image URL ">
 		<input type="text" class="form-control" value="{%if cp.main_image_url1%}{{cp.other_image_url1|default:""}}{%endif%}" name="other_image_url1" id="{{fi.key}}" placeholder="Other Image URL1 ">
 		<input type="text" class="form-control" value="{%if cp.main_image_url2%}{{cp.other_image_url2|default:""}}{%endif%}" name="other_image_url2" id="{{fi.key}}" placeholder="Other Image URL2 ">
 		-->
-		<input type="text" class="form-control" value="" name="main_image_url" id="{{fi.key}}" placeholder="Main Image URL ">
-		<input type="text" class="form-control" value="" name="other_image_url1" id="{{fi.key}}" placeholder="Other Image URL1 ">
-		<input type="text" class="form-control" value="" name="other_image_url2" id="{{fi.key}}" placeholder="Other Image URL2 ">
-		
+		<input type="text" class="form-control" value="" name="main_image_url" id="{{fi.key}}" placeholder="">
+		<input type="text" class="form-control" value="" name="other_image_url1" id="{{fi.key}}" placeholder=" ">
+		<input type="text" class="form-control" value="" name="other_image_url2" id="{{fi.key}}" placeholder="">
 	</div>	
 	<div class="col-sm-2 control-label">
 		<span id="span_ok{{cp._id}}" class="sr-only glyphicon glyphicon-ok" aria-hidden="true"></span>
