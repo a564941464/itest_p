@@ -210,7 +210,7 @@ exports.add_product = function(req) {
 	
 	if(spc == "010"){
 		var variation_theme = req.postParams.variation_theme;
-		var vtmclist2v = req.postParams.variation_theme_content.trim().split(/\r\n|\n/).filter(function(item){return item.trim()!=''}).map(function(itm){return itm.split(",")});
+		var vtmclist2v = req.postParams.variation_theme_content.trim().split(/\r\n|\n/).filter(function(item){return item.trim()!=''}).map(function(itm){return itm.split(/,|，/).filter(function(it){return it.trim()!="";})});
 		// log.info("vtmclist2v:"+JSON.stringify(vtmclist2v));
 		var vtlist = fd.vtmap[variation_theme];
 		//////////////////////

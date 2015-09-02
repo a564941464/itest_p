@@ -97,7 +97,7 @@
 						<div class="form-group">
 							<label for="{{dt.key}}" class="col-sm-2 control-label">{{dt.en}}</label>
 							<div class="col-sm-4">
-							<input type="text" class="form-control" name="{{dt.key}}" id="{{dt.key}}" value="{%if dt.value%}{{dt.value}}{%endif%}" placeholder="{{dt.en}}" {{dt.edit}}/>
+							<input type="text" class="form-control" name="{{dt.key}}" id="{{dt.key}}" value="{%if dt.value%}{{dt.value}}{%endif%}" placeholder="" {{dt.edit}}/>
 							</div>
 						</div>
 						{%else%}
@@ -105,7 +105,7 @@
 						<div class="form-group">
 							<label for="{{dt.key}}" class="col-sm-2 control-label">{{dt.en}}</label>
 							<div class="col-sm-4">
-							<textarea class="form-control" rows="3" name="{{dt.key}}" id="{{dt.key}}" placeholder="{{dt.en}}" {{dt.edit}}>{%if dt.value%}{{dt.value}}{%endif%}</textarea>
+							<textarea class="form-control" rows="3" name="{{dt.key}}" id="{{dt.key}}" placeholder="" {{dt.edit}}>{%if dt.value%}{{dt.value}}{%endif%}</textarea>
 							</div>
 						</div>
 						{%else%}

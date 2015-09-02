@@ -41,6 +41,7 @@ var item_sku = {
 	}, //save
 }//item_sku
 
+
 var item_name = {
 	"spc": "111",
 	"edit": "",
@@ -74,8 +75,8 @@ var external_product_id_type = {
 	"key":"external_product_id_type",
 	"en":"Product ID Type",
 	"copy":false,
-	"type":"select_2", 
-	"values":[['UPC','UPC']],
+	"type":"select_1", 
+	"values":['UPC','GCID'],
 }//external_product_id_type
 
 var item_type = function(valid_values){
@@ -425,11 +426,11 @@ var manufacturer = {
 }//manufacturer
 
 var model = {
-		"spc": "111",
+		"spc": "101",
 		"edit": "",
 		"key":"model",
 		"en":"Model Number",
-		"copy":true,
+		"copy":false,
 		"type":"text", 
 }//model
 
@@ -613,7 +614,7 @@ var PetSupplies = exports.PetSupplies = {
 
 var Clothing = exports.Clothing = {
 	"variable":true,//parent child 
-	"field":[ refer_link, item_sku, item_name, brand_name, external_product_id, external_product_id_type, standard_price, product_description, currency,
+	"field":[ refer_link, item_sku, model, item_name, brand_name, external_product_id, external_product_id_type, standard_price, product_description, currency,
 		department_name(["baby-boys","baby-girls","boys","girls","mens","unisex-baby","womens"]),
 		variation_theme(["sizecolor"]), variation_theme_content, quantity, size_name, color_name,
 		bullet_point1, bullet_point2, bullet_point3, bullet_point4, bullet_point5,
