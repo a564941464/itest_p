@@ -9,7 +9,8 @@ var utils = require("utils");
 var db = exports.db = module.singleton ('db', function(){
 	var mongo = require('mongodb/mongodb');
 	// var client = new mongo.MongoClient('localhost', 20147);//office
-	var client = new mongo.MongoClient('localhost', 27017);//ali home
+	var client = new mongo.MongoClient('localhost', 27017);//ali 
+	var client = new mongo.MongoClient('localhost');//home
 	var db = client.getDB('ListingBuilder');
 	return db;
 });
