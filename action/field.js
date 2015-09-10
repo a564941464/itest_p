@@ -209,6 +209,18 @@ var size_name = {
 	"type":"text", 
 }//size_name
 
+var color_map = function(valid_values){
+	return {
+		"spc": "101",
+		"edit": "",
+		"key":"color_map",
+		"en":"Color Map",
+		"copy":false,
+		"type":"select_1", 
+		"values": valid_values,
+	}
+}//color_map
+
 var color_name = {
 	"spc": "101",
 	"edit": "",
@@ -571,7 +583,7 @@ var Jewelry = exports.Jewelry = {
 		gem_type1([
 			["NA","无"],["agate","玛瑙"],["quartz","石英"],["quartzite","石英岩"],
 		]),
-		variation_theme(["ColorName","StyleName","MetalType",]), variation_theme_content, color_name,
+		variation_theme(["ColorName","StyleName","MetalType",]), variation_theme_content, color_name, 
 		relationship_type("Variation"), 
 		main_image_url, other_image_url1, other_image_url2, other_image_url3, other_image_url4,other_image_url5,
 		
@@ -584,7 +596,7 @@ var Jewelry = exports.Jewelry = {
 
 var PetSupplies = exports.PetSupplies = {
 	"variable":true,//parent child 
-	"field":[ refer_link, item_sku, item_name, brand_name, standard_price, product_description, 
+	"field":[ refer_link, item_sku, model, item_name, brand_name, standard_price, product_description, 
 		currency,
 		feed_product_type(["PetSuppliesMisc"]),
 		variation_theme(["Color","SizeName","SizeNameColorName","Flavor","FlavorSize","PatternName"]), variation_theme_content,
@@ -596,9 +608,10 @@ var PetSupplies = exports.PetSupplies = {
 		target_audience_keywords3(["amphibians","birds","chinchillas","dogs","ferrets","fish","guinea-pigs","hamsters","horses","house-cats","insects","mice","rabbits","rats","reptiles"]),
 		relationship_type("Variation"),
 		quantity, size_name, color_name,
+		color_map(['Beige','Black','Blue','Bronze','Brown','Clear','Copper','Cream','Gold','Green','Grey','Metallic','Multi-colored','Orange','Pink','Purple','Red','Silver','White','Yellow']),
 		
 		item_type([
-			["pet-sweaters","毛衣,运动衫"],["pet-sunglasses","眼镜"],["pet-raincoats","雨衣"],["pet-necklaces","项链"],["pet-lifejackets","夹克"],["pet-hats","帽子"],["pet-hair-accessories","头饰"],["pet-dresses","连衣裙"],["pet-coats","外套"],["pet-paw-protectors","爪子保护器"],["pet-backpacks","背包"],
+			["pet-combs","梳子"],["pet-sweaters","毛衣,运动衫"],["pet-sunglasses","眼镜"],["pet-raincoats","雨衣"],["pet-necklaces","项链"],["pet-lifejackets","夹克"],["pet-hats","帽子"],["pet-hair-accessories","头饰"],["pet-dresses","连衣裙"],["pet-coats","外套"],["pet-paw-protectors","爪子保护器"],["pet-backpacks","背包"],
 			["pet-bed-blankets","床毯"],["pet-squeak-toys","发声玩具"],["pet-toys","其他(玩具)"],["pet-chew-toys","咀嚼玩具"],["pet-toy-balls","玩具球"],["pet-toy-ropes","玩具绳"],
 		]),
 		parent_child("parent"),

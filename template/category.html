@@ -124,7 +124,7 @@
 		<td>{{p.standard_price}}</td>
 		<td>{{p.quantity}}</td>
 		<td>{%if p.parent_child%}{{p.parent_child|default:""}}{%else%}single{%endif%}</td>
-		<td><a href="{{p.product_link}}" target="_blank">View</a></td>
+		<td><a href="{{p.refer_link}}" target="_blank">View</a></td>
 	</tr>
 	{%endfor%}
 	<tr>
