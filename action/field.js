@@ -596,7 +596,7 @@ var Jewelry = exports.Jewelry = {
 
 var PetSupplies = exports.PetSupplies = {
 	"variable":true,//parent child 
-	"field":[ refer_link, item_sku, model, item_name, brand_name, standard_price, product_description, 
+	"field":[ refer_link, item_sku, model, item_name, brand_name, manufacturer, standard_price, product_description, 
 		currency,
 		feed_product_type(["PetSuppliesMisc"]),
 		variation_theme(["Color","SizeName","SizeNameColorName","Flavor","FlavorSize","PatternName"]), variation_theme_content,
