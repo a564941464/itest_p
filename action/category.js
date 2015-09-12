@@ -59,7 +59,7 @@ exports.get_inventory_file = function(req, category, json_product_ids, withupc){
 		for(var i in products){
 			var p = products[i];
 			if(p.parent_child != 'parent'){
-				if(!p.external_product_id){					
+				if(!p.external_product_id){
 					var upc = db.one('UPC', {'used':false});
 					if(!upc){
 						upc_enough = false;

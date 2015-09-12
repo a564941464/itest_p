@@ -546,7 +546,7 @@ var gem_type1 = function(valid_values){
 var Jewelry = exports.Jewelry = {
 	"variable":true,//parent child 
 	"field":[ refer_link, item_sku, item_name, manufacturer, model, brand_name,currency,quantity, 
-		feed_product_type("FashionEarring","FashionNecklaceBraceletAnklet", "FashionRing", "FashionOther"),  standard_price, product_description, 
+		feed_product_type(["FashionEarring","FashionNecklaceBraceletAnklet", "FashionRing", "FashionOther"]),  standard_price, product_description, 
 		item_type([
 			["cuff-bracelets", "开口手镯"],["bracelets", "其他bracelets"],["	wrap-bracelets", "缠绕手链"],["link-bracelets", "链子手链"],["stretch-bracelets", "松紧手链"],["identification-bracelets", "识别手环"],["anklets", "脚链,踝环"],["bangle-bracelets", "圆环手镯"],
 			["earrings", "耳环,耳饰"],
