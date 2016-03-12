@@ -1,7 +1,7 @@
 var user = {
 	"display_name":display_name, 
 	"login_name":login_name,
-	"login_password":save_login_password,
+	"login_passwd":login_passwd,
 	"is_super": is_super,
 	"crt_time":crt_time,
 	"is_enabled":true,
